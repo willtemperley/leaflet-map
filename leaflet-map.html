@@ -84,7 +84,7 @@
         super.connectedCallback();
 
 
-        let map = L.map(this.$.map);
+        this.map = L.map(this.$.map);
 
         map.setView([this.latitude, this.longitude], this.zoom);
 
@@ -93,15 +93,10 @@
           maxZoom: 18
         }).addTo(map);
 
-
       }
 
       _viewChanged(newValue, oldValue) {
-        if (this.map && !this._ignoreViewChange) {
-          setTimeout(function() {
-            this.map.setView(L.latLng(this.latitude, this.longitude), this.zoom);
-          }.bind(this), 1);
-        }
+          this.map.setView(L.latLng(this.latitude, this.longitude), this.zoom);
       }
 
     }
