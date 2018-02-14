@@ -2,6 +2,8 @@
   "name": "leaflet-map",
   "description": "lmap",
   "main": "leaflet-map.html",
+  "author": "Will Temperley",
+  "license": "Apache-2.0",
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.0"
   },
@@ -12,7 +14,5 @@
   },
   "resolutions": {
     "polymer": "^2.0.0"
-  },
-  "license": "MIT"
-
+  }
 }
