@@ -1,3 +1,6 @@
-/bower_components
-/.idea
-leaflet-map.iml
+.DS_Store/
+.idea/
+leaflet-map-webjar/src/
+leaflet-map-webjar/target/
+leaflet-map-flow/target/
+*/*.iml

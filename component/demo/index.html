@@ -16,13 +16,19 @@
       <style is="custom-style" include="demo-pages-shared-styles">
       </style>
     </custom-style>
+    <style>
+    </style>
   </head>
   <body>
     <div class="vertical-section-container centered">
       <h3>Basic leaflet-map demo</h3>
       <demo-snippet>
         <template>
-          <leaflet-map zoom="10" longitude="12.5" latitude="41.9"></leaflet-map>
+          <leaflet-map style="height: 400px" zoom="10" longitude="12.5" latitude="41.9">
+            <leaflet-marker longitude="12.5" latitude="41.9">
+              Marker
+            </leaflet-marker>
+          </leaflet-map>
         </template>
       </demo-snippet>
     </div>

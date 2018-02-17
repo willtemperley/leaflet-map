@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <packaging>jar</packaging>
+    <artifactId>leaflet-map-webjar</artifactId>
+    <name>leaflet-map-webjar</name>
+    <description>WebJar for leaflet-map</description>
+    <url>http://webjars.org</url>
+
+    <parent>
+        <groupId>io.temperley</groupId>
+        <version>0.1</version>
+        <artifactId>leaflet-map</artifactId>
+    </parent>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <scm>
+        <url>https://github.com/willtemperley/leaflet-map</url>
+        <connection>https://github.com/willtemperley/leaflet-map.git</connection>
+        <developerConnection>https://github.com/willtemperley/leaflet-map.git</developerConnection>
+        <tag>v0.16</tag>
+    </scm>
+
+    <developers>
+        <developer>
+            <id>webjars</id>
+            <url>http://webjars.org</url>
+        </developer>
+    </developers>
+
+    <licenses>
+
+        <license>
+            <name>Apache-2.0</name>
+            <url>https://spdx.org/licenses/Apache-2.0#licenseText</url>
+            <distribution>repo</distribution>
+        </license>
+
+    </licenses>
+
+
+    <issueManagement>
+        <url>https://github.com/willtemperley/leaflet-map/issues</url>
+    </issueManagement>
+
+    <build>
+    <plugins>
+    <plugin>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>3.0.2</version>
+        <executions>
+            <execution>
+                <id>copy-resources</id>
+                <!-- here the phase you need -->
+                <phase>validate</phase>
+                <goals>
+                    <goal>copy-resources</goal>
+                </goals>
+                <configuration>
+                    <outputDirectory>${basedir}/src/main/resources/META-INF/resources/webjars/leaflet-map</outputDirectory>
+                    <resources>
+                        <resource>
+                            <directory>../component</directory>
+                        </resource>
+                    </resources>
+                </configuration>
+            </execution>
+        </executions>
+    </plugin>
+    </plugins>
+    </build>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.webjars.bowergithub.polymer</groupId>
+            <artifactId>polymer</artifactId>
+            <version>[2.0.0,3)</version>
+        </dependency>
+
+
+    </dependencies>
+
+</project>
