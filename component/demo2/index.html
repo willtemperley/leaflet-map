@@ -24,19 +24,17 @@
       <h3>Basic leaflet-map demo</h3>
       <demo-snippet>
         <template>
-          <leaflet-map style="height: 400px" zoom="10" longitude="12.5" latitude="41.9">
-            <leaflet-scale-control metric>
-            </leaflet-scale-control>
-
+          <leaflet-map style="height: 400px"  longitude="-104.99404" latitude="45" zoom="12">
             <leaflet-tilelayer url="http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" maxZoom="18">
             </leaflet-tilelayer>
-
-            <leaflet-marker longitude="12.5" latitude="41.9" icon='{"iconUrl": "https://stendhalgame.org/images/mapmarker/dungeon.png"}'>
-              Hello :)
-            </leaflet-marker>
-            <leaflet-layer-group>
-              <leaflet-marker latitude="41.8" longitude="12.6" icon='{"iconUrl": "https://stendhalgame.org/images/mapmarker/dungeon.png"}'> </leaflet-marker>
-            </leaflet-layer-group>
+            <leaflet-geojson
+                data='
+                {
+    "type": "LineString",
+    "coordinates": [[-100, 40], [-105, 45], [-110, 55]]
+}
+'>
+            </leaflet-geojson>
           </leaflet-map>
         </template>
       </demo-snippet>

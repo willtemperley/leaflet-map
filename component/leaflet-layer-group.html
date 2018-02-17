@@ -1,0 +1,70 @@
+
+<!--
+A Layer group (<a href="http://leafletjs.com/reference.html#layergroup">Leaflet Reference</a>).
+
+##### Example
+
+    <leaflet-layer-group>
+        <leaflet-marker latitude="51.505" longitude="-0.09"> </leaflet-marker>
+    </leaflet-layer-group>
+
+
+@element leaflet-layer-group
+@blurb an element which represents a layer group 
+@demo https://leaflet-extras.github.io/leaflet-map/demo.html
+@homepage https://leaflet-extras.github.io/leaflet-map/
+-->
+
+<dom-module id="leaflet-layer-group">
+  <template>
+  </template>
+</dom-module>
+
+<script>
+  "use strict";
+
+  class LeafletLayerGroup extends Polymer.Element {
+
+    static get is() {
+      return 'leaflet-layer-group';
+    }
+
+    static get properties() {
+      return {
+        container: {
+          type: Object,
+          observer: '_containerChanged'
+        }
+      }
+    }
+
+    onConnectedCallback() {
+      this._mutationObserver = new MutationObserver(this.registerContainerOnChildren.bind(this));
+      this._mutationObserver.observe(this, {childList: true});
+    }
+
+    _containerChanged() {
+      if (this.container) {
+        console.log("LAYER GROUP");
+        this.feature = L.layerGroup();
+        this.feature.addTo(this.container);
+        this.registerContainerOnChildren();
+      }
+    }
+
+    registerContainerOnChildren() {
+      for (let i = 0; i < this.children.length; i++) {
+        this.children[i].container = this.feature;
+      }
+    }
+
+    detached() {
+      if (this.container && this.feature) {
+        this.container.removeLayer(this.feature);
+      }
+      this._mutationObserver.disconnect();
+    }
+  }
+
+  window.customElements.define(LeafletLayerGroup.is, LeafletLayerGroup);
+</script>
