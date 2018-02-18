@@ -1,6 +1,7 @@
 # leaflet-map
 
-Polymer 2.0 webcomponent wrapper for LeafletJS and Vaadin 10 server-side bindings
+Polymer 2.0 webcomponent wrapper for LeafletJS;
+Vaadin 10 server-side bindings
 
 ## Project structure
 **./component** contains the Polymer2.0 web component
@@ -14,6 +15,11 @@ https://github.com/leaflet-extras/leaflet-map/pulls
 **./leaflet-map-webjar** contains an empty maven project which serves simply to create a webjar. 
 
 **./leaflet-map-flow** contains the server-side bindings for Vaadin 10 (Flow)
+
+## Client-server communication
+
+Currently the idea is to have client-side properties that are specifically to be read and set by the server.
+e.g. mapState which can be used to retrieve the basic state of the map.
 
 ### Importing into Intellij
 Tip: if you're having issues getting all root folders to show up, try this:

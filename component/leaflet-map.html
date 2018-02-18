@@ -18,9 +18,10 @@
       :host {
         display: block;
       }
+
       :host #map {
-        height:100%;
-        width:100%
+        height: 100%;
+        width: 100%
       }
 
     </style>
@@ -40,7 +41,10 @@
      * @demo demo/index.html
      */
     class LeafletMap extends Polymer.Element {
-      static get is() { return 'leaflet-map'; }
+      static get is() {
+        return 'leaflet-map';
+      }
+
       static get properties() {
         return {
           /**
@@ -53,7 +57,7 @@
             type: Number,
             readOnly: false,
             value: 51,
-            reflectToAttribute: true,
+            // reflectToAttribute: true,
             notify: true,
             observer: '_viewChanged'
           },
@@ -67,7 +71,7 @@
           longitude: {
             type: Number,
             value: 0,
-            reflectToAttribute: true,
+            // reflectToAttribute: true,
             notify: true,
             observer: '_viewChanged'
           },
@@ -81,7 +85,7 @@
           zoom: {
             type: Number,
             value: -1,
-            reflectToAttribute: true,
+            // reflectToAttribute: true,
             notify: true,
             observer: '_viewChanged'
           },
@@ -267,7 +271,7 @@
            * The `no-inertia` attribute disables panning of the map will have an inertia effect where the map builds momentum while dragging and continues moving in the same direction for some time. Feels especially nice on touch devices.
            *
            * @attribute no-inertia
-           * @type
+           * @type number
            */
           noInertia: {
             type: Boolean,
@@ -280,7 +284,10 @@
            * @attribute inertia-deceleration
            * @type number
            */
-          // inertiaDeceleration: 3000,
+          inertiaDeceleration: {
+            type: Number,
+            value: 3000
+          },
 
           /**
            * The `inertia-max-speed` attribute sets the max speed of the inertial movement, in pixels/second.
@@ -337,7 +344,15 @@
             type: Boolean,
             value: false,
             observer: '_fitToMarkers'
+          },
+
+          /**
+           *
+           */
+          mapState: {
+            type: String,
           }
+
 
         };
       }
@@ -510,8 +525,8 @@
        *
        * @event resize
        * @type ResizeEvent
-       * @param {Point}	oldSize	The old size before resize event.
-       * @param {Point}	newSize	The new size after the resize event.
+       * @param {Point}  oldSize  The old size before resize event.
+       * @param {Point}  newSize  The new size after the resize event.
        */
 
       /**
@@ -525,7 +540,7 @@
        *
        * @event layeradd
        * @type LayerEvent
-       * @param {ILayer}	layer	The layer that was added or removed.
+       * @param {ILayer}  layer  The layer that was added or removed.
        */
 
       /**
@@ -533,7 +548,7 @@
        *
        * @event layerremove
        * @type LayerEvent
-       * @param {ILayer}	layer	The layer that was added or removed.
+       * @param {ILayer}  layer  The layer that was added or removed.
        */
 
       /**
@@ -541,7 +556,7 @@
        *
        * @event baselayerchange
        * @type LayerEvent
-       * @param {ILayer}	layer	The layer that was added or removed.
+       * @param {ILayer}  layer  The layer that was added or removed.
        */
 
       /**
@@ -549,7 +564,7 @@
        *
        * @event overlayadd
        * @type LayerEvent
-       * @param {ILayer}	layer	The layer that was added or removed.
+       * @param {ILayer}  layer  The layer that was added or removed.
        */
 
       /**
@@ -557,7 +572,7 @@
        *
        * @event overlayremove
        * @type LayerEvent
-       * @param {ILayer}	layer	The layer that was added or removed.
+       * @param {ILayer}  layer  The layer that was added or removed.
        */
 
       /**
@@ -613,21 +628,6 @@
       connectedCallback() {
         super.connectedCallback();
 
-        // this.map = L.map(this.$.map, {
-        //   minZoom: 1,
-        //   maxZoom: 18
-        // });
-
-        // L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        //   attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-        //   maxZoom: 18
-        // }).addTo(this.map);
-
-
-        // this._viewChanged(null, null);
-        //
-        // this._registerMapOnChildren();
-
         LeafletMap.guessLeafletImagePath();
         this.map = L.map(this.$.map, {
           minZoom: this.minZoom,
@@ -654,26 +654,24 @@
           zoomAnimationThreshold: this.zoomAnimationThreshold
         });
 
+        this._mapInitialized = false;
+
         // fire an event for when this.map is defined and ready.
         // (needed for components that talk to this.map directly)
         this.dispatchEvent(new CustomEvent('map-ready'));
 
+        // update attributes
+        this.map.on('moveend zoomend dragend', function (e) {
+          this._updateMapState();
+        }, this);
+
         // forward events
-        this.map.on('click dblclick mousedown mouseup mouseover mouseout mousemove contextmenu focus blur preclick load unload viewreset movestart move moveend dragstart drag dragend zoomstart zoomend zoomlevelschange resize autopanstart layeradd layerremove baselayerchange overlayadd overlayremove locationfound locationerror popupopen popupclose', function(e) {
+        this.map.on('click dblclick mousedown mouseup mouseover mouseout mousemove contextmenu focus blur preclick load unload viewreset movestart move moveend dragstart drag dragend zoomstart zoomend zoomlevelschange resize autopanstart layeradd layerremove baselayerchange overlayadd overlayremove locationfound locationerror popupopen popupclose', function (e) {
           this.dispatchEvent(new CustomEvent(e.type, e));
         }, this);
+
         // set map view after registering events so viewreset and load events can be caught
         this.map.setView([this.latitude, this.longitude], this.zoom);
-        // update attributes
-        this.map.on('moveend', function(e) {
-          this._ignoreViewChange = true;
-          this.longitude = this.map.getCenter().lng;
-          this.latitude = this.map.getCenter().lat;
-          this._ignoreViewChange = false;
-        }, this);
-        this.map.on('zoomend', function(e) {
-          this.zoom = this.map.getZoom();
-        }, this);
 
         if (this.zoom === -1) {
           this.map.fitWorld();
@@ -727,25 +725,33 @@
       }
 
       _viewChanged(newValue, oldValue) {
-        if (this.map && !this._ignoreViewChange) {
-          setTimeout(function() {
-            this.map.setView(L.latLng(this.latitude, this.longitude), this.zoom);
-          }.bind(this), 1);
+        if (this.map) {
+
+          this.map.setView(L.latLng(this.latitude, this.longitude), this.zoom);
+
+          /*
+          The map is never happy until it's secure about it's size
+          Being explicit about the element size is the safest, but not always possible
+          hence a one-time call to ask the map to rethink it's body image
+          */
+          if (!this._mapInitialized) {
+            this.map.invalidateSize();
+            this._mapInitialized = true;
+          }
         }
       }
 
-
-      _fitToMarkers () {
-        if ( this.map && this.fitToMarkers) {
+      _fitToMarkers() {
+        if (this.map && this.fitToMarkers) {
           let bounds = [];
           let i = 0, f;
-          for(; f = this.children[i]; i++ ) {
-            if ( f.latitude && f.longitude ) {
-              bounds.push( [ f.latitude, f.longitude ] );
+          for (; f = this.children[i]; i++) {
+            if (f.latitude && f.longitude) {
+              bounds.push([f.latitude, f.longitude]);
             }
           }
-          if ( bounds.length > 0 ) {
-            this.map.fitBounds( bounds );
+          if (bounds.length > 0) {
+            this.map.fitBounds(bounds);
             this.map.invalidateSize();
           }
         }
@@ -756,17 +762,31 @@
        *
        * @method toGeoJSON
        */
-      toGeoJSON () {
+      toGeoJSON() {
         let geoJSON = {
           "type": "FeatureCollection",
           "features": []
         };
 
         let i = 0, f;
-        for(; f = this.features[i]; i++ ) {
-          geoJSON.features.push( f.feature.toGeoJSON() );
+        for (; f = this.features[i]; i++) {
+          geoJSON.features.push(f.feature.toGeoJSON());
         }
         return geoJSON;
+      }
+
+      /**
+       * @private
+       */
+      _updateMapState() {
+        console.log(this.map.getZoom());
+        this.mapState = JSON.stringify(
+          {
+            x: this.map.getCenter().lng,
+            y: this.map.getCenter().lat,
+            z: this.map.getZoom()
+          }
+        );
       }
 
     }
