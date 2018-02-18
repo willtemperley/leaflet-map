@@ -1,4 +1,4 @@
-package io.temperley;
+package io.temperley.leaflet;
 
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.DomEvent;

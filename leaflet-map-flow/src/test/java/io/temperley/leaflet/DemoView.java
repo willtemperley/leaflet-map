@@ -1,6 +1,5 @@
-package io.temperley;
+package io.temperley.leaflet;
 
-import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.router.Route;
 
