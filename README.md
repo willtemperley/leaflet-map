@@ -5,6 +5,12 @@ Polymer 2.0 webcomponent wrapper for LeafletJS and Vaadin 10 server-side binding
 ## Project structure
 **./component** contains the Polymer2.0 web component
 
+This has mostly been ported from the Polymer 1.0 component:
+https://github.com/leaflet-extras/leaflet-map/
+
+Still need to go through the un-merged pull requests:
+https://github.com/leaflet-extras/leaflet-map/pulls
+
 **./leaflet-map-webjar** contains an empty maven project which serves simply to create a webjar. 
 
 **./leaflet-map-flow** contains the server-side bindings for Vaadin 10 (Flow)
