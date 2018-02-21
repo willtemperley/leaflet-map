@@ -4,3 +4,4 @@ leaflet-map-webjar/src/
 leaflet-map-webjar/target/
 leaflet-map-flow/target/
 */*.iml
+*.iml

@@ -1,3 +1,4 @@
+<link rel="import" href="../polymer/polymer-element.html">
 <!--
 Scale control that shows the scale of the current center of screen in metric (m/km) and imperial (mi/ft) systems. (<a href="http://leafletjs.com/reference.html#control-scale">Leaflet Reference</a>).
 
@@ -31,6 +32,13 @@ Scale control that shows the scale of the current center of screen in metric (m/
 		  return 'leaflet-scale-control';
 		}
 
+		/* Handles property updates */
+    static get observers() {
+      return [
+        '_updateScale(position, maxwidth, metric, imperial, updatewhenidle)'
+      ]
+    }
+
     static get properties() {
       return {
 
@@ -51,7 +59,7 @@ Scale control that shows the scale of the current center of screen in metric (m/
          * @attribute max-width
          * @type number
          */
-        maxWidth: {
+        maxwidth: {
           type: Number,
           value: 100
         },
@@ -64,7 +72,7 @@ Scale control that shows the scale of the current center of screen in metric (m/
          */
         metric: {
           type: Boolean,
-          value: false
+          value: true
         },
 
         /**
@@ -75,7 +83,7 @@ Scale control that shows the scale of the current center of screen in metric (m/
          */
         imperial: {
           type: Boolean,
-          value: false
+          value: true
         },
 
         /**
@@ -84,7 +92,7 @@ Scale control that shows the scale of the current center of screen in metric (m/
          * @attribute update-when-idle
          * @type boolean
          */
-        updateWhenIdle: {
+        updatewhenidle: {
           type: Boolean,
           value: false
         },
@@ -96,14 +104,32 @@ Scale control that shows the scale of the current center of screen in metric (m/
       }
     }
 
+    _updateScale(position, maxwidth, metric, imperial, updatewhenidle) {
+
+      if (this.control && this.container) {
+
+        this.container.removeControl(this.control);
+
+        this.control = L.control.scale({
+          position: position,
+          maxWidth: maxwidth,
+          metric: metric,
+          imperial: imperial,
+          updateWhenIdle: updatewhenidle,
+        });
+        this.control.addTo(this.container);
+      }
+
+		}
+
 		_containerChanged() {
 			if (this.container) {
         this.control = L.control.scale({
           position: this.position,
-          maxWidth: this.maxWidth,
-          metric: this.metric || !this.imperial,
-          imperial: this.imperial || !this.metric,
-          updateWhenIdle: this.updateWhenIdle,
+          maxWidth: this.maxwidth,
+          metric: this.metric,
+          imperial: this.imperial,
+          updateWhenIdle: this.updatewhenidle,
         });
 				this.control.addTo(this.container);
 			}

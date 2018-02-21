@@ -3,7 +3,7 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.temperley</groupId>
+    <groupId>io.temperley.leaflet</groupId>
     <artifactId>leaflet-map</artifactId>
     <packaging>pom</packaging>
     <version>0.1</version>
@@ -16,7 +16,7 @@
     </modules>
 
     <properties>
-        <vaadin.version>10.0.0.alpha16</vaadin.version>
+        <vaadin.version>10.0.0.alpha19</vaadin.version>
 
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -46,10 +46,10 @@
     </dependencyManagement>
 
     <repositories>
-        <repository>
-            <id>Vaadin Directory</id>
-            <url>http://maven.vaadin.com/vaadin-addons</url>
-        </repository>
+        <!--<repository>-->
+            <!--<id>Vaadin Directory</id>-->
+            <!--<url>http://maven.vaadin.com/vaadin-addons</url>-->
+        <!--</repository>-->
         <repository>
             <id>Vaadin prereleases</id>
             <url>http://maven.vaadin.com/vaadin-prereleases</url>

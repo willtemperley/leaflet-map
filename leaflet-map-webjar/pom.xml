@@ -9,7 +9,7 @@
     <url>http://webjars.org</url>
 
     <parent>
-        <groupId>io.temperley</groupId>
+        <groupId>io.temperley.leaflet</groupId>
         <version>0.1</version>
         <artifactId>leaflet-map</artifactId>
     </parent>
@@ -22,7 +22,6 @@
         <url>https://github.com/willtemperley/leaflet-map</url>
         <connection>https://github.com/willtemperley/leaflet-map.git</connection>
         <developerConnection>https://github.com/willtemperley/leaflet-map.git</developerConnection>
-        <tag>v0.16</tag>
     </scm>
 
     <developers>

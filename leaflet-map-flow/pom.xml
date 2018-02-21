@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>leaflet-map</artifactId>
-        <groupId>io.temperley</groupId>
+        <groupId>io.temperley.leaflet</groupId>
         <version>0.1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
@@ -13,7 +13,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>io.temperley</groupId>
+            <groupId>io.temperley.leaflet</groupId>
             <artifactId>leaflet-map-webjar</artifactId>
             <version>0.1</version>
         </dependency>

@@ -7,10 +7,18 @@ import com.vaadin.flow.router.Route;
 public class DemoView extends Div {
 
     public DemoView() {
+        LeafletScaleControl scaleControl = new LeafletScaleControl()
+                        .position("bottomright")
+                        .maxWidthPx(300)
+                        .metric(false)
+                ;
+
         LeafletMap leafletMap = new LeafletMap(10);
         leafletMap.setCentre(12.5, 41.9);
         leafletMap.getElement().getStyle().set("height", "400px");
         add(leafletMap);
+
+        leafletMap.add(scaleControl);
 
         leafletMap.addValueChangeListener(event -> {
 
