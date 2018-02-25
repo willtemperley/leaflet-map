@@ -1,4 +1,5 @@
 <!--<link rel="import" href="leaflet-map.html">-->
+<link rel="import" href="../polymer/polymer-element.html">
 
 <!--
 Abstract element representing ILayer (<a href="http://leafletjs.com/reference.html#ilayer">Leaflet Reference</a>).
@@ -331,7 +332,7 @@ element which defines a tile layer (<a href="http://leafletjs.com/reference.html
       if (this.container) {
         let cleanedUrl = this.url.replace(new RegExp("%7B([sxyz])%7D", "g"), '{$1}');
         this.layer = L.tileLayer(cleanedUrl, {
-          attribution: Polymer.dom(this).innerHTML + this.attribution,
+          // attribution: Polymer.dom(this).innerHTML + this.attribution,
           minZoom: this.minZoom,
           maxZoom: this.maxZoom,
           // maxNativeZoom: this.maxNativeZoom, fixme why does this cause only a single tile to load?

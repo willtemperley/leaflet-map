@@ -70,3 +70,7 @@ With:
 ```
   this.dispatchEvent(new CustomEvent(e.type, e));
 ```
+
+Use `this.shadowRoot` in place of `Polymer.dom(this.root)`
+
+https://www.polymer-project.org/2.0/docs/upgrade#polymer-dom-apis
