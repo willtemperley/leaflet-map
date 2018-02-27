@@ -21,6 +21,28 @@ https://github.com/leaflet-extras/leaflet-map/pulls
 Currently the idea is to have client-side properties that are specifically to be read and set by the server.
 e.g. mapState which can be used to retrieve the basic state of the map.
 
+The process for communicating properties is somewhat unclear:
+"There are many cases where you can use either an attribute or a property with the same 
+name for the same effect. In some cases only one of them works, in other cases the attribute is considered
+when the element is initialized, but after initialization only the property is effective. 
+Please check documentation specific to the element you’re using to find out whether a feature 
+should be configured using a property or an attribute."
+
+Instead of worrying about this stuff, the idea is to simply provide a single configuration variable (opts) 
+for all components. This makes life much simpler as it is difficult to get all the webcomponent properties 
+and attributes together at construction time.  
+Attempting to use component properties entirely was attempted with the scalecontrol, but doing so required
+removal and reconstruction as many times as there are properties, as mutators are not available for some options.
+
+This approach means the options can be built as a map server-side, then serialized to JSON.
+This can be directly used to feed options parameters on the client. 
+
+It may be preferable to simplify the API and keep as close as possible to the leaflet API.
+This might mean we can just generate the entire API.
+
+Todo: Generate methods
+
+
 ### Importing into Intellij
 Tip: if you're having issues getting all root folders to show up, try this:
 Go to: File->Project Structure->Modules.
@@ -74,3 +96,6 @@ With:
 Use `this.shadowRoot` in place of `Polymer.dom(this.root)`
 
 https://www.polymer-project.org/2.0/docs/upgrade#polymer-dom-apis
+
+### Leaflet extras demo:
+http://leaflet-extras.github.io/leaflet-providers/preview/

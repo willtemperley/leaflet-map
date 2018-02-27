@@ -11,12 +11,9 @@ public class LeafletMap extends Component implements HasComponents {
     public LeafletMap() {
     }
 
-    public LeafletMap(int zoom) {
-        setZoom(zoom);
-    }
-
-    public void setZoom(int zoom) {
+    public LeafletMap zoom(int zoom) {
         getElement().setProperty("zoom", zoom);
+        return this;
     }
 
     public void setCentre(double x, double y) {

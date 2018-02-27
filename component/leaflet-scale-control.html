@@ -32,108 +32,49 @@ Scale control that shows the scale of the current center of screen in metric (m/
 		  return 'leaflet-scale-control';
 		}
 
-		/* Handles property updates */
-    static get observers() {
-      return [
-        '_updateScale(position, maxwidth, metric, imperial, updatewhenidle)'
-      ]
-    }
-
     static get properties() {
       return {
-
-        /**
-         * The `position` attribute sets the position of the control (one of the map corners). See control positions.
-         *
-         * @attribute position
-         * @type string
-         */
-        position: {
-          type: String,
-          value: "bottomleft"
-        },
-
-        /**
-         * The `max-width` attribute sets the maximum width of the control in pixels. The width is set dynamically to show round values (e.g. 100, 200, 500).
-         *
-         * @attribute max-width
-         * @type number
-         */
-        maxwidth: {
-          type: Number,
-          value: 100
-        },
-
-        /**
-         * The `metric` attribute sets whether to show the metric scale line (m/km).
-         *
-         * @attribute metric
-         * @type boolean
-         */
-        metric: {
-          type: Boolean,
-          value: true
-        },
-
-        /**
-         * The `imperial` attribute sets whether to show the imperial scale line (mi/ft).
-         *
-         * @attribute imperial
-         * @type boolean
-         */
-        imperial: {
-          type: Boolean,
-          value: true
-        },
-
-        /**
-         * The `update-when-idle` attribute sets whether the control is updated on moveend, otherwise it's always up-to-date (updated on move).
-         *
-         * @attribute update-when-idle
-         * @type boolean
-         */
-        updatewhenidle: {
-          type: Boolean,
-          value: false
-        },
 
         container: {
           type: Object,
           observer: '_containerChanged'
+        },
+
+        options: {
+          type: Object,
+          value: null
+        },
+
+        opts: {
+          type: String,
+          value: null,
+          observer: '_optsObserver'
         }
+
       }
     }
 
-    _updateScale(position, maxwidth, metric, imperial, updatewhenidle) {
-
-      if (this.control && this.container) {
-
-        this.container.removeControl(this.control);
-
-        this.control = L.control.scale({
-          position: position,
-          maxWidth: maxwidth,
-          metric: metric,
-          imperial: imperial,
-          updateWhenIdle: updatewhenidle,
-        });
-        this.control.addTo(this.container);
-      }
-
-		}
-
-		_containerChanged() {
-			if (this.container) {
-        this.control = L.control.scale({
-          position: this.position,
-          maxWidth: this.maxwidth,
-          metric: this.metric,
-          imperial: this.imperial,
-          updateWhenIdle: this.updatewhenidle,
-        });
-				this.control.addTo(this.container);
+    _optsObserver() {
+		  if (this.opts && this.container) {
+		    let options = JSON.parse(this.opts);
+		    this._create(options);
 			}
 		}
+
+    _containerChanged() {
+      if (this.options && this.container) {
+        this._create(this.options);
+      }
+    }
+
+		_create(options) {
+      if (this.control) {
+        return;
+      }
+      this.control = L.control.scale(options);
+      this.control.addTo(this.container);
+		}
+
 
 		detached() {
 			if (this.container && this.control) {

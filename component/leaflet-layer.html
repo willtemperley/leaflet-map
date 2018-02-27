@@ -17,6 +17,7 @@ Abstract element representing ILayer (<a href="http://leafletjs.com/reference.ht
     isLayer() {
       return true;
     }
+
     /**
      * Fired when the tile layer starts loading tiles.
      *
@@ -59,7 +60,7 @@ Abstract element representing ILayer (<a href="http://leafletjs.com/reference.ht
     /**
      * The `url` attribute sets the address template for tilesets.
      *
-     *	 'http://{s}.somedomain.com/blabla/{z}/{x}/{y}.png'
+     *   'http://{s}.somedomain.com/blabla/{z}/{x}/{y}.png'
      *
      * {s} means one of the available subdomains (used sequentially to help with
      * browser parallel requests per domain limitation; subdomain values are specified
@@ -250,6 +251,7 @@ Abstract element representing ILayer (<a href="http://leafletjs.com/reference.ht
           type: Boolean,
           value: false
         }
+
       }
     }
 
@@ -275,7 +277,6 @@ Abstract element representing ILayer (<a href="http://leafletjs.com/reference.ht
 </script>
 
 
-
 <!--
 element which defines a tile layer (<a href="http://leafletjs.com/reference.html#tilelayer">Leaflet Reference</a>).
 
@@ -298,7 +299,9 @@ element which defines a tile layer (<a href="http://leafletjs.com/reference.html
 <dom-module id="leaflet-tilelayer">
   <template>
     <style>
-      :host {display: none;}
+      :host {
+        display: none;
+      }
     </style>
   </template>
 </dom-module>
@@ -309,7 +312,7 @@ element which defines a tile layer (<a href="http://leafletjs.com/reference.html
   class LeafletTileLayer extends ILeafletTileLayer {
 
     static get is() {
-      return'leaflet-tilelayer';
+      return 'leaflet-tilelayer';
     }
 
     static get properties() {
@@ -323,39 +326,60 @@ element which defines a tile layer (<a href="http://leafletjs.com/reference.html
         container: {
           type: Object,
           observer: '_containerChanged'
+        },
+
+        opts: {
+          type: String,
+          value: null,
+          observer: '_optsObserver'
         }
       }
     }
 
     _containerChanged() {
 
-      if (this.container) {
-        let cleanedUrl = this.url.replace(new RegExp("%7B([sxyz])%7D", "g"), '{$1}');
-        this.layer = L.tileLayer(cleanedUrl, {
-          // attribution: Polymer.dom(this).innerHTML + this.attribution,
-          minZoom: this.minZoom,
-          maxZoom: this.maxZoom,
-          // maxNativeZoom: this.maxNativeZoom, fixme why does this cause only a single tile to load?
-          tileSize: this.tileSize,
-          subdomains: this.subdomains,
-          errorTileUrl: this.errorTileUrl,
-          tms: this.tms,
-          continuousWorld: this.continuousWorld,
-          noWrap: this.noWrap,
-          zoomOffset: this.zoomOffset,
-          zoomReverse: this.zoomReverse,
-          opacity: this.opacity,
-          zIndex: this.zIndex,
-          detectRetina: this.detectRetina,
-          reuseTiles: this.reuseTiles,
-        });
+      this._optsObserver();
 
-        // forward events
-        this.layer.on('loading load tileloadstart tileload tileunload', function(e) {
-          this.dispatchEvent(new CustomEvent(e.type, e));
-        }, this);
-        this.layer.addTo(this.container);
+    }
+
+    _optsObserver() {
+
+      if (this.opts && this.container) {
+        this._buildLayer()
       }
+    }
+
+    //fixme allow null this.opts when just using webcomponent
+    _buildLayer() {
+
+      let layerOpts = JSON.parse(this.opts);
+
+      let cleanedUrl = layerOpts.url.replace(new RegExp("%7B([sxyz])%7D", "g"), '{$1}');
+
+      let opts = {
+        attribution: this.shadowRoot.innerHTML + this.attribution,
+        minZoom: this.minZoom,
+        maxZoom: this.maxZoom,
+        tileSize: this.tileSize,
+        subdomains: this.subdomains,
+        errorTileUrl: this.errorTileUrl,
+        tms: this.tms,
+        continuousWorld: this.continuousWorld,
+        noWrap: this.noWrap,
+        zoomOffset: this.zoomOffset,
+        zoomReverse: this.zoomReverse,
+        opacity: this.opacity,
+        zIndex: this.zIndex,
+        detectRetina: this.detectRetina,
+        reuseTiles: this.reuseTiles,
+      };
+      this.layer = L.tileLayer(cleanedUrl, opts);
+
+      // forward events
+      this.layer.on('loading load tileloadstart tileload tileunload', function (e) {
+        this.dispatchEvent(new CustomEvent(e.type, e));
+      }, this);
+      this.layer.addTo(this.container);
     }
 
     _urlChanged() {
@@ -365,6 +389,7 @@ element which defines a tile layer (<a href="http://leafletjs.com/reference.html
       }
     }
   }
+
   window.customElements.define(LeafletTileLayer.is, LeafletTileLayer);
 </script>
 
@@ -391,7 +416,9 @@ element which defines a tile layer for wms (<a href="http://leafletjs.com/refere
 <dom-module id="leaflet-tilelayer-wms">
   <template>
     <style>
-      :host {display: none;}
+      :host {
+        display: none;
+      }
     </style>
   </template>
 </dom-module>
@@ -512,7 +539,7 @@ element which defines a tile layer for wms (<a href="http://leafletjs.com/refere
         });
 
         // forward events
-        this.layer.on('loading load tileloadstart tileload tileunload', function(e) {
+        this.layer.on('loading load tileloadstart tileload tileunload', function (e) {
           this.dispatchEvent(new CustomEvent(e.type, e));
         }, this);
         this.layer.addTo(this.container);
@@ -525,5 +552,6 @@ element which defines a tile layer for wms (<a href="http://leafletjs.com/refere
       }
     }
   }
+
   window.customElements.define(LeafletTileLayerWMS.is, LeafletTileLayerWMS);
 </script>
