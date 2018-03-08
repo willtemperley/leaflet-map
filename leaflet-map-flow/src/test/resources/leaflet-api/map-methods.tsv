@@ -1,0 +1,19 @@
+setView(<LatLng> center, <Number> zoom, <Zoom/pan options> options?)	this	Sets the view of the map (geographical center and zoom) with the given animation options.
+setZoom(<Number> zoom, <Zoom/pan options> options?)	this	Sets the zoom of the map.
+zoomIn(<Number> delta?, <Zoom options> options?)	this	Increases the zoom of the map by delta (zoomDelta by default).
+zoomOut(<Number> delta?, <Zoom options> options?)	this	Decreases the zoom of the map by delta (zoomDelta by default).
+setZoomAround(<LatLng> latlng, <Number> zoom, <Zoom options> options)	this	Zooms the map while keeping a specified geographical point on the map stationary (e.g. used internally for scroll zoom and double-click zoom).
+setZoomAround(<Point> offset, <Number> zoom, <Zoom options> options)	this	Zooms the map while keeping a specified pixel on the map (relative to the top-left corner) stationary.
+fitBounds(<LatLngBounds> bounds, <fitBounds options> options?)	this	Sets a map view that contains the given geographical bounds with the maximum zoom level possible.
+fitWorld(<fitBounds options> options?)	this	Sets a map view that mostly contains the whole world with the maximum zoom level possible.
+panTo(<LatLng> latlng, <Pan options> options?)	this	Pans the map to a given center.
+panBy(<Point> offset, <Pan options> options?)	this	Pans the map by a given number of pixels (animated).
+flyTo(<LatLng> latlng, <Number> zoom?, <Zoom/pan options> options?)	this	Sets the view of the map (geographical center and zoom) performing a smooth pan-zoom animation.
+flyToBounds(<LatLngBounds> bounds, <fitBounds options> options?)	this	Sets the view of the map with a smooth animation like flyTo, but takes a bounds parameter like fitBounds.
+setMaxBounds(<Bounds> bounds)	this	Restricts the map view to the given bounds (see the maxBounds option).
+setMinZoom(<Number> zoom)	this	Sets the lower limit for the available zoom levels (see the minZoom option).
+setMaxZoom(<Number> zoom)	this	Sets the upper limit for the available zoom levels (see the maxZoom option).
+panInsideBounds(<LatLngBounds> bounds, <Pan options> options?)	this	Pans the map to the closest view that would lie inside the given bounds (if it's not already), controlling the animation using the options specific, if any.
+invalidateSize(<Zoom/pan options> options)	this	Checks if the map container size changed and updates the map if so — call it after you've changed the map size dynamically, also animating pan by default. If options.pan is false, panning will not occur. If options.debounceMoveend is true, it will delay moveend event so that it doesn't happen often even if the method is called many times in a row.
+invalidateSize(<Boolean> animate)	this	Checks if the map container size changed and updates the map if so — call it after you've changed the map size dynamically, also animating pan by default.
+stop()	this	Stops the currently running panTo or flyTo animation, if any.

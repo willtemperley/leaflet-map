@@ -3,6 +3,7 @@ package io.temperley.leaflet;
 import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.shared.Registration;
+import io.temperley.leaflet.events.MapViewChangeEvent;
 
 @Tag("leaflet-map")
 @HtmlImport("bower_components/leaflet-map/leaflet-map.html")

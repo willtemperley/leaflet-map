@@ -9,6 +9,7 @@ public class CoerceTypes {
     public static Class classForJSType(String typeName) {
 
         typeName = typeName.toLowerCase().replaceAll(" ", "");
+        System.out.println("typeName = " + typeName);
 
         switch (typeName) {
             case "string":
@@ -17,6 +18,7 @@ public class CoerceTypes {
             case "boolean":
                 return Boolean.class;
             case "number":
+            case "<number>":
                 return Number.class;
             case "object":
             default:

@@ -1,47 +1,21 @@
 package io.temperley.leaflet.codegen;
 
 import com.squareup.javapoet.*;
+import io.temperley.leaflet.TakesServerOptions;
 import io.temperley.leaflet.control.ControlOptions;
 
 import javax.lang.model.element.Modifier;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class GenOptions {
 
-    public static void main(String[] args) throws IOException, URISyntaxException {
-
-        //        genOptions(
-//                collect,
-//                "ScaleControlOptions",
-//                "io.temperley.leaflet.control",
-//                ControlOptions.class
-//        );
-
-//        genOptions(
-//                getOptionsFromFile("leaflet-api/zoom-control-options.tsv"),
-//                "ZoomControlOptions",
-//                "io.temperley.leaflet.control",
-//                ControlOptions.class
-//        );
-        genOptions(
-                getOptionsFromFile("leaflet-api/layers-control-options.tsv"),
-                "LayersControlOptions",
-                "io.temperley.leaflet.control",
-                ControlOptions.class
-        );
-    }
-
     private static List<OptionDefinition> getOptionsFromFile(String fileName) throws IOException, URISyntaxException {
-        Stream<String> lines = getFile(fileName);
+        Stream<String> lines = Utils.getFile(fileName);
 
         Stream<OptionDefinition> optionStream = lines
                 .map(f -> f.split("\t"))
@@ -50,16 +24,19 @@ public class GenOptions {
         return optionStream.collect(Collectors.toList());
     }
 
-    public static void genOptions(List<OptionDefinition> options, String simpleName, String packageName, Class<ControlOptions> superclass) throws IOException {
+    public static void genOptions(TagInfo tagInfo, Class<?> superclass) throws IOException, URISyntaxException {
 
-        ClassName newThis = ClassName.get(packageName, simpleName);
+        final boolean isOptions = true;
+        ClassName newThis = ClassName.get(tagInfo.packageName, tagInfo.getSimpleName(isOptions));
 
-        ParameterizedTypeName parameterizedTypeName = ParameterizedTypeName.get(ClassName.get(superclass), newThis);
+        //fixme sometimes
+        ParameterizedTypeName parameterizedTypeName = ParameterizedTypeName.get(tagInfo.getSuperClassName(isOptions), newThis);
 
-        TypeSpec.Builder builder = TypeSpec.classBuilder(simpleName)
+        TypeSpec.Builder builder = TypeSpec.classBuilder(tagInfo.getSimpleName(isOptions))
                 .superclass(parameterizedTypeName)
                 .addModifiers(Modifier.PUBLIC);
 
+        List<OptionDefinition> options = getOptionsFromFile(tagInfo.getFileName(isOptions));
 
         for (OptionDefinition option : options) {
             MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder(option.getName())
@@ -77,7 +54,7 @@ public class GenOptions {
 
             methodBuilder.addJavadoc(option.getDescription());
             methodBuilder.addJavadoc("\n");
-            methodBuilder.addJavadoc("default: " +  option.getDefaultValue());
+            methodBuilder.addJavadoc("default: " + option.getDefaultValue());
             methodBuilder.addJavadoc("\n");
 
             builder.addMethod(methodBuilder.build());
@@ -86,19 +63,11 @@ public class GenOptions {
 
         TypeSpec built = builder.build();
 
-        JavaFile javaFile = JavaFile.builder(packageName, built)
+        JavaFile javaFile = JavaFile.builder(tagInfo.packageName, built)
                 .build();
 
         javaFile.writeTo(new File("./leaflet-map-flow/src/main/java").toPath());
 
     }
 
-    private static Stream<String> getFile(String name) throws IOException, URISyntaxException {
-
-        Path path = Paths.get(Objects.requireNonNull(GenOptions.class.getClassLoader()
-                .getResource(name)).toURI());
-
-        return Files.lines(path);
-
-    }
 }

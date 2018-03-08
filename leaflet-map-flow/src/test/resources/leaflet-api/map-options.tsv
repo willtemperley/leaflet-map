@@ -1,0 +1,38 @@
+preferCanvas	Boolean	false	Whether Paths should be rendered on a Canvas renderer. By default, all Paths are rendered in a SVG renderer.
+attributionControl	Boolean	true	Whether a attribution control is added to the map by default.
+zoomControl	Boolean	true	Whether a zoom control is added to the map by default.
+closePopupOnClick	Boolean	true	Set it to false if you don't want popups to close when user clicks the map.
+zoomSnap	Number	1	Forces the map's zoom level to always be a multiple of this, particularly right after a fitBounds() or a pinch-zoom. By default, the zoom level snaps to the nearest integer; lower values (e.g. 0.5 or 0.1) allow for greater granularity. A value of 0 means the zoom level will not be snapped after fitBounds or a pinch-zoom.
+zoomDelta	Number	1	Controls how much the map's zoom level will change after a zoomIn(), zoomOut(), pressing + or - on the keyboard, or using the zoom controls. Values smaller than 1 (e.g. 0.5) allow for greater granularity.
+trackResize	Boolean	true	Whether the map automatically handles browser window resize to update itself.
+boxZoom	Boolean	true	Whether the map can be zoomed to a rectangular area specified by dragging the mouse while pressing the shift key.
+doubleClickZoom	Boolean|String	true	Whether the map can be zoomed in by double clicking on it and zoomed out by double clicking while holding shift. If passed 'center', double-click zoom will zoom to the center of the view regardless of where the mouse was.
+dragging	Boolean	true	Whether the map be draggable with mouse/touch or not.
+crs	CRS	L.CRS.EPSG3857	The Coordinate Reference System to use. Don't change this if you're not sure what it means.
+center	LatLng	undefined	Initial geographic center of the map
+zoom	Number	undefined	Initial map zoom level
+minZoom	Number	*	Minimum zoom level of the map. If not specified and at least one GridLayer or TileLayer is in the map, the lowest of their minZoom options will be used instead.
+maxZoom	Number	*	Maximum zoom level of the map. If not specified and at least one GridLayer or TileLayer is in the map, the highest of their maxZoom options will be used instead.
+layers	Layer[]	[]	Array of layers that will be added to the map initially
+maxBounds	LatLngBounds	null	When this option is set, the map restricts the view to the given geographical bounds, bouncing the user back if the user tries to pan outside the view. To set the restriction dynamically, use setMaxBounds method.
+renderer	Renderer	*	The default method for drawing vector layers on the map. L.SVG or L.Canvas by default depending on browser support.
+zoomAnimation	Boolean	true	Whether the map zoom animation is enabled. By default it's enabled in all browsers that support CSS3 Transitions except Android.
+zoomAnimationThreshold	Number	4	Won't animate zoom if the zoom difference exceeds this value.
+fadeAnimation	Boolean	true	Whether the tile fade animation is enabled. By default it's enabled in all browsers that support CSS3 Transitions except Android.
+markerZoomAnimation	Boolean	true	Whether markers animate their zoom with the zoom animation, if disabled they will disappear for the length of the animation. By default it's enabled in all browsers that support CSS3 Transitions except Android.
+transform3DLimit	Number	2^23	Defines the maximum size of a CSS translation transform. The default value should not be changed unless a web browser positions layers in the wrong place after doing a large panBy.
+inertia	Boolean	*	If enabled, panning of the map will have an inertia effect where the map builds momentum while dragging and continues moving in the same direction for some time. Feels especially nice on touch devices. Enabled by default unless running on old Android devices.
+inertiaDeceleration	Number	3000	The rate with which the inertial movement slows down, in pixels/second².
+inertiaMaxSpeed	Number	Infinity	Max speed of the inertial movement, in pixels/second.
+easeLinearity	Number	0.2	not defined
+worldCopyJump	Boolean	false	With this option enabled, the map tracks when you pan to another "copy" of the world and seamlessly jumps to the original one so that all overlays like markers and vector layers are still visible.
+maxBoundsViscosity	Number	0.0	If maxBounds is set, this option will control how solid the bounds are when dragging the map around. The default value of 0.0 allows the user to drag outside the bounds at normal speed, higher values will slow down map dragging outside bounds, and 1.0 makes the bounds fully solid, preventing the user from dragging outside the bounds.
+keyboard	Boolean	true	Makes the map focusable and allows users to navigate the map with keyboard arrows and +/- keys.
+keyboardPanDelta	Number	80	Amount of pixels to pan when pressing an arrow key.
+scrollWheelZoom	Boolean|String	true	Whether the map can be zoomed by using the mouse wheel. If passed 'center', it will zoom to the center of the view regardless of where the mouse was.
+wheelDebounceTime	Number	40	Limits the rate at which a wheel can fire (in milliseconds). By default user can't zoom via wheel more often than once per 40 ms.
+wheelPxPerZoomLevel	Number	60	How many scroll pixels (as reported by L.DomEvent.getWheelDelta) mean a change of one full zoom level. Smaller values will make wheel-zooming faster (and vice versa).
+tap	Boolean	true	Enables mobile hacks for supporting instant taps (fixing 200ms click delay on iOS/Android) and touch holds (fired as contextmenu events).
+tapTolerance	Number	15	The max number of pixels a user can shift his finger during touch for it to be considered a valid tap.
+touchZoom	Boolean|String	*	Whether the map can be zoomed by touch-dragging with two fingers. If passed 'center', it will zoom to the center of the view regardless of where the touch events (fingers) were. Enabled for touch-capable web browsers except for old Androids.
+bounceAtZoomLimits	Boolean	true	Set it to false if you don't want the map to zoom beyond min/max zoom and then bounce back when pinch-zooming.
