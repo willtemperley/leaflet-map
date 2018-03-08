@@ -18,6 +18,11 @@ public class OptionsBase<O> implements Supplier<O> {
         opts.put(name, value);
     }
 
+    /**
+     * Returns the correct subtype when building fluent APIs
+     *
+     * @return downcasts to return the subtype
+     */
     public O get() {
         return (O) this;
     }

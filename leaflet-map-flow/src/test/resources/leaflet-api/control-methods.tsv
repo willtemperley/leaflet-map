@@ -1,4 +1,4 @@
-getPosition()	string  Returns the position of the control.
+getPosition()	string	Returns the position of the control.
 setPosition(<string> position)	this	Sets the position of the control.
 getContainer()	HTMLElement	Returns the HTMLElement that contains the control.
 addTo(<Map> map)	this	Adds the control to the given map.

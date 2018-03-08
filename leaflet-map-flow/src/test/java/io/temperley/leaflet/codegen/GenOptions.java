@@ -1,9 +1,6 @@
 package io.temperley.leaflet.codegen;
 
-import com.squareup.javapoet.ClassName;
-import com.squareup.javapoet.JavaFile;
-import com.squareup.javapoet.MethodSpec;
-import com.squareup.javapoet.TypeSpec;
+import com.squareup.javapoet.*;
 import io.temperley.leaflet.control.ControlOptions;
 
 import javax.lang.model.element.Modifier;
@@ -18,35 +15,53 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class GenOpts {
+public class GenOptions {
 
     public static void main(String[] args) throws IOException, URISyntaxException {
 
-        Stream<String> lines = getFile("leaflet-scale-options.tsv");
+        //        genOptions(
+//                collect,
+//                "ScaleControlOptions",
+//                "io.temperley.leaflet.control",
+//                ControlOptions.class
+//        );
 
-        Stream<Option> optionStream = lines
-                .map(f -> f.split("\t"))
-                .map(f -> new Option(f[0], f[1], f[2], f[3]));
-
-        List<Option> collect = optionStream.collect(Collectors.toList());
-
+//        genOptions(
+//                getOptionsFromFile("leaflet-api/zoom-control-options.tsv"),
+//                "ZoomControlOptions",
+//                "io.temperley.leaflet.control",
+//                ControlOptions.class
+//        );
         genOptions(
-                collect,
-                "ScaleControlOptions",
+                getOptionsFromFile("leaflet-api/layers-control-options.tsv"),
+                "LayersControlOptions",
                 "io.temperley.leaflet.control",
                 ControlOptions.class
         );
-
     }
 
-    public static void genOptions(List<Option> collect, String simpleName, String packageName, Class<ControlOptions> superclass) throws IOException {
+    private static List<OptionDefinition> getOptionsFromFile(String fileName) throws IOException, URISyntaxException {
+        Stream<String> lines = getFile(fileName);
+
+        Stream<OptionDefinition> optionStream = lines
+                .map(f -> f.split("\t"))
+                .map(f -> new OptionDefinition(f[0], f[1], f[2], f[3]));
+
+        return optionStream.collect(Collectors.toList());
+    }
+
+    public static void genOptions(List<OptionDefinition> options, String simpleName, String packageName, Class<ControlOptions> superclass) throws IOException {
+
+        ClassName newThis = ClassName.get(packageName, simpleName);
+
+        ParameterizedTypeName parameterizedTypeName = ParameterizedTypeName.get(ClassName.get(superclass), newThis);
 
         TypeSpec.Builder builder = TypeSpec.classBuilder(simpleName)
-                .superclass(superclass)
+                .superclass(parameterizedTypeName)
                 .addModifiers(Modifier.PUBLIC);
 
 
-        for (Option option : collect) {
+        for (OptionDefinition option : options) {
             MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder(option.getName())
                     .addModifiers(Modifier.PUBLIC)
                     .returns(void.class);
@@ -58,7 +73,7 @@ public class GenOpts {
             methodBuilder.addStatement("addOption($S, " + name + ")", name);
             methodBuilder.addStatement("return this");
 
-            methodBuilder.returns(ClassName.get(packageName, simpleName));
+            methodBuilder.returns(newThis);
 
             methodBuilder.addJavadoc(option.getDescription());
             methodBuilder.addJavadoc("\n");
@@ -80,7 +95,7 @@ public class GenOpts {
 
     private static Stream<String> getFile(String name) throws IOException, URISyntaxException {
 
-        Path path = Paths.get(Objects.requireNonNull(GenOpts.class.getClassLoader()
+        Path path = Paths.get(Objects.requireNonNull(GenOptions.class.getClassLoader()
                 .getResource(name)).toURI());
 
         return Files.lines(path);

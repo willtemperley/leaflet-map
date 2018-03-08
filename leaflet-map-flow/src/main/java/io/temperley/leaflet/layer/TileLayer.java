@@ -4,16 +4,14 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentSupplier;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.HtmlImport;
+import io.temperley.leaflet.OptionsBase;
 import io.temperley.leaflet.TakesServerOptions;
 
 @Tag("leaflet-tilelayer")
 @HtmlImport("bower_components/leaflet-map/leaflet-layer.html")
-public class LeafletTileLayer extends TakesServerOptions {
+public class TileLayer extends TakesServerOptions {
 
-    public LeafletTileLayer(TileLayerOptions options) {
+    public TileLayer(TileLayerOptions options) {
         super(options);
     }
-
-
-
 }

@@ -2,10 +2,10 @@ package io.temperley.leaflet;
 
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.router.Route;
+import io.temperley.leaflet.control.LayersControl;
+import io.temperley.leaflet.control.LayersControlOptions;
 import io.temperley.leaflet.control.ScaleControl;
 import io.temperley.leaflet.control.ScaleControlOptions;
-import io.temperley.leaflet.layer.LeafletTileLayer;
-import io.temperley.leaflet.layer.TileLayerOptions;
 
 @Route("")
 public class DemoView extends Div {
@@ -29,9 +29,10 @@ public class DemoView extends Div {
 //                new TileLayerOptions(url)
 //                .attribution("Map tiles by <a href=\"http://stamen.com\">Stamen Design</a>, <a href=\"http://creativecommons.org/licenses/by/3.0\">CC BY 3.0</a> &mdash; Map data &copy; <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap</a>");
 //
-//        leafletMap.add( new LeafletTileLayer(options) );
+//        leafletMap.add( new TileLayer(options) );
 
         leafletMap.add(scaleControl);
+        leafletMap.add(new LayersControl(new LayersControlOptions())); //todo add default ctor like this?
 
         leafletMap.addValueChangeListener(event -> {
 

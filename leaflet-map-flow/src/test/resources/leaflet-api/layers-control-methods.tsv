@@ -1,0 +1,5 @@
+addBaseLayer(<Layer> layer, <String> name)	this	Adds a base layer (radio button entry) with the given name to the control.
+addOverlay(<Layer> layer, <String> name)	this	Adds an overlay (checkbox entry) with the given name to the control.
+removeLayer(<Layer> layer)	this	Remove the given layer from the control.
+expand()	this	Expand the control container if collapsed.
+collapse()	this	Collapse the control container if expanded.

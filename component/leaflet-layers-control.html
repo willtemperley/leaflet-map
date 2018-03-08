@@ -1,0 +1,87 @@
+<link rel="import" href="../polymer/polymer-element.html">
+<!--
+todo describe
+
+##### Example
+
+    <leaflet-layers-control> </leaflet-layers-control>
+	
+##### Example
+
+    <leaflet-layers-control metric>
+    </leaflet-layers-control>
+
+@element leaflet-layers-control
+@blurb todo
+@homepage https://leaflet-extras.github.io/leaflet-map/
+@demo https://leaflet-extras.github.io/leaflet-map/demo.html
+-->
+
+<dom-module id="leaflet-layers-control">
+	<template>
+		<style>
+			:host {display: none;}
+		</style>
+	</template>
+	<script>
+	"use strict";
+
+	class LeafletLayersControl extends Polymer.Element {
+
+		static get is(){
+		  return 'leaflet-layers-control';
+		}
+
+    static get properties() {
+      return {
+
+        container: {
+          type: Object,
+          observer: '_containerChanged'
+        },
+
+        options: {
+          type: Object,
+          value: null
+        },
+
+        opts: {
+          type: String,
+          value: null,
+          observer: '_optsObserver'
+        }
+
+      }
+    }
+
+    _optsObserver() {
+		  if (this.opts && this.container) {
+		    let options = JSON.parse(this.opts);
+		    this._create(options);
+			}
+		}
+
+    _containerChanged() {
+      if (this.options && this.container) {
+        this._create(this.options);
+      }
+    }
+
+		_create(options) {
+      if (this.control) {
+        return;
+      }
+      this.control = L.control.layers(options);
+      this.control.addTo(this.container);
+		}
+
+
+		detached() {
+			if (this.container && this.control) {
+				this.container.removeControl(this.control);
+			}
+		}
+	}
+  window.customElements.define(LeafletLayersControl.is, LeafletLayersControl);
+	</script>
+</dom-module>
