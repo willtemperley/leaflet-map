@@ -104,6 +104,12 @@ public class GenMethods {
             List<ParameterSpec> parameterSpecs = buildParamList(paramString);
             methodBuilder.addParameters(parameterSpecs);
 
+            //fixme
+            //thoughts: "action" property to notify JS
+
+            /*
+             *
+             */
             if (methodString.startsWith("get")) {
                 methodBuilder.addStatement("return getElement().getProperty($S)", propertyName);
                 ClassName returnClass = CoerceTypes.classForJSType(option.getReturnType());
@@ -120,8 +126,7 @@ public class GenMethods {
                 methodBuilder.addStatement("getElement().removeFromParent()");
             }
 
-//                    .build();
-//            methodBuilder.addStatement("return this");
+            //fixme end
 
 
             methodBuilder.addJavadoc(option.getDescription());

@@ -6,4 +6,19 @@ The aim is to reflect as exactly as possible the leaflet api:
 3. Fewer special cases in JavaScript means writing less JavaScript
 
 
+For every method, the idea is to have a param list something like this:
+
+```json
+
+{
+    "method": "fitToBounds",
+    "params": [
+        {
+         "type": "L.LatLng",
+         "params": ""
+        }
+    ]
+}
+```
+
 

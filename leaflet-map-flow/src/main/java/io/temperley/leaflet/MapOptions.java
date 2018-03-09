@@ -16,7 +16,7 @@ public class MapOptions<T extends MapOptions> extends OptionsBase<T> {
    */
   public MapOptions preferCanvas(Boolean preferCanvas) {
     addOption("preferCanvas", preferCanvas);
-    return this;
+    return this.get();
   }
 
   /**
@@ -25,7 +25,7 @@ public class MapOptions<T extends MapOptions> extends OptionsBase<T> {
    */
   public MapOptions attributionControl(Boolean attributionControl) {
     addOption("attributionControl", attributionControl);
-    return this;
+    return this.get();
   }
 
   /**
@@ -34,7 +34,7 @@ public class MapOptions<T extends MapOptions> extends OptionsBase<T> {
    */
   public MapOptions zoomControl(Boolean zoomControl) {
     addOption("zoomControl", zoomControl);
-    return this;
+    return this.get();
   }
 
   /**
@@ -43,7 +43,7 @@ public class MapOptions<T extends MapOptions> extends OptionsBase<T> {
    */
   public MapOptions closePopupOnClick(Boolean closePopupOnClick) {
     addOption("closePopupOnClick", closePopupOnClick);
-    return this;
+    return this.get();
   }
 
   /**
@@ -52,7 +52,7 @@ public class MapOptions<T extends MapOptions> extends OptionsBase<T> {
    */
   public MapOptions zoomSnap(Number zoomSnap) {
     addOption("zoomSnap", zoomSnap);
-    return this;
+    return this.get();
   }
 
   /**
@@ -61,7 +61,7 @@ public class MapOptions<T extends MapOptions> extends OptionsBase<T> {
    */
   public MapOptions zoomDelta(Number zoomDelta) {
     addOption("zoomDelta", zoomDelta);
-    return this;
+    return this.get();
   }
 
   /**
@@ -70,7 +70,7 @@ public class MapOptions<T extends MapOptions> extends OptionsBase<T> {
    */
   public MapOptions trackResize(Boolean trackResize) {
     addOption("trackResize", trackResize);
-    return this;
+    return this.get();
   }
 
   /**
@@ -79,7 +79,7 @@ public class MapOptions<T extends MapOptions> extends OptionsBase<T> {
    */
   public MapOptions boxZoom(Boolean boxZoom) {
     addOption("boxZoom", boxZoom);
-    return this;
+    return this.get();
   }
 
   /**
@@ -88,7 +88,7 @@ public class MapOptions<T extends MapOptions> extends OptionsBase<T> {
    */
   public MapOptions doubleClickZoom(ZoomBehaviour doubleClickZoom) {
     addOption("doubleClickZoom", doubleClickZoom);
-    return this;
+    return this.get();
   }
 
   /**
@@ -97,7 +97,7 @@ public class MapOptions<T extends MapOptions> extends OptionsBase<T> {
    */
   public MapOptions dragging(Boolean dragging) {
     addOption("dragging", dragging);
-    return this;
+    return this.get();
   }
 
   /**
@@ -106,7 +106,7 @@ public class MapOptions<T extends MapOptions> extends OptionsBase<T> {
    */
   public MapOptions crs(CRS crs) {
     addOption("crs", crs);
-    return this;
+    return this.get();
   }
 
   /**
@@ -115,7 +115,7 @@ public class MapOptions<T extends MapOptions> extends OptionsBase<T> {
    */
   public MapOptions center(LatLng center) {
     addOption("center", center);
-    return this;
+    return this.get();
   }
 
   /**
@@ -124,7 +124,7 @@ public class MapOptions<T extends MapOptions> extends OptionsBase<T> {
    */
   public MapOptions zoom(Number zoom) {
     addOption("zoom", zoom);
-    return this;
+    return this.get();
   }
 
   /**
@@ -133,7 +133,7 @@ public class MapOptions<T extends MapOptions> extends OptionsBase<T> {
    */
   public MapOptions minZoom(Number minZoom) {
     addOption("minZoom", minZoom);
-    return this;
+    return this.get();
   }
 
   /**
@@ -142,7 +142,7 @@ public class MapOptions<T extends MapOptions> extends OptionsBase<T> {
    */
   public MapOptions maxZoom(Number maxZoom) {
     addOption("maxZoom", maxZoom);
-    return this;
+    return this.get();
   }
 
   /**
@@ -151,7 +151,7 @@ public class MapOptions<T extends MapOptions> extends OptionsBase<T> {
    */
   public MapOptions layers(LayerList layers) {
     addOption("layers", layers);
-    return this;
+    return this.get();
   }
 
   /**
@@ -160,7 +160,7 @@ public class MapOptions<T extends MapOptions> extends OptionsBase<T> {
    */
   public MapOptions maxBounds(LatLngBounds maxBounds) {
     addOption("maxBounds", maxBounds);
-    return this;
+    return this.get();
   }
 
   /**
@@ -169,7 +169,7 @@ public class MapOptions<T extends MapOptions> extends OptionsBase<T> {
    */
   public MapOptions renderer(Renderer renderer) {
     addOption("renderer", renderer);
-    return this;
+    return this.get();
   }
 
   /**
@@ -178,7 +178,7 @@ public class MapOptions<T extends MapOptions> extends OptionsBase<T> {
    */
   public MapOptions zoomAnimation(Boolean zoomAnimation) {
     addOption("zoomAnimation", zoomAnimation);
-    return this;
+    return this.get();
   }
 
   /**
@@ -187,7 +187,7 @@ public class MapOptions<T extends MapOptions> extends OptionsBase<T> {
    */
   public MapOptions zoomAnimationThreshold(Number zoomAnimationThreshold) {
     addOption("zoomAnimationThreshold", zoomAnimationThreshold);
-    return this;
+    return this.get();
   }
 
   /**
@@ -196,7 +196,7 @@ public class MapOptions<T extends MapOptions> extends OptionsBase<T> {
    */
   public MapOptions fadeAnimation(Boolean fadeAnimation) {
     addOption("fadeAnimation", fadeAnimation);
-    return this;
+    return this.get();
   }
 
   /**
@@ -205,7 +205,7 @@ public class MapOptions<T extends MapOptions> extends OptionsBase<T> {
    */
   public MapOptions markerZoomAnimation(Boolean markerZoomAnimation) {
     addOption("markerZoomAnimation", markerZoomAnimation);
-    return this;
+    return this.get();
   }
 
   /**
@@ -214,7 +214,7 @@ public class MapOptions<T extends MapOptions> extends OptionsBase<T> {
    */
   public MapOptions transform3DLimit(Number transform3DLimit) {
     addOption("transform3DLimit", transform3DLimit);
-    return this;
+    return this.get();
   }
 
   /**
@@ -223,7 +223,7 @@ public class MapOptions<T extends MapOptions> extends OptionsBase<T> {
    */
   public MapOptions inertia(Boolean inertia) {
     addOption("inertia", inertia);
-    return this;
+    return this.get();
   }
 
   /**
@@ -232,7 +232,7 @@ public class MapOptions<T extends MapOptions> extends OptionsBase<T> {
    */
   public MapOptions inertiaDeceleration(Number inertiaDeceleration) {
     addOption("inertiaDeceleration", inertiaDeceleration);
-    return this;
+    return this.get();
   }
 
   /**
@@ -241,7 +241,7 @@ public class MapOptions<T extends MapOptions> extends OptionsBase<T> {
    */
   public MapOptions inertiaMaxSpeed(Number inertiaMaxSpeed) {
     addOption("inertiaMaxSpeed", inertiaMaxSpeed);
-    return this;
+    return this.get();
   }
 
   /**
@@ -250,7 +250,7 @@ public class MapOptions<T extends MapOptions> extends OptionsBase<T> {
    */
   public MapOptions easeLinearity(Number easeLinearity) {
     addOption("easeLinearity", easeLinearity);
-    return this;
+    return this.get();
   }
 
   /**
@@ -259,7 +259,7 @@ public class MapOptions<T extends MapOptions> extends OptionsBase<T> {
    */
   public MapOptions worldCopyJump(Boolean worldCopyJump) {
     addOption("worldCopyJump", worldCopyJump);
-    return this;
+    return this.get();
   }
 
   /**
@@ -268,7 +268,7 @@ public class MapOptions<T extends MapOptions> extends OptionsBase<T> {
    */
   public MapOptions maxBoundsViscosity(Number maxBoundsViscosity) {
     addOption("maxBoundsViscosity", maxBoundsViscosity);
-    return this;
+    return this.get();
   }
 
   /**
@@ -277,7 +277,7 @@ public class MapOptions<T extends MapOptions> extends OptionsBase<T> {
    */
   public MapOptions keyboard(Boolean keyboard) {
     addOption("keyboard", keyboard);
-    return this;
+    return this.get();
   }
 
   /**
@@ -286,7 +286,7 @@ public class MapOptions<T extends MapOptions> extends OptionsBase<T> {
    */
   public MapOptions keyboardPanDelta(Number keyboardPanDelta) {
     addOption("keyboardPanDelta", keyboardPanDelta);
-    return this;
+    return this.get();
   }
 
   /**
@@ -295,7 +295,7 @@ public class MapOptions<T extends MapOptions> extends OptionsBase<T> {
    */
   public MapOptions scrollWheelZoom(ZoomBehaviour scrollWheelZoom) {
     addOption("scrollWheelZoom", scrollWheelZoom);
-    return this;
+    return this.get();
   }
 
   /**
@@ -304,7 +304,7 @@ public class MapOptions<T extends MapOptions> extends OptionsBase<T> {
    */
   public MapOptions wheelDebounceTime(Number wheelDebounceTime) {
     addOption("wheelDebounceTime", wheelDebounceTime);
-    return this;
+    return this.get();
   }
 
   /**
@@ -313,7 +313,7 @@ public class MapOptions<T extends MapOptions> extends OptionsBase<T> {
    */
   public MapOptions wheelPxPerZoomLevel(Number wheelPxPerZoomLevel) {
     addOption("wheelPxPerZoomLevel", wheelPxPerZoomLevel);
-    return this;
+    return this.get();
   }
 
   /**
@@ -322,7 +322,7 @@ public class MapOptions<T extends MapOptions> extends OptionsBase<T> {
    */
   public MapOptions tap(Boolean tap) {
     addOption("tap", tap);
-    return this;
+    return this.get();
   }
 
   /**
@@ -331,7 +331,7 @@ public class MapOptions<T extends MapOptions> extends OptionsBase<T> {
    */
   public MapOptions tapTolerance(Number tapTolerance) {
     addOption("tapTolerance", tapTolerance);
-    return this;
+    return this.get();
   }
 
   /**
@@ -340,7 +340,7 @@ public class MapOptions<T extends MapOptions> extends OptionsBase<T> {
    */
   public MapOptions touchZoom(ZoomBehaviour touchZoom) {
     addOption("touchZoom", touchZoom);
-    return this;
+    return this.get();
   }
 
   /**
@@ -349,6 +349,6 @@ public class MapOptions<T extends MapOptions> extends OptionsBase<T> {
    */
   public MapOptions bounceAtZoomLimits(Boolean bounceAtZoomLimits) {
     addOption("bounceAtZoomLimits", bounceAtZoomLimits);
-    return this;
+    return this.get();
   }
 }

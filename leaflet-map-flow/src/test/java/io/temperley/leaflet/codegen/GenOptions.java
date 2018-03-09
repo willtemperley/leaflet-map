@@ -53,7 +53,7 @@ public class GenOptions {
             methodBuilder.addParameter(option.getType(), option.getName())
                     .build();
             methodBuilder.addStatement("addOption($S, " + name + ")", name);
-            methodBuilder.addStatement("return this");
+            methodBuilder.addStatement("return this.get()");
 
             methodBuilder.returns(newThis);
 
