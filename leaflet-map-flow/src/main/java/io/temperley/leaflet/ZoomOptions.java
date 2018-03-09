@@ -9,6 +9,6 @@ public class ZoomOptions<T extends ZoomOptions> extends OptionsBase<T> {
    */
   public ZoomOptions animate(Boolean animate) {
     addOption("animate", animate);
-    return get();
+    return this;
   }
 }

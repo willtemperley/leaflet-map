@@ -9,11 +9,12 @@ import javax.lang.model.element.Modifier;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static io.temperley.leaflet.codegen.Utils.getFile;
+import static io.temperley.leaflet.codegen.ResourceUtils.getFile;
 
 public class GenMethods {
 
@@ -25,6 +26,32 @@ public class GenMethods {
                 .map(f -> new MethodDefinition(f[0], f[1], f[2]));
 
         return stream.collect(Collectors.toList());
+    }
+
+    public static List<ParameterSpec> buildParamList(String paramString) {
+
+        List<ParameterSpec> parameterSpecs = new ArrayList<>();
+        if (paramString.isEmpty()) {
+            return parameterSpecs;
+        }
+        String[] split = paramString.split(",");
+
+        for (String singleParamString : split) {
+            String regex;
+            if (singleParamString.contains(">")) {
+                regex = "> ";
+            } else {
+                regex = " ";
+            }
+            String[] typeAndVar = singleParamString.split(regex);
+            String name = typeAndVar[1];
+            ClassName className = CoerceTypes.classForJSType(typeAndVar[0]);
+            name = name.replace("?", "Optional");
+            parameterSpecs.add(ParameterSpec.builder(className, name).build());
+
+        }
+
+        return parameterSpecs;
     }
 
     public static void genMethods(TagInfo tagInfo, Class superclass) throws IOException, URISyntaxException {
@@ -60,8 +87,10 @@ public class GenMethods {
         List<MethodDefinition> methods = getMethodsFromFile(tagInfo.getFileName(false));
         for (MethodDefinition option : methods) {
 
+            //whole method def
             String methodString = option.getMethodString();
-
+            //just params
+            String paramString = methodString.substring(methodString.indexOf('(') + 1, methodString.indexOf(')'));
             String methodName = methodString.substring(0, methodString.indexOf('('));
 
             MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder(methodName)
@@ -70,17 +99,22 @@ public class GenMethods {
 
             String propertyName = methodName.substring(3).toLowerCase();
 
+
+            //method params
+            List<ParameterSpec> parameterSpecs = buildParamList(paramString);
+            methodBuilder.addParameters(parameterSpecs);
+
             if (methodString.startsWith("get")) {
                 methodBuilder.addStatement("return getElement().getProperty($S)", propertyName);
-                Class aClass = CoerceTypes.classForJSType(option.getReturnType());
-                methodBuilder.returns(aClass);
+                ClassName returnClass = CoerceTypes.classForJSType(option.getReturnType());
+                methodBuilder.returns(returnClass);
             } else if (methodString.startsWith("set")) {
-                //todo multiple
-                methodBuilder.addStatement("getElement().setProperty($S, " + propertyName + ")", propertyName);
 
-                String propertyType = methodString.substring(methodString.indexOf('(') + 1, methodString.indexOf(' '));
-                Class aClass = CoerceTypes.classForJSType(propertyType);
-                methodBuilder.addParameter(aClass, propertyName);
+                for (ParameterSpec parameterSpec : parameterSpecs) {
+                    methodBuilder.addStatement("setProperty($S, " + parameterSpec.name + ")", parameterSpec.name);
+                }
+
+
 
             } else if (methodName.equals("remove")) {
                 methodBuilder.addStatement("getElement().removeFromParent()");

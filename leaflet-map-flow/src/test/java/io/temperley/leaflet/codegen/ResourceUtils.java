@@ -9,7 +9,8 @@ import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.stream.Stream;
 
-public class Utils {
+public class ResourceUtils {
+
     static Stream<String> getFile(String name) throws IOException, URISyntaxException {
 
         URL resource = GenOptions.class.getClassLoader()
@@ -17,6 +18,13 @@ public class Utils {
         Path path = Paths.get(Objects.requireNonNull(resource).toURI());
 
         return Files.lines(path);
+    }
 
+    public static boolean exists(String name) {
+
+        URL resource = GenOptions.class.getClassLoader()
+                .getResource(name);
+
+        return resource != null;
     }
 }

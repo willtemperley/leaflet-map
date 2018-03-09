@@ -41,5 +41,10 @@ public class DemoView extends Div {
 
         });
 
+        PanOptions panOptions = new PanOptions();
+
+        ZoomOptions zoomOptions = new ZoomOptions().animate(true);
+
+
     }
 }

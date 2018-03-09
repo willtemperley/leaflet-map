@@ -1,6 +1,5 @@
 package io.temperley.leaflet.codegen;
 
-import io.temperley.leaflet.OptionsBase;
 import io.temperley.leaflet.TakesServerOptions;
 
 import java.io.File;
@@ -10,7 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static io.temperley.leaflet.codegen.Utils.getFile;
+import static io.temperley.leaflet.codegen.ResourceUtils.getFile;
 
 public class Gen {
 
@@ -20,8 +19,9 @@ public class Gen {
         List<TagInfo> tagsFromFile = getTagsFromFile("tags.tsv");
 
         for (TagInfo tagInfo : tagsFromFile) {
-            GenOptions.genOptions(tagInfo, OptionsBase.class);
-            if (new File(tagInfo.getFileName(false)).exists()) {
+            GenOptions.genOptions(tagInfo);
+            String fileName = tagInfo.getFileName(false);
+            if (ResourceUtils.exists(fileName)) {
                 GenMethods.genMethods(tagInfo, TakesServerOptions.class);
             }
         }

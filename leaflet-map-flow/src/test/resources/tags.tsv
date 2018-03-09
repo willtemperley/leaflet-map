@@ -1,4 +1,5 @@
+#TAG	PACKAGE	SUPERCLASS
 map	io.temperley.leaflet
 zoom	io.temperley.leaflet
 pan	io.temperley.leaflet	zoom
-#map2	io.temperley.leaflet
+fit-bounds	io.temperley.leaflet	pan

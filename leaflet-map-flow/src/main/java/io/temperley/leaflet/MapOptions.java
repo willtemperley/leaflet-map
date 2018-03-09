@@ -1,10 +1,15 @@
 package io.temperley.leaflet;
 
+import io.temperley.leaflet.basetypes.CRS;
+import io.temperley.leaflet.basetypes.LatLng;
+import io.temperley.leaflet.basetypes.LatLngBounds;
+import io.temperley.leaflet.basetypes.LayerList;
+import io.temperley.leaflet.basetypes.Renderer;
+import io.temperley.leaflet.basetypes.ZoomBehaviour;
 import java.lang.Boolean;
 import java.lang.Number;
-import java.lang.Object;
 
-public class MapOptions extends OptionsBase<MapOptions> {
+public class MapOptions<T extends MapOptions> extends OptionsBase<T> {
   /**
    * Whether Paths should be rendered on a Canvas renderer. By default, all Paths are rendered in a SVG renderer.
    * default: false
@@ -81,7 +86,7 @@ public class MapOptions extends OptionsBase<MapOptions> {
    * Whether the map can be zoomed in by double clicking on it and zoomed out by double clicking while holding shift. If passed 'center', double-click zoom will zoom to the center of the view regardless of where the mouse was.
    * default: true
    */
-  public MapOptions doubleClickZoom(Object doubleClickZoom) {
+  public MapOptions doubleClickZoom(ZoomBehaviour doubleClickZoom) {
     addOption("doubleClickZoom", doubleClickZoom);
     return this;
   }
@@ -99,7 +104,7 @@ public class MapOptions extends OptionsBase<MapOptions> {
    * The Coordinate Reference System to use. Don't change this if you're not sure what it means.
    * default: L.CRS.EPSG3857
    */
-  public MapOptions crs(Object crs) {
+  public MapOptions crs(CRS crs) {
     addOption("crs", crs);
     return this;
   }
@@ -108,7 +113,7 @@ public class MapOptions extends OptionsBase<MapOptions> {
    * Initial geographic center of the map
    * default: undefined
    */
-  public MapOptions center(Object center) {
+  public MapOptions center(LatLng center) {
     addOption("center", center);
     return this;
   }
@@ -144,7 +149,7 @@ public class MapOptions extends OptionsBase<MapOptions> {
    * Array of layers that will be added to the map initially
    * default: []
    */
-  public MapOptions layers(Object layers) {
+  public MapOptions layers(LayerList layers) {
     addOption("layers", layers);
     return this;
   }
@@ -153,7 +158,7 @@ public class MapOptions extends OptionsBase<MapOptions> {
    * When this option is set, the map restricts the view to the given geographical bounds, bouncing the user back if the user tries to pan outside the view. To set the restriction dynamically, use setMaxBounds method.
    * default: null
    */
-  public MapOptions maxBounds(Object maxBounds) {
+  public MapOptions maxBounds(LatLngBounds maxBounds) {
     addOption("maxBounds", maxBounds);
     return this;
   }
@@ -162,7 +167,7 @@ public class MapOptions extends OptionsBase<MapOptions> {
    * The default method for drawing vector layers on the map. L.SVG or L.Canvas by default depending on browser support.
    * default: *
    */
-  public MapOptions renderer(Object renderer) {
+  public MapOptions renderer(Renderer renderer) {
     addOption("renderer", renderer);
     return this;
   }
@@ -288,7 +293,7 @@ public class MapOptions extends OptionsBase<MapOptions> {
    * Whether the map can be zoomed by using the mouse wheel. If passed 'center', it will zoom to the center of the view regardless of where the mouse was.
    * default: true
    */
-  public MapOptions scrollWheelZoom(Object scrollWheelZoom) {
+  public MapOptions scrollWheelZoom(ZoomBehaviour scrollWheelZoom) {
     addOption("scrollWheelZoom", scrollWheelZoom);
     return this;
   }
@@ -333,7 +338,7 @@ public class MapOptions extends OptionsBase<MapOptions> {
    * Whether the map can be zoomed by touch-dragging with two fingers. If passed 'center', it will zoom to the center of the view regardless of where the touch events (fingers) were. Enabled for touch-capable web browsers except for old Androids.
    * default: *
    */
-  public MapOptions touchZoom(Object touchZoom) {
+  public MapOptions touchZoom(ZoomBehaviour touchZoom) {
     addOption("touchZoom", touchZoom);
     return this;
   }

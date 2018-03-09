@@ -1,5 +1,7 @@
 package io.temperley.leaflet.codegen;
 
+import com.squareup.javapoet.ClassName;
+
 public class OptionDefinition {
 
     private final String defaultValue;
@@ -16,7 +18,7 @@ public class OptionDefinition {
 
     public String getDefaultValue() {
 
-        if (CoerceTypes.classForJSType(type).equals(Boolean.class)) {
+        if (CoerceTypes.classForJSType(type).equals(ClassName.get(Boolean.class))) {
             return defaultValue.toLowerCase();
         }
 
@@ -33,7 +35,7 @@ public class OptionDefinition {
         return name;
     }
 
-    public Class getType() {
+    public ClassName getType() {
 
         return CoerceTypes.classForJSType(type);
     }

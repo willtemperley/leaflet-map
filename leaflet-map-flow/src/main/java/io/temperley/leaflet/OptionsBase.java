@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public class OptionsBase<O> implements Supplier<O> {
+public class OptionsBase<O> implements Supplier<O>, LeafletSerializable {
     private Map<String, Object> opts = new HashMap<>();
 
     public String serialize() {

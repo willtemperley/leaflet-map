@@ -1,8 +1,6 @@
 package io.temperley.leaflet.codegen;
 
 import com.squareup.javapoet.*;
-import io.temperley.leaflet.TakesServerOptions;
-import io.temperley.leaflet.control.ControlOptions;
 
 import javax.lang.model.element.Modifier;
 import java.io.File;
@@ -15,7 +13,7 @@ import java.util.stream.Stream;
 public class GenOptions {
 
     private static List<OptionDefinition> getOptionsFromFile(String fileName) throws IOException, URISyntaxException {
-        Stream<String> lines = Utils.getFile(fileName);
+        Stream<String> lines = ResourceUtils.getFile(fileName);
 
         Stream<OptionDefinition> optionStream = lines
                 .map(f -> f.split("\t"))
@@ -24,16 +22,23 @@ public class GenOptions {
         return optionStream.collect(Collectors.toList());
     }
 
-    public static void genOptions(TagInfo tagInfo, Class<?> superclass) throws IOException, URISyntaxException {
+
+// todo figure out how to do this:
+// todo public class ZoomOptions<T extends ZoomOptions> extends OptionsBase<T> {
+
+    public static void genOptions(TagInfo tagInfo) throws IOException, URISyntaxException {
 
         final boolean isOptions = true;
         ClassName newThis = ClassName.get(tagInfo.packageName, tagInfo.getSimpleName(isOptions));
 
-        //fixme sometimes
-        ParameterizedTypeName parameterizedTypeName = ParameterizedTypeName.get(tagInfo.getSuperClassName(isOptions), newThis);
+        ClassName superClassName = tagInfo.getSuperClassName(isOptions);
+        TypeVariableName typeVariableName = TypeVariableName.get("T", newThis);
+
+        ParameterizedTypeName parameterizedSuperClass = ParameterizedTypeName.get(superClassName, typeVariableName);
 
         TypeSpec.Builder builder = TypeSpec.classBuilder(tagInfo.getSimpleName(isOptions))
-                .superclass(parameterizedTypeName)
+                .addTypeVariable(typeVariableName)
+                .superclass(parameterizedSuperClass)
                 .addModifiers(Modifier.PUBLIC);
 
         List<OptionDefinition> options = getOptionsFromFile(tagInfo.getFileName(isOptions));
