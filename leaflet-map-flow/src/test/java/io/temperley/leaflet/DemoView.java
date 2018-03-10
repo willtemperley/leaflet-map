@@ -30,6 +30,8 @@ public class DemoView extends Div {
         options.zoom(9);
         options.center(new LatLng(41.9, 12.5));
         options.doubleClickZoom(ZoomBehaviour.Disabled);
+
+
         Map leafletMap = new Map(options);
 //        leafletMap.setCentre(12.5, 41.9);
         leafletMap.getElement().getStyle().set("height", "400px");
@@ -42,7 +44,13 @@ public class DemoView extends Div {
             leafletMap.setView(new LatLng(42.9, 12.5), 7, new PanOptions().animate(true));
         });
 
+        leafletMap.setMaxZoom(10);
         add(button);
+
+
+
+
+
 
 //        String url = "https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png";
 //        TileLayerOptions options =

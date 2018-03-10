@@ -1,12 +1,12 @@
 package io.temperley.leaflet.generated;
 
-import io.temperley.leaflet.options.OptionsBase;
 import io.temperley.leaflet.basetypes.CRS;
 import io.temperley.leaflet.basetypes.LatLng;
 import io.temperley.leaflet.basetypes.LatLngBounds;
 import io.temperley.leaflet.basetypes.LayerList;
 import io.temperley.leaflet.basetypes.Renderer;
 import io.temperley.leaflet.basetypes.ZoomBehaviour;
+import io.temperley.leaflet.options.OptionsBase;
 import java.lang.Boolean;
 import java.lang.Number;
 

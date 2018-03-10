@@ -8,24 +8,24 @@ The aim is to reflect as exactly as possible the leaflet api:
 
 
 ### Options
-Options are built with a fluent API. Abstract classes are generated with the methods and a concrete type 
-manually created simply to pass itself as a type parameter, which is recursively applied to superclasses.
+Options are built with a fluent API. For each automatically generated abstract options class there is a manually 
+created concrete type. This simply passes itself as a type parameter, which is recursively applied to superclasses.
+This provides an entry point at each level in the hierarchy. 
+
+### Methods
 
 TODO: concrete types in GenMethods 
 
 ### JS
 
-For every method, the idea is to have a param list something like this:
+Every method is called using a JSON invocation
 
 ```json
 
 {
-    "method": "fitToBounds",
+    "methodName": "setView",
     "params": [
-        {
-         "type": "L.LatLng",
-         "params": ""
-        }
+      [1,2], 7
     ]
 }
 ```

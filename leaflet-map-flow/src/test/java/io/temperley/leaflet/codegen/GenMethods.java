@@ -78,6 +78,7 @@ public class GenMethods {
             builder = builder.superclass(superclass);
         }
 
+
         MethodSpec ctor = MethodSpec.constructorBuilder()
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(OptionsBase.class, "options")
@@ -106,17 +107,16 @@ public class GenMethods {
             List<ParameterSpec> parameterSpecs = buildParamList(paramString);
             methodBuilder.addParameters(parameterSpecs);
 
-            //fixme
             //thoughts: "action" property to notify JS?
 
+
+            //these don't need special serialization
+            //todo probably better to create a MethodInvocationBuilder to deal with serialization
             Set<TypeName> basicTypes = new HashSet<>();
             basicTypes.add(TypeName.get(Number.class));
             basicTypes.add(TypeName.get(Boolean.class));
             basicTypes.add(TypeName.get(String.class));
 
-            /*
-             *
-             */
             if (methodString.startsWith("get")) {
                 methodBuilder.addStatement("return getElement().getProperty($S)", propertyName);
                 ClassName returnClass = CoerceTypes.classForJSType(option.getReturnType());
@@ -125,42 +125,35 @@ public class GenMethods {
             } else if (methodName.equals("remove")) {
 
                 methodBuilder.addStatement("getElement().removeFromParent()");
-
             } else {
 
-                methodBuilder.addStatement("String methodName = \"setView\"");
-                methodBuilder.addStatement("List<Object> objects = new ArrayList<>()");
+                //todo optional params should mean two methods created: doThis(x, optional); doThis(x);
+                methodBuilder.addStatement("$T<Object> objects = new $T<>()", List.class, ArrayList.class);
 
                 for (ParameterSpec parameterSpec : parameterSpecs) {
                     if (basicTypes.contains(parameterSpec.type)) {
                         methodBuilder.addStatement("objects.add(" + parameterSpec.name + ")");
                     } else {
-                        methodBuilder.addStatement("objects.add(" + parameterSpec.name + ").serializable()");
+                        methodBuilder.addStatement("objects.add(" + parameterSpec.name + ".serializable())");
                     }
                 }
-                methodBuilder.addStatement("setProperty(" + methodName + ").serializable()");
-//                setProperty(methodName, objects);
-
+                methodBuilder.addStatement("setProperty($S, objects)", methodName);
             }
-
-
-            //fixme end
-
 
             methodBuilder.addJavadoc(option.getDescription());
             methodBuilder.addJavadoc("\n");
 
+            //add the method
             builder.addMethod(methodBuilder.build());
-
         }
 
-        TypeSpec built = builder.build();
+        TypeSpec typeSpec = builder.build();
 
-        JavaFile javaFile = JavaFile.builder(tagInfo.packageName, built)
+        JavaFile javaFile =
+                JavaFile.builder(tagInfo.packageName, typeSpec)
                 .build();
 
         javaFile.writeTo(new File("./leaflet-map-flow/src/main/java").toPath());
-
     }
 
 }
