@@ -23,23 +23,37 @@ public class GenOptions {
     }
 
 
-// todo figure out how to do this:
-// todo public class ZoomOptions<T extends ZoomOptions> extends OptionsBase<T> {
-
     public static void genOptions(TagInfo tagInfo) throws IOException, URISyntaxException {
 
         final boolean isOptions = true;
-        ClassName newThis = ClassName.get(tagInfo.packageName, tagInfo.getSimpleName(isOptions));
+        String simpleName = tagInfo.getSimpleName(isOptions);
+
+        TypeSpec.Builder builder =
+                TypeSpec.classBuilder(simpleName)
+                    .addModifiers(Modifier.PUBLIC);
+        ClassName newThis = ClassName.get(tagInfo.packageName, simpleName);
+
+//        boolean isFinalClass = simpleName.equals("AbstractFitBoundsOptions");
+        TypeVariableName T = TypeVariableName.get("T");
+
+//        if (!isFinalClass) {
+
+        ParameterizedTypeName recursiveT = ParameterizedTypeName.get(newThis, T);
 
         ClassName superClassName = tagInfo.getSuperClassName(isOptions);
-        TypeVariableName typeVariableName = TypeVariableName.get("T", newThis);
+        TypeVariableName typeVariableName = TypeVariableName.get("T", recursiveT);
 
         ParameterizedTypeName parameterizedSuperClass = ParameterizedTypeName.get(superClassName, typeVariableName);
 
-        TypeSpec.Builder builder = TypeSpec.classBuilder(tagInfo.getSimpleName(isOptions))
-                .addTypeVariable(typeVariableName)
-                .superclass(parameterizedSuperClass)
-                .addModifiers(Modifier.PUBLIC);
+        builder.addTypeVariable(typeVariableName)
+                .superclass(parameterizedSuperClass);
+
+//        } else {
+//
+//            ClassName superClassName = tagInfo.getSuperClassName(isOptions);
+//            ParameterizedTypeName parameterizedSuperClass = ParameterizedTypeName.get(superClassName, newThis);
+//            builder.superclass(parameterizedSuperClass);
+//        }
 
         List<OptionDefinition> options = getOptionsFromFile(tagInfo.getFileName(isOptions));
 
@@ -55,7 +69,7 @@ public class GenOptions {
             methodBuilder.addStatement("addOption($S, " + name + ")", name);
             methodBuilder.addStatement("return this.get()");
 
-            methodBuilder.returns(newThis);
+            methodBuilder.returns(T);
 
             methodBuilder.addJavadoc(option.getDescription());
             methodBuilder.addJavadoc("\n");

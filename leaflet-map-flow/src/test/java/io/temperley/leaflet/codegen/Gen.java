@@ -22,15 +22,10 @@ public class Gen {
             GenOptions.genOptions(tagInfo);
             String fileName = tagInfo.getFileName(false);
             if (ResourceUtils.exists(fileName)) {
-                GenMethods.genMethods(tagInfo, TakesServerOptions.class);
+//                GenMethods.genMethods(tagInfo, TakesServerOptions.class);
             }
         }
 
-//        genMethods(
-//                "layers-control",
-//                "io.temperley.leaflet.control",
-//                TakesServerOptions.class
-//        );
     }
 
 

@@ -37,6 +37,7 @@ public class TagInfo {
 
         String[] nameParts = tag.split("-");
         StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Abstract");
         for (String namePart : nameParts) {
             char c = Character.toUpperCase(namePart.charAt(0));
             stringBuilder.append(c);

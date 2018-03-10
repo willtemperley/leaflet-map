@@ -6,6 +6,7 @@ import io.temperley.leaflet.control.LayersControl;
 import io.temperley.leaflet.control.LayersControlOptions;
 import io.temperley.leaflet.control.ScaleControl;
 import io.temperley.leaflet.control.ScaleControlOptions;
+import io.temperley.leaflet.generated.AbstractPanOptions;
 
 @Route("")
 public class DemoView extends Div {
@@ -41,9 +42,9 @@ public class DemoView extends Div {
 
         });
 
-        PanOptions panOptions = new PanOptions();
+        AbstractPanOptions panOptions = new AbstractPanOptions();
 
-        ZoomOptions zoomOptions = new ZoomOptions().animate(true);
+//        AbstractZoomOptions zoomOptions = new AbstractZoomOptions().animate(true);
 
 
     }

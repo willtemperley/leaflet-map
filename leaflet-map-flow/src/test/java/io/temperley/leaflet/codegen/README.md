@@ -8,6 +8,15 @@ The aim is to reflect as exactly as possible the leaflet api:
 
 For every method, the idea is to have a param list something like this:
 
+Question: are recursive generics that useful?  I mean in this case it's actually 
+arguably better to return the supertype, simply to make it clear which class the method is defined on.
+
+Or implement this approach: 
+http://www.eclecticlogic.com/2016/12/31/fluent-interfaces-generics/
+
+
+### JS
+
 ```json
 
 {

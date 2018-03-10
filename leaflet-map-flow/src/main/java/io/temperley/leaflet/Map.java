@@ -6,6 +6,10 @@ import io.temperley.leaflet.basetypes.Bounds;
 import io.temperley.leaflet.basetypes.LatLng;
 import io.temperley.leaflet.basetypes.LatLngBounds;
 import io.temperley.leaflet.basetypes.LeafletPoint;
+import io.temperley.leaflet.generated.AbstractFitBoundsOptions;
+import io.temperley.leaflet.generated.AbstractPanOptions;
+import io.temperley.leaflet.generated.AbstractZoomOptions;
+
 import java.lang.Boolean;
 import java.lang.Number;
 
@@ -19,7 +23,7 @@ public class Map extends TakesServerOptions {
   /**
    * Sets the view of the map (geographical center and zoom) with the given animation options.
    */
-  public void setView(LatLng center, Number zoom, PanOptions optionsOptional) {
+  public void setView(LatLng center, Number zoom, AbstractPanOptions optionsOptional) {
     setProperty("center", center);
     setProperty("zoom", zoom);
     setProperty("optionsOptional", optionsOptional);
@@ -28,7 +32,7 @@ public class Map extends TakesServerOptions {
   /**
    * Sets the zoom of the map.
    */
-  public void setZoom(Number zoom, PanOptions optionsOptional) {
+  public void setZoom(Number zoom, AbstractPanOptions optionsOptional) {
     setProperty("zoom", zoom);
     setProperty("optionsOptional", optionsOptional);
   }
@@ -36,19 +40,19 @@ public class Map extends TakesServerOptions {
   /**
    * Increases the zoom of the map by delta (zoomDelta by default).
    */
-  public void zoomIn(Number deltaOptional, ZoomOptions optionsOptional) {
+  public void zoomIn(Number deltaOptional, AbstractZoomOptions optionsOptional) {
   }
 
   /**
    * Decreases the zoom of the map by delta (zoomDelta by default).
    */
-  public void zoomOut(Number deltaOptional, ZoomOptions optionsOptional) {
+  public void zoomOut(Number deltaOptional, AbstractZoomOptions optionsOptional) {
   }
 
   /**
    * Zooms the map while keeping a specified geographical point on the map stationary (e.g. used internally for scroll zoom and double-click zoom).
    */
-  public void setZoomAround(LatLng latlng, Number zoom, ZoomOptions options) {
+  public void setZoomAround(LatLng latlng, Number zoom, AbstractZoomOptions options) {
     setProperty("latlng", latlng);
     setProperty("zoom", zoom);
     setProperty("options", options);
@@ -57,7 +61,7 @@ public class Map extends TakesServerOptions {
   /**
    * Zooms the map while keeping a specified pixel on the map (relative to the top-left corner) stationary.
    */
-  public void setZoomAround(LeafletPoint offset, Number zoom, ZoomOptions options) {
+  public void setZoomAround(LeafletPoint offset, Number zoom, AbstractZoomOptions options) {
     setProperty("offset", offset);
     setProperty("zoom", zoom);
     setProperty("options", options);
@@ -66,37 +70,37 @@ public class Map extends TakesServerOptions {
   /**
    * Sets a map view that contains the given geographical bounds with the maximum zoom level possible.
    */
-  public void fitBounds(LatLngBounds bounds, FitBoundsOptions optionsOptional) {
+  public void fitBounds(LatLngBounds bounds, AbstractFitBoundsOptions optionsOptional) {
   }
 
   /**
    * Sets a map view that mostly contains the whole world with the maximum zoom level possible.
    */
-  public void fitWorld(FitBoundsOptions optionsOptional) {
+  public void fitWorld(AbstractFitBoundsOptions optionsOptional) {
   }
 
   /**
    * Pans the map to a given center.
    */
-  public void panTo(LatLng latlng, PanOptions optionsOptional) {
+  public void panTo(LatLng latlng, AbstractPanOptions optionsOptional) {
   }
 
   /**
    * Pans the map by a given number of pixels (animated).
    */
-  public void panBy(LeafletPoint offset, PanOptions optionsOptional) {
+  public void panBy(LeafletPoint offset, AbstractPanOptions optionsOptional) {
   }
 
   /**
    * Sets the view of the map (geographical center and zoom) performing a smooth pan-zoom animation.
    */
-  public void flyTo(LatLng latlng, Number zoomOptional, PanOptions optionsOptional) {
+  public void flyTo(LatLng latlng, Number zoomOptional, AbstractPanOptions optionsOptional) {
   }
 
   /**
    * Sets the view of the map with a smooth animation like flyTo, but takes a bounds parameter like fitBounds.
    */
-  public void flyToBounds(LatLngBounds bounds, FitBoundsOptions optionsOptional) {
+  public void flyToBounds(LatLngBounds bounds, AbstractFitBoundsOptions optionsOptional) {
   }
 
   /**
@@ -123,13 +127,13 @@ public class Map extends TakesServerOptions {
   /**
    * Pans the map to the closest view that would lie inside the given bounds (if it's not already), controlling the animation using the options specific, if any.
    */
-  public void panInsideBounds(LatLngBounds bounds, PanOptions optionsOptional) {
+  public void panInsideBounds(LatLngBounds bounds, AbstractPanOptions optionsOptional) {
   }
 
   /**
    * Checks if the map container size changed and updates the map if so — call it after you've changed the map size dynamically, also animating pan by default. If options.pan is false, panning will not occur. If options.debounceMoveend is true, it will delay moveend event so that it doesn't happen often even if the method is called many times in a row.
    */
-  public void invalidateSize(PanOptions options) {
+  public void invalidateSize(AbstractPanOptions options) {
   }
 
   /**

@@ -1,12 +1,10 @@
 package io.temperley.leaflet.codegen;
 
 import com.squareup.javapoet.ClassName;
-import io.temperley.leaflet.FitBoundsOptions;
-import io.temperley.leaflet.PanOptions;
-import io.temperley.leaflet.ZoomOptions;
+import io.temperley.leaflet.generated.AbstractFitBoundsOptions;
+import io.temperley.leaflet.generated.AbstractPanOptions;
+import io.temperley.leaflet.generated.AbstractZoomOptions;
 import io.temperley.leaflet.basetypes.*;
-
-import java.awt.geom.Point2D;
 
 public class CoerceTypes {
 
@@ -35,9 +33,9 @@ public class CoerceTypes {
             case "zoom/panoptions":
             case "panoptions":
                 //Because zoom/pan and pan are so close just use one class
-                return ClassName.get(PanOptions.class);
+                return ClassName.get(AbstractPanOptions.class);
             case "zoomoptions":
-                return ClassName.get(ZoomOptions.class);
+                return ClassName.get(AbstractZoomOptions.class);
             case "crs":
                 return ClassName.get(CRS.class);
             case "boolean|string":
@@ -45,7 +43,7 @@ public class CoerceTypes {
             case "point":
                 return ClassName.get(LeafletPoint.class);
             case "fitboundsoptions":
-                return ClassName.get(FitBoundsOptions.class);
+                return ClassName.get(AbstractFitBoundsOptions.class);
             case "renderer":
                 return ClassName.get(Renderer.class);
             case "layer[]":
