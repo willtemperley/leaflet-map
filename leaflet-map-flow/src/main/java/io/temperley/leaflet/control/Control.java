@@ -1,7 +1,7 @@
 package io.temperley.leaflet.control;
 
-import io.temperley.leaflet.OptionsBase;
-import io.temperley.leaflet.TakesServerOptions;
+import io.temperley.leaflet.options.OptionsBase;
+import io.temperley.leaflet.options.TakesServerOptions;
 import java.lang.Object;
 import java.lang.String;
 

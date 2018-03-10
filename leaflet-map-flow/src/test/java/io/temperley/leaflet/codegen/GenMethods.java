@@ -3,14 +3,16 @@ package io.temperley.leaflet.codegen;
 import com.squareup.javapoet.*;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.HtmlImport;
-import io.temperley.leaflet.OptionsBase;
+import io.temperley.leaflet.options.OptionsBase;
 
 import javax.lang.model.element.Modifier;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -105,7 +107,12 @@ public class GenMethods {
             methodBuilder.addParameters(parameterSpecs);
 
             //fixme
-            //thoughts: "action" property to notify JS
+            //thoughts: "action" property to notify JS?
+
+            Set<TypeName> basicTypes = new HashSet<>();
+            basicTypes.add(TypeName.get(Number.class));
+            basicTypes.add(TypeName.get(Boolean.class));
+            basicTypes.add(TypeName.get(String.class));
 
             /*
              *
@@ -114,17 +121,28 @@ public class GenMethods {
                 methodBuilder.addStatement("return getElement().getProperty($S)", propertyName);
                 ClassName returnClass = CoerceTypes.classForJSType(option.getReturnType());
                 methodBuilder.returns(returnClass);
-            } else if (methodString.startsWith("set")) {
-
-                for (ParameterSpec parameterSpec : parameterSpecs) {
-                    methodBuilder.addStatement("setProperty($S, " + parameterSpec.name + ")", parameterSpec.name);
-                }
-
-
 
             } else if (methodName.equals("remove")) {
+
                 methodBuilder.addStatement("getElement().removeFromParent()");
+
+            } else {
+
+                methodBuilder.addStatement("String methodName = \"setView\"");
+                methodBuilder.addStatement("List<Object> objects = new ArrayList<>()");
+
+                for (ParameterSpec parameterSpec : parameterSpecs) {
+                    if (basicTypes.contains(parameterSpec.type)) {
+                        methodBuilder.addStatement("objects.add(" + parameterSpec.name + ")");
+                    } else {
+                        methodBuilder.addStatement("objects.add(" + parameterSpec.name + ").serializable()");
+                    }
+                }
+                methodBuilder.addStatement("setProperty(" + methodName + ").serializable()");
+//                setProperty(methodName, objects);
+
             }
+
 
             //fixme end
 

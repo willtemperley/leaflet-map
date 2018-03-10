@@ -1,8 +1,7 @@
 package io.temperley.leaflet.codegen;
 
-import io.temperley.leaflet.TakesServerOptions;
+import io.temperley.leaflet.options.TakesServerOptions;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -22,7 +21,7 @@ public class Gen {
             GenOptions.genOptions(tagInfo);
             String fileName = tagInfo.getFileName(false);
             if (ResourceUtils.exists(fileName)) {
-//                GenMethods.genMethods(tagInfo, TakesServerOptions.class);
+                GenMethods.genMethods(tagInfo, TakesServerOptions.class);
             }
         }
 

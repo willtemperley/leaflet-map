@@ -61,6 +61,11 @@
 
           mapState: {
             type: String,
+          },
+
+          setView: {
+            type: String,
+            observer: '_methodObserver'
           }
 
         };
@@ -77,14 +82,49 @@
         // this._fitToMarkers();
       }
 
+      _methodObserver(newvalue, oldvalue) {
+        console.log(newvalue);
+        if (this.map) {
+
+          let invocation = JSON.parse(newvalue);
+          let methodName = invocation.methodName;
+          let args =  invocation.args;
+
+          switch(args.length) {
+            case 0: {
+              this.map[methodName]();
+              break;
+            }
+            case 1: {
+              this.map[methodName](args[0]);
+              break;
+            }
+            case 2: {
+              this.map[methodName](args[0], args[1]);
+              break;
+            }
+            case 3: {
+              this.map[methodName](args[0], args[1], args[2]);
+              break;
+            }
+            default: {
+              console.error("args len was " + args.length);
+              break;
+            }
+          }
+        }
+      }
+
       _optsObserver() {
-        if (this.opts && this.container) {
+        if (this.opts) {
           let options = JSON.parse(this.opts);
           this._create(options);
         }
       }
 
       _create(options) {
+
+        console.log(JSON.stringify(options));
         // super.connectedCallback();
 
         LeafletMap.guessLeafletImagePath();
@@ -106,27 +146,20 @@
           this.dispatchEvent(new CustomEvent(e.type, e));
         }, this);
 
-        // set map view after registering events so viewreset and load events can be caught
-        this.map.setView([this.latitude, this.longitude], this.zoom);
-
-        if (this.zoom === -1) {
-          this.map.fitWorld();
-        }
-
         // add a default layer if there are no layers defined
-        let defaultLayerRequired = true;
-        for (let i = 0; i < this.children.length; i++) {
-          const e = this.children[i];
-          if (e.isLayer && e.isLayer()) {
-            defaultLayerRequired = false;
-          }
-        }
-        if (defaultLayerRequired) {
+        // let defaultLayerRequired = true;
+        // for (let i = 0; i < this.children.length; i++) {
+        //   const e = this.children[i];
+        //   if (e.isLayer && e.isLayer()) {
+        //     defaultLayerRequired = false;
+        //   }
+        // }
+        // if (defaultLayerRequired) {
           L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="http://mapbox.com">Mapbox</a>',
             maxZoom: 18
           }).addTo(this.map);
-        }
+        // }
 
         this._registerMapOnChildren();
         this._mutationObserver = new MutationObserver(this._registerMapOnChildren.bind(this));

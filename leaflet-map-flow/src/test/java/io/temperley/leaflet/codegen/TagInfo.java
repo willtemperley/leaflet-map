@@ -1,7 +1,7 @@
 package io.temperley.leaflet.codegen;
 
 import com.squareup.javapoet.ClassName;
-import io.temperley.leaflet.OptionsBase;
+import io.temperley.leaflet.options.OptionsBase;
 
 public class TagInfo {
 

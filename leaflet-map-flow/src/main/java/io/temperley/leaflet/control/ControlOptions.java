@@ -1,6 +1,6 @@
 package io.temperley.leaflet.control;
 
-import io.temperley.leaflet.OptionsBase;
+import io.temperley.leaflet.options.OptionsBase;
 
 public class ControlOptions<T> extends OptionsBase<T> {
 

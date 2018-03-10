@@ -1,6 +1,6 @@
 package io.temperley.leaflet.layer;
 
-import io.temperley.leaflet.OptionsBase;
+import io.temperley.leaflet.options.OptionsBase;
 
 /*
 Simply generate all options and send as JSON

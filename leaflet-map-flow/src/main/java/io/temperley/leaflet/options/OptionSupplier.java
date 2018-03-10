@@ -1,4 +1,4 @@
-package io.temperley.leaflet;
+package io.temperley.leaflet.options;
 
 import java.io.Serializable;
 import java.util.function.Supplier;

@@ -1,6 +1,6 @@
 package io.temperley.leaflet.generated;
 
-import io.temperley.leaflet.OptionsBase;
+import io.temperley.leaflet.options.OptionsBase;
 import io.temperley.leaflet.basetypes.CRS;
 import io.temperley.leaflet.basetypes.LatLng;
 import io.temperley.leaflet.basetypes.LatLngBounds;

@@ -13,6 +13,7 @@ import java.util.stream.Stream;
 public class GenOptions {
 
     private static List<OptionDefinition> getOptionsFromFile(String fileName) throws IOException, URISyntaxException {
+
         Stream<String> lines = ResourceUtils.getFile(fileName);
 
         Stream<OptionDefinition> optionStream = lines
@@ -33,11 +34,8 @@ public class GenOptions {
                     .addModifiers(Modifier.PUBLIC);
         ClassName newThis = ClassName.get(tagInfo.packageName, simpleName);
 
-//        boolean isFinalClass = simpleName.equals("AbstractFitBoundsOptions");
+
         TypeVariableName T = TypeVariableName.get("T");
-
-//        if (!isFinalClass) {
-
         ParameterizedTypeName recursiveT = ParameterizedTypeName.get(newThis, T);
 
         ClassName superClassName = tagInfo.getSuperClassName(isOptions);
@@ -47,13 +45,6 @@ public class GenOptions {
 
         builder.addTypeVariable(typeVariableName)
                 .superclass(parameterizedSuperClass);
-
-//        } else {
-//
-//            ClassName superClassName = tagInfo.getSuperClassName(isOptions);
-//            ParameterizedTypeName parameterizedSuperClass = ParameterizedTypeName.get(superClassName, newThis);
-//            builder.superclass(parameterizedSuperClass);
-//        }
 
         List<OptionDefinition> options = getOptionsFromFile(tagInfo.getFileName(isOptions));
 

@@ -1,6 +1,6 @@
 package io.temperley.leaflet.generated;
 
-import io.temperley.leaflet.OptionsBase;
+import io.temperley.leaflet.options.OptionsBase;
 import java.lang.Boolean;
 
 public class AbstractZoomOptions<T extends AbstractZoomOptions<T>> extends OptionsBase<T> {

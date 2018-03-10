@@ -4,18 +4,18 @@ The aim is to reflect as exactly as possible the leaflet api:
 1. This means code documentation can also be generated
 2. The api should be familiar to anyone
 3. Fewer special cases in JavaScript means writing less JavaScript
+4. Fewer bugs caused by typos or copy/paste snafu
 
 
-For every method, the idea is to have a param list something like this:
+### Options
+Options are built with a fluent API. Abstract classes are generated with the methods and a concrete type 
+manually created simply to pass itself as a type parameter, which is recursively applied to superclasses.
 
-Question: are recursive generics that useful?  I mean in this case it's actually 
-arguably better to return the supertype, simply to make it clear which class the method is defined on.
-
-Or implement this approach: 
-http://www.eclecticlogic.com/2016/12/31/fluent-interfaces-generics/
-
+TODO: concrete types in GenMethods 
 
 ### JS
+
+For every method, the idea is to have a param list something like this:
 
 ```json
 

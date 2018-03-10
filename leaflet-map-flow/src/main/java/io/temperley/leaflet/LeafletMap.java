@@ -6,7 +6,7 @@ import com.vaadin.flow.shared.Registration;
 import io.temperley.leaflet.events.MapViewChangeEvent;
 
 @Tag("leaflet-map")
-@HtmlImport("bower_components/leaflet-map/leaflet-map.html")
+@HtmlImport("frontend://bower_components/leaflet-map/leaflet-map.html")
 public class LeafletMap extends Component implements HasComponents {
 
     public LeafletMap() {

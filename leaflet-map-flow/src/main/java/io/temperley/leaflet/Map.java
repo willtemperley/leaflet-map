@@ -9,9 +9,13 @@ import io.temperley.leaflet.basetypes.LeafletPoint;
 import io.temperley.leaflet.generated.AbstractFitBoundsOptions;
 import io.temperley.leaflet.generated.AbstractPanOptions;
 import io.temperley.leaflet.generated.AbstractZoomOptions;
+import io.temperley.leaflet.options.OptionsBase;
+import io.temperley.leaflet.options.TakesServerOptions;
 
 import java.lang.Boolean;
 import java.lang.Number;
+import java.util.ArrayList;
+import java.util.List;
 
 @Tag("leaflet-map")
 @HtmlImport("bower_components/leaflet-map/leaflet-map.html")
@@ -24,9 +28,14 @@ public class Map extends TakesServerOptions {
    * Sets the view of the map (geographical center and zoom) with the given animation options.
    */
   public void setView(LatLng center, Number zoom, AbstractPanOptions optionsOptional) {
-    setProperty("center", center);
-    setProperty("zoom", zoom);
-    setProperty("optionsOptional", optionsOptional);
+
+    String methodName = "setView";
+    List<Object> objects = new ArrayList<>();
+    objects.add(center.serializable());
+    objects.add(zoom);
+    objects.add(optionsOptional.serializable());
+
+    setProperty(methodName, objects);
   }
 
   /**
