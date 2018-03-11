@@ -41,7 +41,7 @@
      * @polymer
      * @demo demo/index.html
      */
-    class LeafletMap extends LeafletCore {
+    class ${className} extends LeafletCore {
       static get is() {
         return 'leaflet-map';
       }

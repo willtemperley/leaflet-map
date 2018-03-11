@@ -23,7 +23,7 @@ Every method is called using a JSON invocation
 ```json
 
 {
-    "methodName": "setView",
+    "methodString": "setView",
     "params": [
       [1,2], 7
     ]

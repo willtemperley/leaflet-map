@@ -1,5 +1,6 @@
 package io.temperley.leaflet.codegen;
 
+import com.jsoniter.output.JsonStream;
 import com.squareup.javapoet.*;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.HtmlImport;
@@ -9,10 +10,7 @@ import javax.lang.model.element.Modifier;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -88,20 +86,20 @@ public class GenMethods {
         builder.addMethod(ctor);
 
         List<MethodDefinition> methods = getMethodsFromFile(tagInfo.getFileName(false));
+
         for (MethodDefinition option : methods) {
 
             //whole method def
             String methodString = option.getMethodString();
             //just params
-            String paramString = methodString.substring(methodString.indexOf('(') + 1, methodString.indexOf(')'));
-            String methodName = methodString.substring(0, methodString.indexOf('('));
+            String paramString = option.getParamString();
+            String methodName = option.getMethodName();
 
             MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder(methodName)
                     .addModifiers(Modifier.PUBLIC)
                     .returns(void.class);
 
             String propertyName = methodName.substring(3).toLowerCase();
-
 
             //method params
             List<ParameterSpec> parameterSpecs = buildParamList(paramString);

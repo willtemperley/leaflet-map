@@ -13,8 +13,7 @@ public class ResourceUtils {
 
     static Stream<String> getFile(String name) throws IOException, URISyntaxException {
 
-        URL resource = GenOptions.class.getClassLoader()
-                .getResource(name);
+        URL resource = getResource(name);
         Path path = Paths.get(Objects.requireNonNull(resource).toURI());
 
         return Files.lines(path);
@@ -22,9 +21,13 @@ public class ResourceUtils {
 
     public static boolean exists(String name) {
 
-        URL resource = GenOptions.class.getClassLoader()
-                .getResource(name);
+        URL resource = getResource(name);
 
         return resource != null;
+    }
+
+    public static URL getResource(String name) {
+        return ResourceUtils.class.getClassLoader()
+                .getResource(name);
     }
 }

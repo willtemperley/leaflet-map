@@ -35,6 +35,7 @@ public class TagInfo {
 
     public String getSimpleName(boolean isOptions) {
 
+        //Todo to camel case to use in GenHtml
         String[] nameParts = tag.split("-");
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Abstract");

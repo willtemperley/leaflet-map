@@ -22,6 +22,7 @@ public class Gen {
             String fileName = tagInfo.getFileName(false);
             if (ResourceUtils.exists(fileName)) {
                 GenMethods.genMethods(tagInfo, TakesServerOptions.class);
+                GenHtml.genHtml(tagInfo);
             }
         }
 

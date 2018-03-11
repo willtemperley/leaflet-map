@@ -1,0 +1,97 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+
+<script>
+  /**
+   * `leaflet-map`
+   * lmap
+   *
+   * @customElement
+   * @polymer
+   * @demo demo/index.html
+   */
+  class LeafletCore extends Polymer.Element {
+
+    static get properties() {
+      return {
+
+        //Opts and options both null intentionally
+        options: {
+          type: Object,
+          value: null,
+          observer: '_optionsObserver'
+        },
+
+        opts: {
+          type: String,
+          value: null,
+          observer: '_optsObserver'
+        },
+
+        mapState: {
+          type: String,
+        },
+
+        setView: {
+          type: String,
+          observer: '_methodObserver'
+        }
+
+      };
+    }
+
+    _methodObserver(newvalue, oldvalue) {
+      console.log(newvalue);
+      if (this.obj) {
+
+        let invocation = JSON.parse(newvalue);
+        let methodString = invocation.methodString;
+        let args = invocation.args;
+
+        switch (args.length) {
+          case 0: {
+            this.obj[methodString]();
+            break;
+          }
+          case 1: {
+            this.obj[methodString](args[0]);
+            break;
+          }
+          case 2: {
+            this.obj[methodString](args[0], args[1]);
+            break;
+          }
+          case 3: {
+            this.obj[methodString](args[0], args[1], args[2]);
+            break;
+          }
+          case 4: {
+            this.obj[methodString](args[0], args[1], args[2], args[3]);
+            break;
+          }
+          default: {
+            console.error("args len was " + args.length);
+            break;
+          }
+        }
+      }
+    }
+
+    _optsObserver() {
+      if (this.opts) {
+        let options = JSON.parse(this.opts);
+        this._create(options);
+        this.initialized = true;
+      }
+    }
+
+    _optionsObserver() {
+      if (this.options) {
+        this._create(this.options);
+        this.initialized = true;
+      }
+    }
+
+  }
+
+</script>
