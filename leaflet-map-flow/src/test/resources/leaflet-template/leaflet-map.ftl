@@ -1,4 +1,3 @@
-<!--<link rel="import" href="../polymer/polymer-element.html">-->
 <link rel="import" href="leaflet-core.html">
 <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"
         integrity="sha512-/Nsx9X4HebavoBvEBuyp3I7od5tA0UzAxs+j83KgC8PU0kgB4XiK4Lfe4y4cgBtaRJQEIFCW+oC506aPT2L1zw=="
@@ -49,13 +48,15 @@
       static get properties() {
         return {
 
-          mapState: {
-            type: String,
-          },
-
-          setView: {
+          <#list methodNames as m>
+          ${m}: {
             type: String,
             observer: '_methodObserver'
+          },
+
+          </#list>
+          mapState: {
+            type: String,
           }
 
         };
@@ -104,10 +105,10 @@
         //   }
         // }
         // if (defaultLayerRequired) {
-          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="http://mapbox.com">Mapbox</a>',
-            maxZoom: 18
-          }).addTo(this.obj);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="http://mapbox.com">Mapbox</a>',
+          maxZoom: 18
+        }).addTo(this.obj);
         // }
 
         this._registerMapOnChildren();
@@ -122,11 +123,11 @@
       _updateMapState() {
         console.log(this.obj.getZoom());
         this.objState = JSON.stringify(
-          {
-            x: this.obj.getCenter().lng,
-            y: this.obj.getCenter().lat,
-            z: this.obj.getZoom()
-          }
+            {
+              x: this.obj.getCenter().lng,
+              y: this.obj.getCenter().lat,
+              z: this.obj.getZoom()
+            }
         );
       }
 

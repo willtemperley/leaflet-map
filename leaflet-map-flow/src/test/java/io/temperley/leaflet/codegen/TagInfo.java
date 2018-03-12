@@ -22,7 +22,6 @@ public class TagInfo {
         this.tag = tag;
         this.packageName = packageName;
         this.superClassTagInfo = new TagInfo(superClass, packageName);
-        //fixme need to return the correct superclass. Expected to be in the same package.
     }
 
     public String getFileName(boolean isOptions) {
@@ -56,12 +55,12 @@ public class TagInfo {
         return stringBuilder.toString();
     }
 
-    public ClassName getSuperClassName(boolean isOptions) {
+    public ClassName getSuperClassName(String formatString) {
         if (superClassTagInfo != null) {
-            return ClassName.get(superClassTagInfo.packageName, superClassTagInfo.getSimpleName());
-        } else if (isOptions) {
+            String name = String.format(formatString, superClassTagInfo.getSimpleName());
+            return ClassName.get(superClassTagInfo.packageName, name);
+        } else  {
             return ClassName.get(OptionsBase.class);
         }
-        return null;
     }
 }

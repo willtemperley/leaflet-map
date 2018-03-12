@@ -40,7 +40,8 @@ public class GenOptions {
         TypeVariableName T = TypeVariableName.get("T");
         ParameterizedTypeName recursiveT = ParameterizedTypeName.get(newThis, T);
 
-        ClassName superClassName = tagInfo.getSuperClassName(isOptions);
+        ClassName superClassName = tagInfo.getSuperClassName(formatString);
+
         TypeVariableName typeVariableName = TypeVariableName.get("T", recursiveT);
 
         ParameterizedTypeName parameterizedSuperClass = ParameterizedTypeName.get(superClassName, typeVariableName);

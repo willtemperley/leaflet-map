@@ -13,10 +13,7 @@ import io.temperley.leaflet.codegen.js.ValueExampleObject;
 import io.temperley.leaflet.options.OptionsBase;
 
 import javax.lang.model.element.Modifier;
-import java.io.File;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
+import java.io.*;
 import java.net.URISyntaxException;
 import java.util.*;
 import java.util.Map;
@@ -63,8 +60,14 @@ public class GenHtml {
         // 2. Proccess template(s)
         Map<String, Object> input = new HashMap<>();
 
-        input.put("className", tagInfo.getSimpleName());
+        Set<String> methodNames = new HashSet<>();
+        for (MethodDefinition method : methods) {
+            methodNames.add(method.getMethodName());
+        }
+
+        input.put("className", "Leaflet" + tagInfo.getSimpleName());
         input.put("tagName", tagInfo.getTagName());
+        input.put("methodNames", methodNames);
 //
 //        input.put("exampleObject", new ValueExampleObject("Java object", "me"));
 //
@@ -75,7 +78,7 @@ public class GenHtml {
 //        systems.add(new ValueExampleObject("Windows7", "Microsoft"));
 //        input.put("systems", systems);
 
-        Template template = configuration.getTemplate("leaflet-map.ftl");
+        Template template = configuration.getTemplate(tagInfo.getTagName() +".ftl");
 
         // Write output to the console
         Writer consoleWriter = new OutputStreamWriter(System.out);
@@ -85,13 +88,12 @@ public class GenHtml {
             throw new RuntimeException(e);
         }
 
-        // For the sake of example, also write output into a file:
-//        Writer fileWriter = new FileWriter(new File("output.html"));
-//        try {
-//            template.process(input, fileWriter);
-//        } finally {
-//            fileWriter.close();
-//        }
+//         For the sake of example, also write output into a file:
+        try (Writer fileWriter = new FileWriter(new File(tagInfo.getTagName() + ".html"))) {
+            template.process(input, fileWriter);
+        } catch (TemplateException e) {
+            e.printStackTrace();
+        }
 
     }
 }

@@ -109,7 +109,6 @@ public class GenMethods {
 
             //thoughts: "action" property to notify JS?
 
-
             //these don't need special serialization
             //todo probably better to create a MethodInvocationBuilder to deal with serialization
             Set<TypeName> basicTypes = new HashSet<>();

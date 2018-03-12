@@ -26,47 +26,39 @@
           type: String,
           value: null,
           observer: '_optsObserver'
-        },
-
-        mapState: {
-          type: String,
-        },
-
-        setView: {
-          type: String,
-          observer: '_methodObserver'
         }
 
       };
     }
 
     _methodObserver(newvalue, oldvalue) {
-      console.log(newvalue);
+      console.log("invocation:" + newvalue);
       if (this.obj) {
 
         let invocation = JSON.parse(newvalue);
-        let methodString = invocation.methodString;
+        let methodName = invocation.methodName;
+
         let args = invocation.args;
 
         switch (args.length) {
           case 0: {
-            this.obj[methodString]();
+            this.obj[methodName]();
             break;
           }
           case 1: {
-            this.obj[methodString](args[0]);
+            this.obj[methodName](args[0]);
             break;
           }
           case 2: {
-            this.obj[methodString](args[0], args[1]);
+            this.obj[methodName](args[0], args[1]);
             break;
           }
           case 3: {
-            this.obj[methodString](args[0], args[1], args[2]);
+            this.obj[methodName](args[0], args[1], args[2]);
             break;
           }
           case 4: {
-            this.obj[methodString](args[0], args[1], args[2], args[3]);
+            this.obj[methodName](args[0], args[1], args[2], args[3]);
             break;
           }
           default: {

@@ -38,17 +38,22 @@ public class DemoView extends Div {
         add(leafletMap);
 
 
-        Button button = new Button("clickme");
+        Button button = new Button("SetView");
 
         button.addClickListener(e -> {
             leafletMap.setView(new LatLng(42.9, 12.5), 7, new PanOptions().animate(true));
         });
 
-        leafletMap.setMaxZoom(10);
+        Button button2 = new Button("ZoomIn");
+
+        button2.addClickListener(e -> {
+            //fixme
+            leafletMap.zoomIn(3, new AbstractPanOptions());
+        });
+
+//        leafletMap.setMaxZoom(13);
         add(button);
-
-
-
+        add(button2);
 
 
 
