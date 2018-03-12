@@ -1,6 +1,5 @@
 package io.temperley.leaflet.codegen;
 
-import com.jsoniter.output.JsonStream;
 import com.squareup.javapoet.*;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.HtmlImport;
@@ -57,7 +56,10 @@ public class GenMethods {
     public static void genMethods(TagInfo tagInfo, Class superclass) throws IOException, URISyntaxException {
 
         //build class
-        TypeSpec.Builder builder = TypeSpec.classBuilder(tagInfo.getSimpleName(false))
+        String formatString = "Abstract%s";
+        String simpleName = String.format(formatString, tagInfo.getSimpleName());
+
+        TypeSpec.Builder builder = TypeSpec.classBuilder(simpleName)
                 .addAnnotation(
                         AnnotationSpec.builder(Tag.class)
                             .addMember("value", "$S", tagInfo.getTagName())

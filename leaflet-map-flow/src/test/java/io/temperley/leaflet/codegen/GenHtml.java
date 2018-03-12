@@ -63,7 +63,8 @@ public class GenHtml {
         // 2. Proccess template(s)
         Map<String, Object> input = new HashMap<>();
 
-        input.put("className", "Leaflet" + tagInfo.getTagName());
+        input.put("className", tagInfo.getSimpleName());
+        input.put("tagName", tagInfo.getTagName());
 //
 //        input.put("exampleObject", new ValueExampleObject("Java object", "me"));
 //

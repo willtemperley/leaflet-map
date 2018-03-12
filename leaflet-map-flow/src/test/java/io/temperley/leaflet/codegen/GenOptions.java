@@ -27,7 +27,9 @@ public class GenOptions {
     public static void genOptions(TagInfo tagInfo) throws IOException, URISyntaxException {
 
         final boolean isOptions = true;
-        String simpleName = tagInfo.getSimpleName(isOptions);
+
+        String formatString = "Abstract%sOptions";
+        String simpleName = String.format(formatString, tagInfo.getSimpleName());
 
         TypeSpec.Builder builder =
                 TypeSpec.classBuilder(simpleName)

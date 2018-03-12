@@ -43,7 +43,7 @@
      */
     class ${className} extends LeafletCore {
       static get is() {
-        return 'leaflet-map';
+        return '${tagName}';
       }
 
       static get properties() {
