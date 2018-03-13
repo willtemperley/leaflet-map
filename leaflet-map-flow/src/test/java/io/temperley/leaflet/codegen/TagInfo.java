@@ -2,6 +2,7 @@ package io.temperley.leaflet.codegen;
 
 import com.squareup.javapoet.ClassName;
 import io.temperley.leaflet.options.OptionsBase;
+import io.temperley.leaflet.options.TakesServerOptions;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -12,7 +13,12 @@ public class TagInfo {
     public final String packageName;
     private final String tag;
     private TagInfo superClassTagInfo = null;
-    private Class superClass = null;
+
+    public void setIsOptions(boolean isOptions) {
+        this.isOptions = isOptions;
+    }
+
+    private boolean isOptions = false;
 
     public TagInfo(String tag, String packageName) {
         this.tag = tag;
@@ -24,7 +30,11 @@ public class TagInfo {
         this.superClassTagInfo = new TagInfo(superClass, packageName);
     }
 
-    public String getFileName(boolean isOptions) {
+    public Boolean fileExists() {
+        return  ResourceUtils.exists(getFileName());
+    }
+
+    public String getFileName() {
         return String.format("leaflet-api/%s-%s.tsv", tag, isOptions ? "options" : "methods");
     }
 
@@ -60,7 +70,12 @@ public class TagInfo {
             String name = String.format(formatString, superClassTagInfo.getSimpleName());
             return ClassName.get(superClassTagInfo.packageName, name);
         } else  {
-            return ClassName.get(OptionsBase.class);
+            if (isOptions) {
+                return ClassName.get(OptionsBase.class);
+            } else {
+
+                return ClassName.get(TakesServerOptions.class);
+            }
         }
     }
 }

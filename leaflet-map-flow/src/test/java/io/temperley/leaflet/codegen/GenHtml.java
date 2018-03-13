@@ -1,18 +1,7 @@
 package io.temperley.leaflet.codegen;
 
-import com.jsoniter.output.JsonStream;
-import com.squareup.javapoet.*;
-import com.vaadin.flow.component.Tag;
-import com.vaadin.flow.component.dependency.HtmlImport;
 import freemarker.template.*;
-import io.temperley.leaflet.codegen.CoerceTypes;
-import io.temperley.leaflet.codegen.MethodDefinition;
-import io.temperley.leaflet.codegen.TagInfo;
-import io.temperley.leaflet.codegen.js.MainTest;
-import io.temperley.leaflet.codegen.js.ValueExampleObject;
-import io.temperley.leaflet.options.OptionsBase;
 
-import javax.lang.model.element.Modifier;
 import java.io.*;
 import java.net.URISyntaxException;
 import java.util.*;
@@ -24,63 +13,36 @@ import static io.temperley.leaflet.codegen.ResourceUtils.getFile;
 
 public class GenHtml {
 
-    private static List<MethodDefinition> getMethodsFromFile(String fileName) throws IOException, URISyntaxException {
-        Stream<String> lines = getFile(fileName);
-
-        Stream<MethodDefinition> stream = lines
-                .map(f -> f.split("\t"))
-                .map(f -> new MethodDefinition(f[0], f[1], f[2]));
-
-        return stream.collect(Collectors.toList());
-    }
-
 
     public static void genHtml(TagInfo tagInfo) throws IOException, URISyntaxException {
 
-        List<MethodDefinition> methods = getMethodsFromFile(tagInfo.getFileName(false));
+        String tagName = tagInfo.getTagName();
 
-        //generate properties for component
-        Map<String, Object> objectMap = new HashMap<>();
-        for (MethodDefinition method : methods) {
-            String methodString = method.getMethodName();
-            Map<String, String> property = new HashMap<>();
-            property.put("type", "String");
-            property.put("observer", "_methodObserver");
-            objectMap.put(methodString, property);
-        }
+        List<MethodDefinition> methodDefinitions = GenMethods.getMethodsFromFile(tagInfo.getFileName());
+        Set<String> methodNames = methodDefinitions
+                .stream()
+                .map(MethodDefinition::getMethodName)
+                .collect(Collectors.toSet());
 
         Configuration configuration = new Configuration(new Version(2, 3, 23));
-        configuration.setClassForTemplateLoading(MainTest.class, "/leaflet-template");
-
-        // Some other recommended settings:
+        configuration.setClassForTemplateLoading(GenHtml.class, "/leaflet-template");
         configuration.setDefaultEncoding("UTF-8");
         configuration.setLocale(Locale.UK);
         configuration.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
 
-        // 2. Proccess template(s)
-        Map<String, Object> input = new HashMap<>();
-
-        Set<String> methodNames = new HashSet<>();
-        for (MethodDefinition method : methods) {
-            methodNames.add(method.getMethodName());
+        String templateName = "leaflet-x.ftl";
+        if (tagName.equals("leaflet-map")) {
+            templateName = "leaflet-map.ftl";
         }
 
-        input.put("className", "Leaflet" + tagInfo.getSimpleName());
-        input.put("tagName", tagInfo.getTagName());
-        input.put("methodNames", methodNames);
-//
-//        input.put("exampleObject", new ValueExampleObject("Java object", "me"));
-//
-//        List<ValueExampleObject> systems = new ArrayList<ValueExampleObject>();
-//        systems.add(new ValueExampleObject("Android", "Google"));
-//        systems.add(new ValueExampleObject("iOS States", "Apple"));
-//        systems.add(new ValueExampleObject("Ubuntu", "Canonical"));
-//        systems.add(new ValueExampleObject("Windows7", "Microsoft"));
-//        input.put("systems", systems);
+        Template template = configuration.getTemplate(templateName);
+        Map<String, Object> input = new HashMap<>();
+        {
+            input.put("className", "Leaflet" + tagInfo.getSimpleName());
+            input.put("tagName", tagName);
+            input.put("methodNames", methodNames);
+        }
 
-        Template template = configuration.getTemplate(tagInfo.getTagName() +".ftl");
-
-        // Write output to the console
         Writer consoleWriter = new OutputStreamWriter(System.out);
         try {
             template.process(input, consoleWriter);
@@ -88,8 +50,9 @@ public class GenHtml {
             throw new RuntimeException(e);
         }
 
-//         For the sake of example, also write output into a file:
-        try (Writer fileWriter = new FileWriter(new File(tagInfo.getTagName() + ".html"))) {
+
+        String outputLocation = "leaflet-map-flow/src/main/resources/generated/";
+        try (Writer fileWriter = new FileWriter(new File(outputLocation + tagName + ".html"))) {
             template.process(input, fileWriter);
         } catch (TemplateException e) {
             e.printStackTrace();

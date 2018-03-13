@@ -10,7 +10,7 @@ import io.temperley.leaflet.options.OptionsBase;
 import java.lang.Boolean;
 import java.lang.Number;
 
-public class AbstractMapOptions<T extends AbstractMapOptions<T>> extends OptionsBase<T> {
+public abstract class AbstractMapOptions<T extends AbstractMapOptions<T>> extends OptionsBase<T> {
   /**
    * Whether Paths should be rendered on a Canvas renderer. By default, all Paths are rendered in a SVG renderer.
    * default: false

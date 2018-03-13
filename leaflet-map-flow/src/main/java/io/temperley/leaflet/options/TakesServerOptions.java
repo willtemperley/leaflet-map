@@ -15,7 +15,7 @@ public class TakesServerOptions extends Component {
         getElement().setProperty("opts", serialized);
     }
 
-    public void setProperty(String propertyName, List<Object> args) {
+    protected void setProperty(String propertyName, List<Object> args) {
 
         Map<String, Object> objectMap = new HashMap<>();
         objectMap.put("args", args);
@@ -25,15 +25,4 @@ public class TakesServerOptions extends Component {
         getElement().setProperty(propertyName, serialized);
     }
 
-    public void setProperty(String propertyName, Boolean property) {
-
-    }
-
-    public void setProperty(String propertyName, LeafletSerializable leafletSerializable) {
-
-    }
-
-    protected void setProperty(String propertyName, Number number) {
-
-    }
 }

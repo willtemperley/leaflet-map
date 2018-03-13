@@ -3,3 +3,9 @@ map	io.temperley.leaflet.generated
 zoom	io.temperley.leaflet.generated
 pan	io.temperley.leaflet.generated	zoom
 fit-bounds	io.temperley.leaflet.generated	pan
+#controls
+control	io.temperley.leaflet.generated.control
+zoom-control	io.temperley.leaflet.generated.control	control
+attribution-control	io.temperley.leaflet.generated.control	control
+scale-control	io.temperley.leaflet.generated.control	control
+layers-control	io.temperley.leaflet.generated.control	control

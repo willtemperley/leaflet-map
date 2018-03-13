@@ -1,9 +1,9 @@
 package io.temperley.leaflet.codegen;
 
 import com.squareup.javapoet.ClassName;
-import io.temperley.leaflet.generated.AbstractFitBoundsOptions;
-import io.temperley.leaflet.generated.AbstractPanOptions;
-import io.temperley.leaflet.generated.AbstractZoomOptions;
+import io.temperley.leaflet.FitBoundsOptions;
+import io.temperley.leaflet.PanOptions;
+import io.temperley.leaflet.ZoomOptions;
 import io.temperley.leaflet.basetypes.*;
 
 public class CoerceTypes {
@@ -15,7 +15,7 @@ public class CoerceTypes {
 
     public static ClassName classForJSType(String typeName) {
 
-        typeName = getNormalisedTypeString(typeName);
+        typeName = normalizeTypeString(typeName);
 
         switch (typeName) {
             case "string":
@@ -30,12 +30,12 @@ public class CoerceTypes {
                 return ClassName.get(Bounds.class);
             case "latlngbounds":
                 return ClassName.get(LatLngBounds.class);
+            //Because zoom/pan and pan are so close just use one class
             case "zoom/panoptions":
             case "panoptions":
-                //Because zoom/pan and pan are so close just use one class
-                return ClassName.get(AbstractPanOptions.class);
+                return ClassName.get(PanOptions.class);
             case "zoomoptions":
-                return ClassName.get(AbstractZoomOptions.class);
+                return ClassName.get(ZoomOptions.class);
             case "crs":
                 return ClassName.get(CRS.class);
             case "boolean|string":
@@ -43,11 +43,14 @@ public class CoerceTypes {
             case "point":
                 return ClassName.get(LeafletPoint.class);
             case "fitboundsoptions":
-                return ClassName.get(AbstractFitBoundsOptions.class);
+                return ClassName.get(FitBoundsOptions.class);
             case "renderer":
                 return ClassName.get(Renderer.class);
             case "layer[]":
                 return ClassName.get(LayerList.class);
+            case "this":
+                System.out.println("this");
+                return ClassName.get(Object.class);
             case "object":
             default:
                 System.out.println("typeName = " + typeName);
@@ -61,7 +64,7 @@ public class CoerceTypes {
      * @param typeName String type
      * @return a Java type
      */
-    static String getNormalisedTypeString(String typeName) {
+    static String normalizeTypeString(String typeName) {
         typeName = typeName.toLowerCase().replaceAll(" ", "");
         typeName = typeName.replaceAll("<", "");
         typeName = typeName.replaceAll(">", "");

@@ -3,7 +3,7 @@ package io.temperley.leaflet.generated;
 import java.lang.Boolean;
 import java.lang.Number;
 
-public class AbstractPanOptions<T extends AbstractPanOptions<T>> extends AbstractZoomOptions<T> {
+public abstract class AbstractPanOptions<T extends AbstractPanOptions<T>> extends AbstractZoomOptions<T> {
   /**
    * If true, panning will always be animated if possible. If false, it will not animate panning, either resetting the map view if panning more than a screen away, or just setting a new offset for the map pane (except for panBy which always does the latter).
    * default: 

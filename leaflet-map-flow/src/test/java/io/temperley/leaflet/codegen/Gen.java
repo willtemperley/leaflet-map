@@ -18,11 +18,13 @@ public class Gen {
         List<TagInfo> tagsFromFile = getTagsFromFile("tags.tsv");
 
         for (TagInfo tagInfo : tagsFromFile) {
-            GenOptions.genOptions(tagInfo);
-            String fileName = tagInfo.getFileName(false);
-            if (ResourceUtils.exists(fileName)) {
-                GenMethods.genMethods(tagInfo, TakesServerOptions.class);
+            if (tagInfo.fileExists()) {
+                GenMethods.genMethods(tagInfo);
                 GenHtml.genHtml(tagInfo);
+            }
+            tagInfo.setIsOptions(true);
+            if (tagInfo.fileExists()) {
+                GenOptions.genOptions(tagInfo);
             }
         }
 
@@ -37,6 +39,7 @@ public class Gen {
                 .filter(f -> !f.startsWith("#"))
                 .map(f -> f.split("\t"))
                 .map(f -> {
+
                     if (f.length == 3) {
                         return new TagInfo(f[0], f[1], f[2]);
                     }

@@ -26,14 +26,12 @@ public class GenOptions {
 
     public static void genOptions(TagInfo tagInfo) throws IOException, URISyntaxException {
 
-        final boolean isOptions = true;
-
         String formatString = "Abstract%sOptions";
         String simpleName = String.format(formatString, tagInfo.getSimpleName());
 
         TypeSpec.Builder builder =
                 TypeSpec.classBuilder(simpleName)
-                    .addModifiers(Modifier.PUBLIC);
+                    .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT);
         ClassName newThis = ClassName.get(tagInfo.packageName, simpleName);
 
 
@@ -49,7 +47,7 @@ public class GenOptions {
         builder.addTypeVariable(typeVariableName)
                 .superclass(parameterizedSuperClass);
 
-        List<OptionDefinition> options = getOptionsFromFile(tagInfo.getFileName(isOptions));
+        List<OptionDefinition> options = getOptionsFromFile(tagInfo.getFileName());
 
         for (OptionDefinition option : options) {
             MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder(option.getName())

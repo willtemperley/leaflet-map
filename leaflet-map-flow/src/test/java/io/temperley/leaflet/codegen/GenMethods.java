@@ -11,49 +11,31 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static io.temperley.leaflet.codegen.ResourceUtils.getFile;
 
 public class GenMethods {
 
-    private static List<MethodDefinition> getMethodsFromFile(String fileName) throws IOException, URISyntaxException {
-        Stream<String> lines = getFile(fileName);
+    public static List<MethodDefinition> getMethodsFromFile(String fileName) throws IOException, URISyntaxException {
 
-        Stream<MethodDefinition> stream = lines
-                .map(f -> f.split("\t"))
-                .map(f -> new MethodDefinition(f[0], f[1], f[2]));
+        List<String> lines = getFile(fileName).collect(Collectors.toList());
 
-        return stream.collect(Collectors.toList());
-    }
-
-    public static List<ParameterSpec> buildParamList(String paramString) {
-
-        List<ParameterSpec> parameterSpecs = new ArrayList<>();
-        if (paramString.isEmpty()) {
-            return parameterSpecs;
-        }
-        String[] split = paramString.split(",");
-
-        for (String singleParamString : split) {
-            String regex;
-            if (singleParamString.contains(">")) {
-                regex = "> ";
-            } else {
-                regex = " ";
+        List<MethodDefinition> methodDefinitions = new ArrayList<>();
+        for (String line : lines) {
+            String[] f = line.split("\t");
+            if (f.length != 3) {
+                throw new RuntimeException("File: " + fileName + ". Invalid entry: " + line);
             }
-            String[] typeAndVar = singleParamString.split(regex);
-            String name = typeAndVar[1];
-            ClassName className = CoerceTypes.classForJSType(typeAndVar[0]);
-            name = name.replace("?", "Optional");
-            parameterSpecs.add(ParameterSpec.builder(className, name).build());
-
+            List<MethodDefinition> defs = MethodDefinition.getDefs(f[0], f[1], f[2]);
+            methodDefinitions.addAll(defs);
         }
 
-        return parameterSpecs;
+        return methodDefinitions;
+
     }
 
-    public static void genMethods(TagInfo tagInfo, Class superclass) throws IOException, URISyntaxException {
+
+    public static void genMethods(TagInfo tagInfo) throws IOException, URISyntaxException {
 
         //build class
         String formatString = "Abstract%s";
@@ -70,13 +52,11 @@ public class GenMethods {
                             .addMember("value", "$S", tagInfo.getHtmlImport())
                             .build()
                 )
-                .addModifiers(Modifier.PUBLIC);
-
+                .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT);
 
         //add superclass if required
-        if (superclass != null) {
-            builder = builder.superclass(superclass);
-        }
+        ClassName superclass = tagInfo.getSuperClassName("Abstract%s");
+        builder = builder.superclass(superclass);
 
 
         MethodSpec ctor = MethodSpec.constructorBuilder()
@@ -87,14 +67,11 @@ public class GenMethods {
 
         builder.addMethod(ctor);
 
-        List<MethodDefinition> methods = getMethodsFromFile(tagInfo.getFileName(false));
+        List<MethodDefinition> methods = getMethodsFromFile(tagInfo.getFileName());
 
         for (MethodDefinition option : methods) {
 
             //whole method def
-            String methodString = option.getMethodString();
-            //just params
-            String paramString = option.getParamString();
             String methodName = option.getMethodName();
 
             MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder(methodName)
@@ -104,8 +81,7 @@ public class GenMethods {
             String propertyName = methodName.substring(3).toLowerCase();
 
             //method params
-            List<ParameterSpec> parameterSpecs = buildParamList(paramString);
-            methodBuilder.addParameters(parameterSpecs);
+            methodBuilder.addParameters(option.getParameterSpecs());
 
             //thoughts: "action" property to notify JS?
 
@@ -116,9 +92,11 @@ public class GenMethods {
             basicTypes.add(TypeName.get(Boolean.class));
             basicTypes.add(TypeName.get(String.class));
 
-            if (methodString.startsWith("get")) {
+            if (methodName.equals("addTo")) {
+                methodBuilder.addStatement("throw new $T($S)", RuntimeException.class, "Not implemented. Use add() method on element.");
+            } else if (methodName.startsWith("get")) {
                 methodBuilder.addStatement("return getElement().getProperty($S)", propertyName);
-                ClassName returnClass = CoerceTypes.classForJSType(option.getReturnType());
+                ClassName returnClass = option.getReturnType();
                 methodBuilder.returns(returnClass);
 
             } else if (methodName.equals("remove")) {
@@ -126,10 +104,10 @@ public class GenMethods {
                 methodBuilder.addStatement("getElement().removeFromParent()");
             } else {
 
-                //todo optional params should mean two methods created: doThis(x, optional); doThis(x);
                 methodBuilder.addStatement("$T<Object> objects = new $T<>()", List.class, ArrayList.class);
 
-                for (ParameterSpec parameterSpec : parameterSpecs) {
+
+                for (ParameterSpec parameterSpec : option.getParameterSpecs()) {
                     if (basicTypes.contains(parameterSpec.type)) {
                         methodBuilder.addStatement("objects.add(" + parameterSpec.name + ")");
                     } else {

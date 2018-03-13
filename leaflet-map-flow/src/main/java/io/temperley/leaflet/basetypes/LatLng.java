@@ -4,8 +4,8 @@ import io.temperley.leaflet.LeafletSerializable;
 
 public class LatLng implements LeafletSerializable {
 
-    private final Double y;
-    private final Double x;
+    public final Double y;
+    public final Double x;
 
     public LatLng(Double y, Double x) {
         this.y = y;

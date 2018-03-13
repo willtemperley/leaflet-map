@@ -1,12 +1,19 @@
-package io.temperley.leaflet.control;
+package io.temperley.leaflet.generated.control;
 
+import com.vaadin.flow.component.Tag;
+import com.vaadin.flow.component.dependency.HtmlImport;
 import io.temperley.leaflet.options.OptionsBase;
 import io.temperley.leaflet.options.TakesServerOptions;
 import java.lang.Object;
+import java.lang.RuntimeException;
 import java.lang.String;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Control extends TakesServerOptions {
-  public Control(OptionsBase options) {
+@Tag("leaflet-control")
+@HtmlImport("bower_components/leaflet-map/leaflet-control.html")
+public abstract class AbstractControl extends TakesServerOptions {
+  public AbstractControl(OptionsBase options) {
     super(options);
   }
 
@@ -21,7 +28,9 @@ public class Control extends TakesServerOptions {
    * Sets the position of the control.
    */
   public void setPosition(String position) {
-    getElement().setProperty("position", position);
+    List<Object> objects = new ArrayList<>();
+    objects.add(position);
+    setProperty("setPosition", objects);
   }
 
   /**
@@ -34,7 +43,8 @@ public class Control extends TakesServerOptions {
   /**
    * Adds the control to the given map.
    */
-  public void addTo() {
+  public void addTo(Object map) {
+    throw new RuntimeException("Not implemented. Use add() method on element.");
   }
 
   /**

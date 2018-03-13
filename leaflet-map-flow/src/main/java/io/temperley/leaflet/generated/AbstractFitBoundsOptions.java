@@ -3,7 +3,7 @@ package io.temperley.leaflet.generated;
 import io.temperley.leaflet.basetypes.LeafletPoint;
 import java.lang.Number;
 
-public class AbstractFitBoundsOptions<T extends AbstractFitBoundsOptions<T>> extends AbstractPanOptions<T> {
+public abstract class AbstractFitBoundsOptions<T extends AbstractFitBoundsOptions<T>> extends AbstractPanOptions<T> {
   /**
    * Sets the amount of padding in the top left corner of a map container that shouldn't be accounted for when setting the view to fit bounds. Useful if you have some control overlays on the map like a sidebar and you don't want them to obscure objects you're zooming to.
    * default: [0, 0]
