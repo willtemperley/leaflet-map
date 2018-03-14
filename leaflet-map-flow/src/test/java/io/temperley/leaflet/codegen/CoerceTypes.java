@@ -2,9 +2,13 @@ package io.temperley.leaflet.codegen;
 
 import com.squareup.javapoet.ClassName;
 import io.temperley.leaflet.FitBoundsOptions;
+import io.temperley.leaflet.LeafletSerializable;
 import io.temperley.leaflet.PanOptions;
 import io.temperley.leaflet.ZoomOptions;
 import io.temperley.leaflet.basetypes.*;
+import io.temperley.leaflet.codegen.markers.ConstructorMarker;
+import io.temperley.leaflet.codegen.markers.ThisMarker;
+import io.temperley.leaflet.layers.Layer;
 
 public class CoerceTypes {
 
@@ -48,13 +52,15 @@ public class CoerceTypes {
                 return ClassName.get(Renderer.class);
             case "layer[]":
                 return ClassName.get(LayerList.class);
+            case "layer":
+                return ClassName.get(Layer.class);
             case "this":
-                System.out.println("this");
-                return ClassName.get(Object.class);
+                return ClassName.get(ThisMarker.class);
+            case "ctor":
+                return ClassName.get(ConstructorMarker.class);
             case "object":
             default:
-                System.out.println("typeName = " + typeName);
-                return ClassName.get(Object.class);
+                return ClassName.get(LeafletSerializable.class);
         }
 
     }

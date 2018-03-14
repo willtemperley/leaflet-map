@@ -2,7 +2,7 @@ package io.temperley.leaflet.generated.control;
 
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.HtmlImport;
-import io.temperley.leaflet.options.OptionsBase;
+import io.temperley.leaflet.LeafletSerializable;
 import java.lang.String;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +10,13 @@ import java.util.List;
 @Tag("leaflet-attribution-control")
 @HtmlImport("bower_components/leaflet-map/leaflet-attribution-control.html")
 public abstract class AbstractAttributionControl extends AbstractControl {
-  public AbstractAttributionControl(OptionsBase options) {
-    super(options);
+  /**
+   * Creates an attribution control.
+   */
+  public AbstractAttributionControl(LeafletSerializable options) {
+    List<Object> objects = new ArrayList<>();
+    objects.add(options.serializable());
+    setProperty("constructorargs", objects);
   }
 
   /**

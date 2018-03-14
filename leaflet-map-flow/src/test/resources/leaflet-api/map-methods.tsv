@@ -1,3 +1,4 @@
+L.map(<Map options> options?)	ctor	Sets the view of the map (geographical center and zoom) with the given animation options.
 setView(<LatLng> center, <Number> zoom, <Zoom/pan options> options?)	this	Sets the view of the map (geographical center and zoom) with the given animation options.
 setZoom(<Number> zoom, <Zoom/pan options> options?)	this	Sets the zoom of the map.
 zoomIn(<Number> delta?, <Zoom options> options?)	this	Increases the zoom of the map by delta (zoomDelta by default).

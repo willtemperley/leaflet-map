@@ -9,22 +9,40 @@
 	<script>
 	"use strict";
 
-	class ${className} extends LeafletCore {
+	class LeafletLayersControl extends LeafletCore {
 
 		static get is(){
-          return '${tagName}';
+          return 'leaflet-layers-control';
 		}
 
     static get properties() {
       return {
 
-          <#list methodNames as m>
-			  ${m}: {
+			  addBaseLayer: {
             type: String,
                 observer: '_methodObserver'
           },
 
-		  </#list>
+			  removeLayer: {
+            type: String,
+                observer: '_methodObserver'
+          },
+
+			  expand: {
+            type: String,
+                observer: '_methodObserver'
+          },
+
+			  addOverlay: {
+            type: String,
+                observer: '_methodObserver'
+          },
+
+			  collapse: {
+            type: String,
+                observer: '_methodObserver'
+          },
+
 
           container: {
             type: Object,
@@ -58,19 +76,19 @@
 
         switch (args.length) {
           case 0: {
-            this.obj = ${factoryMethod}();
+            this.obj = L.control.layers();
             break;
           }
           case 1: {
-            this.obj = ${factoryMethod}(args[0]);
+            this.obj = L.control.layers(args[0]);
             break;
           }
           case 2: {
-            this.obj = ${factoryMethod}(args[0], args[1]);
+            this.obj = L.control.layers(args[0], args[1]);
             break;
           }
           case 3: {
-            this.obj = ${factoryMethod}(args[0], args[1], args[2]);
+            this.obj = L.control.layers(args[0], args[1], args[2]);
             break;
           }
         }
@@ -81,6 +99,6 @@
 		  //fixme
       }
 	}
-  window.customElements.define(${className}.is, ${className});
+  window.customElements.define(LeafletLayersControl.is, LeafletLayersControl);
 	</script>
 </dom-module>

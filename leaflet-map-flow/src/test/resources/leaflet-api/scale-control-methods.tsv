@@ -1,0 +1,1 @@
+L.control.scale(<Control.Scale options> options?)	ctor	Creates an scale control with the given options.

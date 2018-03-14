@@ -19,9 +19,11 @@ public class DemoView extends Div {
     public DemoView() {
 
         ScaleControlOptions scaleControlOptions = new ScaleControlOptions()
-                .position("bottomright")
+                .position("topright")
                 .maxWidth(300)
-                .metric(false);
+//                .metric(false)
+                ;
+
 
         ScaleControl scaleControl = new ScaleControl(scaleControlOptions);
 
@@ -31,11 +33,11 @@ public class DemoView extends Div {
         options.doubleClickZoom(ZoomBehaviour.Disabled);
 
 
-        Map leafletMap = new Map(options);
+        Map leafletMap = new Map(400, options);
 //        leafletMap.setCentre(12.5, 41.9);
-        leafletMap.getElement().getStyle().set("height", "400px");
         add(leafletMap);
 
+        leafletMap.getElement().appendChild(scaleControl.getElement());
 
         Button button = new Button("SetView");
 

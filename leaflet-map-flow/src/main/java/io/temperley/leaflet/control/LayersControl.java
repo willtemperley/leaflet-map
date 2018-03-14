@@ -7,7 +7,7 @@ import io.temperley.leaflet.options.TakesServerOptions;
 
 public class LayersControl extends TakesServerOptions {
   public LayersControl(OptionsBase options) {
-    super(options);
+//    super(options);
   }
 
 }

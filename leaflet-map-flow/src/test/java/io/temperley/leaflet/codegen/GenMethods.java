@@ -3,6 +3,9 @@ package io.temperley.leaflet.codegen;
 import com.squareup.javapoet.*;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.HtmlImport;
+import com.vaadin.flow.dom.Element;
+import com.vaadin.flow.dom.ElementConstants;
+import io.temperley.leaflet.codegen.markers.ConstructorMarker;
 import io.temperley.leaflet.options.OptionsBase;
 
 import javax.lang.model.element.Modifier;
@@ -31,9 +34,7 @@ public class GenMethods {
         }
 
         return methodDefinitions;
-
     }
-
 
     public static void genMethods(TagInfo tagInfo) throws IOException, URISyntaxException {
 
@@ -42,7 +43,12 @@ public class GenMethods {
         String simpleName = String.format(formatString, tagInfo.getSimpleName());
 
         TypeSpec.Builder builder = TypeSpec.classBuilder(simpleName)
-                .addAnnotation(
+                .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT);
+
+        //fixme better way to define abstract tags
+        if (!tagInfo.getTagName().equals("leaflet-control")) {
+
+                builder.addAnnotation(
                         AnnotationSpec.builder(Tag.class)
                             .addMember("value", "$S", tagInfo.getTagName())
                             .build()
@@ -51,42 +57,34 @@ public class GenMethods {
                         AnnotationSpec.builder(HtmlImport.class)
                             .addMember("value", "$S", tagInfo.getHtmlImport())
                             .build()
-                )
-                .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT);
+                );
+        }
 
         //add superclass if required
-        ClassName superclass = tagInfo.getSuperClassName("Abstract%s");
+        ClassName superclass = tagInfo.getSuperClassName(formatString);
         builder = builder.superclass(superclass);
-
-
-        MethodSpec ctor = MethodSpec.constructorBuilder()
-                .addModifiers(Modifier.PUBLIC)
-                .addParameter(OptionsBase.class, "options")
-                .addStatement("super(options)")
-                .build();
-
-        builder.addMethod(ctor);
 
         List<MethodDefinition> methods = getMethodsFromFile(tagInfo.getFileName());
 
         for (MethodDefinition option : methods) {
 
-            //whole method def
             String methodName = option.getMethodName();
+            boolean isConstructor = option.getReturnType().equals(ClassName.get(ConstructorMarker.class));
 
-            MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder(methodName)
-                    .addModifiers(Modifier.PUBLIC)
-                    .returns(void.class);
+            MethodSpec.Builder methodBuilder;
+            if (isConstructor) {
+                methodBuilder = MethodSpec.constructorBuilder();
+            } else {
+                methodBuilder = MethodSpec.methodBuilder(methodName)
+                        .returns(void.class);
+            }
 
-            String propertyName = methodName.substring(3).toLowerCase();
+            methodBuilder.addModifiers(Modifier.PUBLIC);
 
             //method params
             methodBuilder.addParameters(option.getParameterSpecs());
 
-            //thoughts: "action" property to notify JS?
-
             //these don't need special serialization
-            //todo probably better to create a MethodInvocationBuilder to deal with serialization
             Set<TypeName> basicTypes = new HashSet<>();
             basicTypes.add(TypeName.get(Number.class));
             basicTypes.add(TypeName.get(Boolean.class));
@@ -94,7 +92,13 @@ public class GenMethods {
 
             if (methodName.equals("addTo")) {
                 methodBuilder.addStatement("throw new $T($S)", RuntimeException.class, "Not implemented. Use add() method on element.");
+            } else if (methodName.equals("getContainer")) {
+
+                methodBuilder.addStatement("return getElement().getParent()");
+                methodBuilder.returns(Element.class);
+
             } else if (methodName.startsWith("get")) {
+                String propertyName = methodName.substring(3).toLowerCase();
                 methodBuilder.addStatement("return getElement().getProperty($S)", propertyName);
                 ClassName returnClass = option.getReturnType();
                 methodBuilder.returns(returnClass);
@@ -106,7 +110,6 @@ public class GenMethods {
 
                 methodBuilder.addStatement("$T<Object> objects = new $T<>()", List.class, ArrayList.class);
 
-
                 for (ParameterSpec parameterSpec : option.getParameterSpecs()) {
                     if (basicTypes.contains(parameterSpec.type)) {
                         methodBuilder.addStatement("objects.add(" + parameterSpec.name + ")");
@@ -114,7 +117,9 @@ public class GenMethods {
                         methodBuilder.addStatement("objects.add(" + parameterSpec.name + ".serializable())");
                     }
                 }
-                methodBuilder.addStatement("setProperty($S, objects)", methodName);
+
+                String property = isConstructor ? "constructorargs" : methodName;
+                methodBuilder.addStatement("setProperty($S, objects)", property);
             }
 
             methodBuilder.addJavadoc(option.getDescription());

@@ -9,10 +9,10 @@
 	<script>
 	"use strict";
 
-	class LeafletScaleControl extends LeafletCore {
+	class LeafletZoomControl extends LeafletCore {
 
 		static get is(){
-          return 'leaflet-scale-control';
+          return 'leaflet-zoom-control';
 		}
 
     static get properties() {
@@ -28,14 +28,15 @@
       }
 
       _containerChanged() {
-        if (this.constructorargs && this.container) {
-          this._construct(this.constructorargs);
+        if (this.opts && this.container) {
+          this._create(this.options);
         }
       }
 
       _construct(argString) {
-
-		  	console.log("SCALE ARGS: " + argString);
+        if (this.obj) {
+          return;
+        }
 
         if (this.obj) {
           return;
@@ -43,27 +44,26 @@
 
         if (!(this.constructorargs && this.container)) {
           return;
-				}
-
+        }
 
         let invocation = JSON.parse(argString);
         let args = invocation.args;
 
         switch (args.length) {
           case 0: {
-            this.obj = L.control.scale();
+            this.obj = L.control.zoom();
             break;
           }
           case 1: {
-            this.obj = L.control.scale(args[0]);
+            this.obj = L.control.zoom(args[0]);
             break;
           }
           case 2: {
-            this.obj = L.control.scale(args[0], args[1]);
+            this.obj = L.control.zoom(args[0], args[1]);
             break;
           }
           case 3: {
-            this.obj = L.control.scale(args[0], args[1], args[2]);
+            this.obj = L.control.zoom(args[0], args[1], args[2]);
             break;
           }
         }
@@ -74,6 +74,6 @@
 		  //fixme
       }
 	}
-  window.customElements.define(LeafletScaleControl.is, LeafletScaleControl);
+  window.customElements.define(LeafletZoomControl.is, LeafletZoomControl);
 	</script>
 </dom-module>

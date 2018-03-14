@@ -10,10 +10,10 @@ import java.util.Map;
 
 public class TakesServerOptions extends Component {
 
-    public TakesServerOptions(OptionsBase options) {
-        String serialized = JsonStream.serialize(options.serializable());
-        getElement().setProperty("opts", serialized);
-    }
+//    public TakesServerOptions(OptionsBase options) {
+//        String serialized = JsonStream.serialize(options.serializable());
+//        getElement().setProperty("opts", serialized);
+//    }
 
     protected void setProperty(String propertyName, List<Object> args) {
 

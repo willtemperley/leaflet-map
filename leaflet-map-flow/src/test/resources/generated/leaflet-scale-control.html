@@ -28,14 +28,15 @@
       }
 
       _containerChanged() {
-        if (this.constructorargs && this.container) {
-          this._construct(this.constructorargs);
+        if (this.opts && this.container) {
+          this._create(this.options);
         }
       }
 
       _construct(argString) {
-
-		  	console.log("SCALE ARGS: " + argString);
+        if (this.obj) {
+          return;
+        }
 
         if (this.obj) {
           return;
@@ -43,8 +44,7 @@
 
         if (!(this.constructorargs && this.container)) {
           return;
-				}
-
+        }
 
         let invocation = JSON.parse(argString);
         let args = invocation.args;

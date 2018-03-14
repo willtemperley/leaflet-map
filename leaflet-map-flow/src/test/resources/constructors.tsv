@@ -1,0 +1,2 @@
+zoom-control	L.control.zoom(<Control.Zoom options> options)	Creates a zoom control
+scale-control	L.control.scale(<Control.Scale options> options?)	Creates an scale control with the given options.	Creates a zoom control

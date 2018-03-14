@@ -2,12 +2,12 @@ package io.temperley.leaflet.events;
 
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.DomEvent;
-import io.temperley.leaflet.LeafletMap;
+import io.temperley.leaflet.Map;
 
 @DomEvent("moveend")
-public class MapViewChangeEvent extends ComponentEvent<LeafletMap> {
+public class MapViewChangeEvent extends ComponentEvent<Map> {
 
-    public MapViewChangeEvent(LeafletMap source, boolean fromClient) {
+    public MapViewChangeEvent(Map source, boolean fromClient) {
 
         super(source, fromClient);
 

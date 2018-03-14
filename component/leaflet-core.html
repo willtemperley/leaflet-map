@@ -15,17 +15,16 @@
 
       return {
 
-        //Opts and options both null intentionally
         options: {
           type: Object,
           value: null,
           observer: '_optionsObserver'
         },
 
-        opts: {
+        constructorargs: {
           type: String,
           value: null,
-          observer: '_optsObserver'
+          observer: '_construct'
         }
 
       };
@@ -66,14 +65,6 @@
             break;
           }
         }
-      }
-    }
-
-    _optsObserver() {
-      if (this.opts) {
-        let options = JSON.parse(this.opts);
-        this._create(options);
-        this.initialized = true;
       }
     }
 

@@ -3,13 +3,13 @@ package io.temperley.leaflet.generated;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import io.temperley.leaflet.FitBoundsOptions;
+import io.temperley.leaflet.LeafletSerializable;
 import io.temperley.leaflet.PanOptions;
 import io.temperley.leaflet.ZoomOptions;
 import io.temperley.leaflet.basetypes.Bounds;
 import io.temperley.leaflet.basetypes.LatLng;
 import io.temperley.leaflet.basetypes.LatLngBounds;
 import io.temperley.leaflet.basetypes.LeafletPoint;
-import io.temperley.leaflet.options.OptionsBase;
 import io.temperley.leaflet.options.TakesServerOptions;
 import java.lang.Boolean;
 import java.lang.Number;
@@ -19,8 +19,21 @@ import java.util.List;
 @Tag("leaflet-map")
 @HtmlImport("bower_components/leaflet-map/leaflet-map.html")
 public abstract class AbstractMap extends TakesServerOptions {
-  public AbstractMap(OptionsBase options) {
-    super(options);
+  /**
+   * Sets the view of the map (geographical center and zoom) with the given animation options.
+   */
+  public AbstractMap() {
+    List<Object> objects = new ArrayList<>();
+    setProperty("constructorargs", objects);
+  }
+
+  /**
+   * Sets the view of the map (geographical center and zoom) with the given animation options.
+   */
+  public AbstractMap(LeafletSerializable options) {
+    List<Object> objects = new ArrayList<>();
+    objects.add(options.serializable());
+    setProperty("constructorargs", objects);
   }
 
   /**

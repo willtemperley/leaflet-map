@@ -1,3 +1,4 @@
+L.control.attribution(<Control.Attribution options> options)	ctor	Creates an attribution control.
 setPrefix(<String> prefix)	this	Sets the text before the attributions.
 addAttribution(<String> text)	this	Adds an attribution text (e.g. 'Vector data &copy; Mapbox').
 removeAttribution(<String> text)	this	Removes an attribution text.

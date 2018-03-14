@@ -9,6 +9,6 @@ import io.temperley.leaflet.options.TakesServerOptions;
 public class TileLayer extends TakesServerOptions {
 
     public TileLayer(TileLayerOptions options) {
-        super(options);
+//        super(options);
     }
 }
