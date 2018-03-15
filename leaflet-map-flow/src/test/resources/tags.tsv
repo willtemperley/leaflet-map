@@ -1,4 +1,4 @@
-#TAG	CONSTRUCTOR	PACKAGE	SUPERCLASS
+#TAG	PACKAGE	SUPERCLASS
 map	io.temperley.leaflet.generated
 zoom	io.temperley.leaflet.generated
 pan	io.temperley.leaflet.generated	zoom

@@ -35,15 +35,12 @@
       }
 
       _containerChanged() {
-        if (this.opts && this.container) {
-          this._create(this.options);
+        if (this.constructorargs && this.container) {
+          this._construct(this.constructorargs);
         }
       }
 
       _construct(argString) {
-        if (this.obj) {
-          return;
-        }
 
         if (this.obj) {
           return;

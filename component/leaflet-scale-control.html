@@ -35,16 +35,13 @@
 
       _construct(argString) {
 
-		  	console.log("SCALE ARGS: " + argString);
-
         if (this.obj) {
           return;
         }
 
         if (!(this.constructorargs && this.container)) {
           return;
-				}
-
+        }
 
         let invocation = JSON.parse(argString);
         let args = invocation.args;
