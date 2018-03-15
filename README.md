@@ -37,11 +37,11 @@ the actual leaflet object defined by subclasses.
 Much of the code is boilerplate; the real heavy lifting is done by LeafletJS iteslf. 
 The LeafletJS documentation is thorough, so the method signatures were copied into e.g.: 
 
-[Map Methods](src/test/resources/leaflet-api/map-methods.tsv)
+[Map Methods](leaflet-map-flow/src/test/resources/leaflet-api/map-methods.tsv)
 
-[Map Options](src/test/resources/leaflet-api/map-options.tsv)
+[Map Options](leaflet-map-flow/src/test/resources/leaflet-api/map-options.tsv)
 
-Tags and their mappings to class names are defined [here](src/test/resources/tags.tsv).
+Tags and their mappings to class names are defined [here](leaflet-map-flow/src/test/resources/tags.tsv).
 
 The method and option definitions are used to generate the vast majority of the code,
 with the exception of core JavaScript and top-level Java classes.
