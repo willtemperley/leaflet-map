@@ -27,7 +27,9 @@ public class TagInfo {
     public TagInfo(String tag, String packageName, String superClass) {
         this.tag = tag;
         this.packageName = packageName;
-        this.superClassTagInfo = new TagInfo(superClass, packageName);
+        if (!superClass.equals("object")) {
+            this.superClassTagInfo = new TagInfo(superClass, packageName);
+        }
     }
 
     public Boolean fileExists() {

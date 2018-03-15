@@ -1,6 +1,6 @@
 #TAG	PACKAGE	SUPERCLASS
-map	io.temperley.leaflet.generated
-zoom	io.temperley.leaflet.generated
+map	io.temperley.leaflet.generated	object
+zoom	io.temperley.leaflet.generated	object
 pan	io.temperley.leaflet.generated	zoom
 fit-bounds	io.temperley.leaflet.generated	pan
 #controls
