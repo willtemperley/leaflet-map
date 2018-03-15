@@ -17,7 +17,6 @@ however the projects bear little resemblance to each other now).
 ### Overall architecture
 Every method name is mapped to a property on the component, including the constructor.
 All information required to perform a method invocation is sent in a JSON object, e.g.:
-
 ```json
 
 {
@@ -25,10 +24,11 @@ All information required to perform a method invocation is sent in a JSON object
     "params": [
       [1,2], 7
     ],
-    "nonce": 1345899798  //this isn't checked, it's just sent to ensure the property observer is always triggered
+    "nonce": 1345899798
 }
 ```
 
+The nonce isn't checked, it's just sent to ensure the property observer is always triggered.
 All JS classes inherit from LeafletCore which will invoke the required method on "obj", 
 the actual leaflet object defined by subclasses.
 
@@ -37,11 +37,11 @@ the actual leaflet object defined by subclasses.
 Much of the code is boilerplate; the real heavy lifting is done by LeafletJS iteslf. 
 The LeafletJS documentation is thorough, so the method signatures were copied into e.g.: 
 
-[Map Methods](resources/leaflet-api/map-methods.tsv)
+[Map Methods](src/test/resources/leaflet-api/map-methods.tsv)
 
-[Map Options](resources/leaflet-api/map-options.tsv)
+[Map Options](src/test/resources/leaflet-api/map-options.tsv)
 
-Tags and their mappings to class names are defined [here](resources/tags.tsv).
+Tags and their mappings to class names are defined [here](src/test/resources/tags.tsv).
 
 The method and option definitions are used to generate the vast majority of the code,
 with the exception of core JavaScript and top-level Java classes.
@@ -64,34 +64,6 @@ This provides an entry point at each level in the hierarchy.
 
 ### Methods
 TODO: Return this, need fluent API as in options
-
-
-
-## Client-server communication
-
-Currently the idea is to have client-side properties that are specifically to be read and set by the server.
-e.g. mapState which can be used to retrieve the basic state of the map.
-
-The process for communicating properties is somewhat unclear:
-"There are many cases where you can use either an attribute or a property with the same 
-name for the same effect. In some cases only one of them works, in other cases the attribute is considered
-when the element is initialized, but after initialization only the property is effective. 
-Please check documentation specific to the element you’re using to find out whether a feature 
-should be configured using a property or an attribute."
-
-Instead of worrying about this stuff, the idea is to simply provide a single configuration variable (opts) 
-for all components. This makes life much simpler as it is difficult to get all the webcomponent properties 
-and attributes together at construction time.  
-Attempting to use component properties entirely was attempted with the scalecontrol, but doing so required
-removal and reconstruction as many times as there are properties, as mutators are not available for some options.
-
-This approach means the options can be built as a map server-side, then serialized to JSON.
-This can be directly used to feed options parameters on the client. 
-
-It may be preferable to simplify the API and keep as close as possible to the leaflet API.
-This might mean we can just generate the entire API.
-
-Todo: Generate methods
 
 ## Running the Vaadin bindings
 cd to ./leaflet-map-flow and run `mvn jetty:run`
