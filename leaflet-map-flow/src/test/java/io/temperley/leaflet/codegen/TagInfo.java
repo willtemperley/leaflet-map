@@ -24,12 +24,11 @@ public class TagInfo {
         this.tag = tag;
         this.packageName = packageName;
     }
-    public TagInfo(String tag, String packageName, String superClass) {
+
+    public TagInfo(String tag, String packageName, TagInfo tagInfo) {
         this.tag = tag;
         this.packageName = packageName;
-        if (!superClass.equals("object")) {
-            this.superClassTagInfo = new TagInfo(superClass, packageName);
-        }
+        this.superClassTagInfo = tagInfo;
     }
 
     public Boolean fileExists() {
@@ -81,7 +80,7 @@ public class TagInfo {
     }
 
     public ClassName getSuperClassName(String formatString) {
-        if (superClassTagInfo != null) {
+        if (!superClassTagInfo.getTagName().equals("object")) {
             String name = String.format(formatString, superClassTagInfo.getSimpleName());
             return ClassName.get(superClassTagInfo.packageName, name);
         } else  {

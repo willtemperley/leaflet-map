@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 
 public class ResourceUtils {
 
-    static Stream<String> getFile(String name) throws IOException, URISyntaxException {
+    public static Stream<String> getFile(String name) throws IOException, URISyntaxException {
 
         URL resource = getResource(name);
         Path path = Paths.get(Objects.requireNonNull(resource).toURI());
