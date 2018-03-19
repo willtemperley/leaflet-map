@@ -14,7 +14,6 @@ public class Gen {
 
     public static void main(String[] args) throws IOException, URISyntaxException {
 
-
         List<TagInfo> tagsFromFile = getTagsFromFile("tags.tsv");
 
         for (TagInfo tagInfo : tagsFromFile) {
@@ -29,7 +28,6 @@ public class Gen {
         }
 
     }
-
 
     private static List<TagInfo> getTagsFromFile(String fileName) throws IOException, URISyntaxException {
 

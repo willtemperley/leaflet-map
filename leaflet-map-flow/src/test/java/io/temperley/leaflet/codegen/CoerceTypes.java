@@ -1,6 +1,7 @@
 package io.temperley.leaflet.codegen;
 
 import com.squareup.javapoet.ClassName;
+import com.vaadin.flow.dom.Element;
 import io.temperley.leaflet.FitBoundsOptions;
 import io.temperley.leaflet.LeafletSerializable;
 import io.temperley.leaflet.PanOptions;
@@ -9,6 +10,7 @@ import io.temperley.leaflet.basetypes.*;
 import io.temperley.leaflet.codegen.markers.ConstructorMarker;
 import io.temperley.leaflet.codegen.markers.ThisMarker;
 import io.temperley.leaflet.layers.Layer;
+import io.temperley.leaflet.layers.MarkerOptions;
 
 public class CoerceTypes {
 
@@ -58,6 +60,18 @@ public class CoerceTypes {
                 return ClassName.get(ThisMarker.class);
             case "ctor":
                 return ClassName.get(ConstructorMarker.class);
+            case "htmlelement":
+                return ClassName.get(Element.class);
+            case "icon":
+                return ClassName.get(Icon.class);
+            case "markeroptions":
+                return ClassName.get(MarkerOptions.class);
+            case "iconoptions":
+                return ClassName.get(Icon.class);
+            case "string|htmlelement|popup":
+                return ClassName.get(String.class);
+            case "popup":
+                return ClassName.get(Popup.class);
             case "object":
             default:
                 return ClassName.get(LeafletSerializable.class);

@@ -80,4 +80,8 @@ public class TagInfo {
             }
         }
     }
+
+    public TagInfo getSuperClassTagInfo() {
+        return superClassTagInfo;
+    }
 }

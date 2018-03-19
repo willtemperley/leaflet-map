@@ -16,7 +16,6 @@ import static io.temperley.leaflet.codegen.ResourceUtils.getFile;
 
 public class GenHtml {
 
-
     public static void genHtml(TagInfo tagInfo) throws IOException, URISyntaxException {
 
         String tagName = tagInfo.getTagName();
@@ -39,12 +38,23 @@ public class GenHtml {
         configuration.setLocale(Locale.UK);
         configuration.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
 
+        TagInfo superClassTagInfo = tagInfo.getSuperClassTagInfo();
+        //fixme figure out from the superclass tag info
         String templateName = "leaflet-x.ftl";
+        String superClassNameToFix = "Core";
+        if (tagName.equals("leaflet-layer")) {
+            templateName = "leaflet-abstract.ftl";
+        }
+        if (tagName.equals("leaflet-marker")) {
+            templateName = "leaflet-marker.ftl";
+        }
+
 
         Template template = configuration.getTemplate(templateName);
         Map<String, Object> input = new HashMap<>();
         {
             input.put("className", "Leaflet" + tagInfo.getSimpleName());
+            input.put("superClassName", "Leaflet" + superClassNameToFix);
             input.put("tagName", tagName);
             input.put("methodNames", methodNames);
         }

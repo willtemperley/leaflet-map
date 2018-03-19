@@ -5,12 +5,11 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.Theme;
 import com.vaadin.flow.theme.lumo.Lumo;
-import io.temperley.leaflet.basetypes.LatLng;
-import io.temperley.leaflet.basetypes.LatLngBounds;
-import io.temperley.leaflet.basetypes.LeafletPoint;
-import io.temperley.leaflet.basetypes.ZoomBehaviour;
+import io.temperley.leaflet.basetypes.*;
 import io.temperley.leaflet.control.ScaleControl;
 import io.temperley.leaflet.control.ScaleControlOptions;
+import io.temperley.leaflet.layers.Marker;
+import io.temperley.leaflet.layers.MarkerOptions;
 
 @Route("")
 @Theme(Lumo.class)
@@ -29,15 +28,15 @@ public class DemoView extends Div {
 
         MapOptions options = new MapOptions();
         options.zoom(9);
-        options.center(new LatLng(41.9, 12.5));
+        LatLng center = new LatLng(41.9, 12.5);
+        options.center(center);
         options.doubleClickZoom(ZoomBehaviour.Disabled);
 
 
         Map leafletMap = new Map(400, options);
-//        leafletMap.setCentre(12.5, 41.9);
         add(leafletMap);
 
-        leafletMap.getElement().appendChild(scaleControl.getElement());
+        leafletMap.add(scaleControl);
 
         Button button = new Button("SetView");
 
@@ -70,6 +69,21 @@ public class DemoView extends Div {
         add(button2);
         add(button3);
         add(button4);
+
+
+        Icon icon = new Icon("https://stendhalgame.org/images/mapmarker/me.png");
+        icon.iconSize(new LeafletPoint(100,100));
+
+        MarkerOptions markerOptions = new MarkerOptions()
+                .icon(icon)
+                .draggable(true)
+                .opacity(0.7);
+
+
+        Marker marker = new Marker(center, markerOptions);
+        leafletMap.add(marker);
+
+
 
 
 

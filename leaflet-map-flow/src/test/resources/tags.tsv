@@ -8,3 +8,6 @@ zoom-control	io.temperley.leaflet.generated.control	control
 attribution-control	io.temperley.leaflet.generated.control	control
 scale-control	io.temperley.leaflet.generated.control	control
 layers-control	io.temperley.leaflet.generated.control	control
+layer	io.temperley.leaflet.generated.layer	object
+marker	io.temperley.leaflet.generated.layer	layer
+icon	io.temperley.leaflet.generated.layer	object

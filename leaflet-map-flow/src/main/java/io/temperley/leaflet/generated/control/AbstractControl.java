@@ -9,40 +9,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractControl extends TakesServerOptions {
-  /**
-   * Returns the position of the control.
-   */
-  public String getPosition() {
-    return getElement().getProperty("position");
-  }
+    /**
+     * Returns the position of the control.
+     */
+    public String getPosition() {
+        return getElement().getProperty("position");
+    }
 
-  /**
-   * Sets the position of the control.
-   */
-  public void setPosition(String position) {
-    List<Object> objects = new ArrayList<>();
-    objects.add(position);
-    setProperty("setPosition", objects);
-  }
+    /**
+     * Sets the position of the control.
+     */
+    public void setPosition(String position) {
+        List<Object> objects = new ArrayList<>();
+        objects.add(position);
+        setProperty("setPosition", objects);
+    }
 
-  /**
-   * Returns the HTMLElement that contains the control.
-   */
-  public Element getContainer() {
-    return getElement().getParent();
-  }
+    /**
+     * Returns the HTMLElement that contains the control.
+     */
+    public Element getContainer() {
+        return getElement().getParent();
+    }
 
-  /**
-   * Adds the control to the given map.
-   */
-  public void addTo(LeafletSerializable map) {
-    throw new RuntimeException("Not implemented. Use add() method on element.");
-  }
+    /**
+     * Adds the control to the given map.
+     */
+    public void addTo(LeafletSerializable map) {
+        throw new RuntimeException("Not implemented. Use add() method on element.");
+    }
 
-  /**
-   * Removes the control from the map it is currently active on.
-   */
-  public void remove() {
-    getElement().removeFromParent();
-  }
+    /**
+     * Removes the control from the map it is currently active on.
+     */
+    public void remove() {
+        getElement().removeFromParent();
+    }
 }

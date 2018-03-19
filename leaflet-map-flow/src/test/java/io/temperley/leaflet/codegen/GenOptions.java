@@ -75,6 +75,7 @@ public class GenOptions {
         TypeSpec built = builder.build();
 
         JavaFile javaFile = JavaFile.builder(tagInfo.packageName, built)
+                .indent("    ")
                 .build();
 
         javaFile.writeTo(new File("./leaflet-map-flow/src/main/java").toPath());

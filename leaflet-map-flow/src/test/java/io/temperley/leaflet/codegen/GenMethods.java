@@ -25,6 +25,9 @@ public class GenMethods {
 
         List<MethodDefinition> methodDefinitions = new ArrayList<>();
         for (String line : lines) {
+            if (line.startsWith("#")) {
+                continue;
+            }
             String[] f = line.split("\t");
             if (f.length != 3) {
                 throw new RuntimeException("File: " + fileName + ". Invalid entry: " + line);
@@ -99,8 +102,13 @@ public class GenMethods {
 
             } else if (methodName.startsWith("get")) {
                 String propertyName = methodName.substring(3).toLowerCase();
-                methodBuilder.addStatement("return getElement().getProperty($S)", propertyName);
                 ClassName returnClass = option.getReturnType();
+                if (basicTypes.contains(returnClass)) {
+                    methodBuilder.addStatement("return getElement().getProperty($S)", propertyName);
+                } else {
+                    methodBuilder.addStatement("String str = getElement().getProperty($S)", propertyName);
+                    methodBuilder.addStatement("return $T.fromString(str)", returnClass);
+                }
                 methodBuilder.returns(returnClass);
 
             } else if (methodName.equals("remove")) {
@@ -133,6 +141,7 @@ public class GenMethods {
 
         JavaFile javaFile =
                 JavaFile.builder(tagInfo.packageName, typeSpec)
+                .indent("    ")
                 .build();
 
         javaFile.writeTo(new File("./leaflet-map-flow/src/main/java").toPath());

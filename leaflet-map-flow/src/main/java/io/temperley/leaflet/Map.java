@@ -1,32 +1,38 @@
 package io.temperley.leaflet;
 
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.Synchronize;
 import com.vaadin.flow.shared.Registration;
+import io.temperley.leaflet.control.ScaleControl;
 import io.temperley.leaflet.events.MapViewChangeEvent;
 import io.temperley.leaflet.generated.AbstractMap;
 import io.temperley.leaflet.options.OptionsBase;
 
 public class Map extends AbstractMap {
 
-  public Map() {
-    super();
-  }
+    public Map() {
+        super();
+    }
 
-  public Map(int height, OptionsBase options) {
+    public Map(int height, OptionsBase options) {
 
-    //fixme no need
-    super(options);
-    getElement().getStyle().set("height", height + "px");
-  }
+        //fixme no need
+        super(options);
+        getElement().getStyle().set("height", height + "px");
+    }
 
-  @Synchronize({"moveend", "zoomend", "dragend"})
-  public String getMapState() {
-    return getElement().getProperty("mapState", "");
-  }
+    @Synchronize({"moveend", "zoomend", "dragend"})
+    public String getMapState() {
+        return getElement().getProperty("mapState", "");
+    }
 
-  public Registration addValueChangeListener(
-          ComponentEventListener<MapViewChangeEvent> valueChangeListener) {
-    return super.addListener(MapViewChangeEvent.class, valueChangeListener);
-  }
+    public Registration addValueChangeListener(
+            ComponentEventListener<MapViewChangeEvent> valueChangeListener) {
+        return super.addListener(MapViewChangeEvent.class, valueChangeListener);
+    }
+
+    public void add(Component component) {
+        getElement().appendChild(component.getElement());
+    }
 }

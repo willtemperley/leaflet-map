@@ -32,6 +32,10 @@ The nonce isn't checked, it's just sent to ensure the property observer is alway
 All JS classes inherit from LeafletCore which will invoke the required method on "obj", 
 the actual leaflet object defined by subclasses.
 
+Options object are simply serialized and sent as a JSON argument to a constructor.
+This works in the majority of cases, however the Icon class can't be passed this way,
+although it is really an options object, it must be constructed explicitly client side.
+
 ### Algorithmic generation of bindings
 
 Much of the code is boilerplate; the real heavy lifting is done by LeafletJS iteslf. 

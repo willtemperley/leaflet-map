@@ -1,0 +1,13 @@
+#addTo(<Map|LayerGroup> map)	this	Adds the layer to the given map or layer group.
+remove()	this	Removes the layer from the map it is currently active on.
+#removeFrom(<Map> map)	this	Removes the layer from the given map
+#getPane(<String> name?)	HTMLElement	Returns the HTMLElement representing the named pane on the map. If name is omitted, returns the pane for this layer.
+getAttribution()	String	Used by the attribution control, returns the attribution option.
+bindPopup(<String|HTMLElement|Function|Popup> content, <Popup options> options?)	this	Binds a popup to the layer with the passed content and sets up the necessary event listeners. If a Function is passed it will receive the layer as the first argument and should return a String or HTMLElement.
+unbindPopup()	thisRemoves	the popup previously bound with bindPopup.
+openPopup(<LatLng> latlng?)	this	Opens the bound popup at the specified latlng or at the default popup anchor if no latlng is passed.
+closePopup()	this	Closes the popup bound to this layer if it is open.
+togglePopup()	this	Opens or closes the popup bound to this layer depending on its current state.
+isPopupOpen()	boolean	Returns true if the popup bound to this layer is currently open.
+setPopupContent(<String|HTMLElement|Popup> content)	this	Sets the content of the popup bound to this layer.
+getPopup()	Popup	Returns the popup bound to this layer.

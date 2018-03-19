@@ -1,0 +1,7 @@
+L.marker(<LatLng> latlng, <Marker options> options?)	ctor	Instantiates a Marker object given a geographical point and optionally an options object.
+toGeoJSON()	Object	Returns a GeoJSON representation of the marker (as a GeoJSON Point Feature).
+getLatLng()	LatLng	Returns the current geographical position of the marker.
+setLatLng(<LatLng> latlng)	this	Changes the marker position to the given point.
+setZIndexOffset(<Number> offset)	this	Changes the zIndex offset of the marker.
+setIcon(<Icon> icon)	this	Changes the marker icon.
+setOpacity(<Number> opacity)	this	Changes the opacity of the marker.

@@ -9,7 +9,7 @@
 	<script>
 	"use strict";
 
-	class LeafletMarker extends LeafletCore {
+	class LeafletMarker extends LeafletLayer {
 
 		static get is(){
           return 'leaflet-marker';
@@ -17,43 +17,18 @@
 
     static get properties() {
       return {
-
-			  setIcon: {
+        <#list methodNames as m>
+          ${m}: {
             type: String,
-                observer: '_methodObserver'
-          },
+            observer: '_methodObserver'
+        },
 
-			  getLatLng: {
-            type: String,
-                observer: '_methodObserver'
-          },
-
-			  toGeoJSON: {
-            type: String,
-                observer: '_methodObserver'
-          },
-
-			  setZIndexOffset: {
-            type: String,
-                observer: '_methodObserver'
-          },
-
-			  setLatLng: {
-            type: String,
-                observer: '_methodObserver'
-          },
-
-			  setOpacity: {
-            type: String,
-                observer: '_methodObserver'
-          },
-
+        </#list>
 
           container: {
             type: Object,
             observer: '_containerChanged'
           }
-
         }
       }
 

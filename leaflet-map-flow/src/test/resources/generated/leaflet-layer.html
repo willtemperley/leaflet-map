@@ -1,0 +1,73 @@
+<link rel="import" href="../polymer/polymer-element.html">
+
+<script>
+  /**
+   * `leaflet-map`
+   * lmap
+   *
+   * @customElement
+   * @polymer
+   * @demo demo/index.html
+   */
+  class LeafletLayer extends LeafletCore {
+    static get properties() {
+
+      return {
+
+        getAttribution: {
+          type: String,
+          observer : '_methodObserver'
+        },
+
+        bindPopup: {
+          type: String,
+          observer : '_methodObserver'
+        },
+
+        setPopupContent: {
+          type: String,
+          observer : '_methodObserver'
+        },
+
+        openPopup: {
+          type: String,
+          observer : '_methodObserver'
+        },
+
+        togglePopup: {
+          type: String,
+          observer : '_methodObserver'
+        },
+
+        unbindPopup: {
+          type: String,
+          observer : '_methodObserver'
+        },
+
+        getPopup: {
+          type: String,
+          observer : '_methodObserver'
+        },
+
+        closePopup: {
+          type: String,
+          observer : '_methodObserver'
+        },
+
+        isPopupOpen: {
+          type: String,
+          observer : '_methodObserver'
+        },
+
+        remove: {
+          type: String,
+          observer : '_methodObserver'
+        },
+
+      }
+    }
+
+
+  }
+
+</script>

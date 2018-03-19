@@ -1,6 +1,7 @@
 .DS_Store/
 .idea/
 leaflet-map-webjar/src/
+leaflet-map-flow/src/test/resources/generated
 leaflet-map-webjar/target/
 leaflet-map-flow/target/
 */*.iml
