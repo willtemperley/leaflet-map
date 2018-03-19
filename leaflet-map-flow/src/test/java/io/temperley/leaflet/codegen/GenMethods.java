@@ -49,11 +49,11 @@ public class GenMethods {
                 .addModifiers(Modifier.PUBLIC, Modifier.ABSTRACT);
 
         //fixme better way to define abstract tags
-        if (!tagInfo.getTagName().equals("leaflet-control")) {
+        if (!tagInfo.getTagName().equals("control")) {
 
                 builder.addAnnotation(
                         AnnotationSpec.builder(Tag.class)
-                            .addMember("value", "$S", tagInfo.getTagName())
+                            .addMember("value", "$S", tagInfo.getLeafletTagName())
                             .build()
                 )
                 .addAnnotation(

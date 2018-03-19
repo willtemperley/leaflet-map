@@ -58,10 +58,18 @@
           }
           case 2: {
 
+            //replace icon config with instance
             let opts = args[1];
+            //figure out what kind it is
             if (opts.icon) {
-              opts.icon = L.icon(opts.icon);
-						}
+              if (opts.icon.className === 'leaflet-div-icon') {
+                opts.icon = L.divIcon(opts.icon);
+              } else if (opts.icon.html || opts.icon.bgPos) {
+                opts.icon = L.divIcon(opts.icon);
+              } else {
+                opts.icon = L.icon(opts.icon);
+              }
+            }
 
             this.obj = L.marker(args[0], opts);
             break;

@@ -1,0 +1,11 @@
+L.popup(<Popup options> options?, <Layer> source?)	ctor	Instantiates a Popup object given an optional options object that describes its appearance and location and an optional source object that is used to tag the popup with a reference to the Layer to which it refers.
+getLatLng()	LatLng	Returns the geographical point of popup.
+setLatLng(<LatLng> latlng)	this	Sets the geographical point where the popup will open.
+getContent()	String|HTMLElement	Returns the content of the popup.
+setContent(<String|HTMLElement|Function> htmlContent)	this	Sets the HTML content of the popup. If a function is passed the source layer will be passed to the function. The function should return a String or HTMLElement to be used in the popup.
+getElement()	String|HTMLElement	Alias for getContent()
+update()	null	Updates the popup content, layout and position. Useful for updating the popup after something inside changed, e.g. image loaded.
+isOpen()	Boolean	Returns true when the popup is visible on the map.
+bringToFront()	this	Brings this popup in front of other popups (in the same map pane).
+bringToBack()	this	Brings this popup to the back of other popups (in the same map pane).
+openOn(<Map> map)	this	Adds the popup to the map and closes the previous one. The same as map.openPopup(popup).

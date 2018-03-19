@@ -19,7 +19,7 @@ public class GenHtml {
     public static void genHtml(TagInfo tagInfo) throws IOException, URISyntaxException {
 
         String tagName = tagInfo.getTagName();
-        if (tagName.equals("leaflet-map")) {
+        if (tagName.equals("map")) {
             return;
         }
         ClassName constructorMarkerClassName = ClassName.get(ConstructorMarker.class);
@@ -41,20 +41,19 @@ public class GenHtml {
         TagInfo superClassTagInfo = tagInfo.getSuperClassTagInfo();
         //fixme figure out from the superclass tag info
         String templateName = "leaflet-x.ftl";
-        String superClassNameToFix = "Core";
-        if (tagName.equals("leaflet-layer")) {
+        String superClassTagName = TagInfo.capitalize(superClassTagInfo.getTagName());
+        if (tagName.equals("layer")) {
             templateName = "leaflet-abstract.ftl";
         }
-        if (tagName.equals("leaflet-marker")) {
+        if (tagName.equals("marker")) {
             templateName = "leaflet-marker.ftl";
         }
-
 
         Template template = configuration.getTemplate(templateName);
         Map<String, Object> input = new HashMap<>();
         {
             input.put("className", "Leaflet" + tagInfo.getSimpleName());
-            input.put("superClassName", "Leaflet" + superClassNameToFix);
+            input.put("superClassName", "Leaflet" + superClassTagName);
             input.put("tagName", tagName);
             input.put("methodNames", methodNames);
         }

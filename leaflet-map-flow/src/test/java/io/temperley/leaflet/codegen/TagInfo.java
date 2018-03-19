@@ -41,11 +41,14 @@ public class TagInfo {
     }
 
     public String getTagName() {
+        return tag;
+    }
+    public String getLeafletTagName() {
         return "leaflet-" + tag;
     }
 
     public String getHtmlImport() {
-        return String.format("bower_components/leaflet-map/%s.html", getTagName());
+        return String.format("bower_components/leaflet-map/%s.html", getLeafletTagName());
     }
 
     public String getSimpleName() {
@@ -55,6 +58,16 @@ public class TagInfo {
 
         return toCamelCase(nameParts);
     }
+
+    public static String capitalize(String input) {
+        if (input == null || input.length() < 1) {
+            return "";
+        }
+        char[] chars = input.toCharArray();
+        chars[0] = Character.toUpperCase(chars[0]);
+        return new String(chars);
+    }
+
 
     public static String toCamelCase(List<String> nameParts) {
 

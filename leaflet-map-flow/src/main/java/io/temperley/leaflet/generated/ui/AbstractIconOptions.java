@@ -1,4 +1,4 @@
-package io.temperley.leaflet.generated.layer;
+package io.temperley.leaflet.generated.ui;
 
 import io.temperley.leaflet.basetypes.LeafletPoint;
 import io.temperley.leaflet.options.OptionsBase;

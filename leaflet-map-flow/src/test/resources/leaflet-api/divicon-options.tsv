@@ -1,0 +1,2 @@
+html	String	''	Custom HTML code to put inside the div element, empty by default.
+bgPos	Point	[0, 0]	Optional relative position of the background, in pixels

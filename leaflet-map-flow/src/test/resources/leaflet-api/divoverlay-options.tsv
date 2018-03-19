@@ -1,0 +1,3 @@
+offset	Point	Point(0, 7)	The offset of the popup position. Useful to control the anchor of the popup when opening it on some overlays.
+className	String	''	A custom CSS class name to assign to the popup.
+pane	String	'popupPane'	Map pane where the popup will be added.
