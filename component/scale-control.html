@@ -1,6 +1,6 @@
 <link rel="import" href="leaflet-core.html">
 
-<dom-module id="leaflet-attribution-control">
+<dom-module id="leaflet-scale-control">
 	<template>
 		<style>
 			:host {display: none;}
@@ -9,29 +9,14 @@
 	<script>
 	"use strict";
 
-	class LeafletAttributionControl extends LeafletControl {
+	class LeafletScaleControl extends LeafletControl {
 
       static get is(){
-        return 'leaflet-attribution-control';
+        return 'scale-control';
       }
 
       static get properties() {
         return {
-
-			  addAttribution: {
-            type: String,
-                observer: '_methodObserver'
-          },
-
-			  setPrefix: {
-            type: String,
-                observer: '_methodObserver'
-          },
-
-			  removeAttribution: {
-            type: String,
-                observer: '_methodObserver'
-          },
 
 
           container: {
@@ -63,19 +48,19 @@
 
         switch (args.length) {
           case 0: {
-            this.obj = L.control.attribution();
+            this.obj = L.control.scale();
             break;
           }
           case 1: {
-            this.obj = L.control.attribution(args[0]);
+            this.obj = L.control.scale(args[0]);
             break;
           }
           case 2: {
-            this.obj = L.control.attribution(args[0], args[1]);
+            this.obj = L.control.scale(args[0], args[1]);
             break;
           }
           case 3: {
-            this.obj = L.control.attribution(args[0], args[1], args[2]);
+            this.obj = L.control.scale(args[0], args[1], args[2]);
             break;
           }
         }
@@ -86,6 +71,6 @@
 		  //fixme
       }
 	}
-  window.customElements.define(LeafletAttributionControl.is, LeafletAttributionControl);
+  window.customElements.define(LeafletScaleControl.is, LeafletScaleControl);
 	</script>
 </dom-module>

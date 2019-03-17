@@ -11,6 +11,8 @@ import io.temperley.leaflet.codegen.markers.ConstructorMarker;
 import io.temperley.leaflet.codegen.markers.ThisMarker;
 import io.temperley.leaflet.layers.Layer;
 import io.temperley.leaflet.layers.MarkerOptions;
+import io.temperley.leaflet.ui.Popup;
+import io.temperley.leaflet.ui.PopupOptions;
 
 public class CoerceTypes {
 
@@ -68,7 +70,13 @@ public class CoerceTypes {
                 return ClassName.get(MarkerOptions.class);
             case "iconoptions":
                 return ClassName.get(Icon.class);
+            case "popupoptions":
+                return ClassName.get(PopupOptions.class);
+            case "string|htmlelement":
             case "string|htmlelement|popup":
+            case "string|htmlelement|function":
+            case "string|htmlelement|function|popup":
+                //todo element is possible
                 return ClassName.get(String.class);
             case "popup":
                 return ClassName.get(Popup.class);

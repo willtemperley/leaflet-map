@@ -42,12 +42,12 @@ public class TagInfo {
     public String getTagName() {
         return tag;
     }
-    public String getLeafletTagName() {
+    public String getPolymerTagName() {
         return "leaflet-" + tag;
     }
 
     public String getHtmlImport() {
-        return String.format("bower_components/leaflet-map/%s.html", getLeafletTagName());
+        return String.format("bower_components/leaflet-map/%s.html", getPolymerTagName());
     }
 
     public String getSimpleName() {

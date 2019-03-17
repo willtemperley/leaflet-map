@@ -31,26 +31,6 @@ public class Gen {
 
     }
 
-//    private static List<TagInfo> getTagsFromFile(String fileName) throws IOException, URISyntaxException {
-//
-//        Stream<String> lines = getFile(fileName);
-//
-//        List<String> collect = lines.collect(Collectors.toList());
-//
-//        Stream<TagInfo> stream = lines
-//                .filter(f -> !f.startsWith("#"))
-//                .map(f -> f.split("\t"))
-//                .map(f -> {
-//                    if (f.length == 3) {
-//                        //fixme
-//                        return new TagInfo(f[0], f[1], new TagInfo(f[2], f[1]));
-//                    }
-//                    return new TagInfo(f[0], f[1]);
-//                });
-//
-//        return stream.collect(Collectors.toList());
-//    }
-
     public static List<TagInfo> getTagInfo() throws IOException, URISyntaxException {
 
         Stream<String> lines = getFile("tags.tsv");
@@ -94,8 +74,6 @@ public class Gen {
         List<TagInfo> tagInfos = new ArrayList<>();
         for (String[] row : table) {
             String c = row[0];
-            String p = row[1];
-            String s = row[2];
 
             int i = map.get(c);
             LinkedList<String> linkedList = new LinkedList<>();
@@ -109,6 +87,7 @@ public class Gen {
             String superClassName = linkedList.getLast();
             TagInfo tagInfoSuper = new TagInfo(superClassName, classNameToPackage.get(superClassName));
             TagInfo tagInfo = new TagInfo(className, row[1], tagInfoSuper);
+            tagInfos.add(tagInfo);
         }
 
         return tagInfos;

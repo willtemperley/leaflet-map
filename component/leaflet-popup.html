@@ -1,6 +1,6 @@
 <link rel="import" href="leaflet-core.html">
 
-<dom-module id="leaflet-attribution-control">
+<dom-module id="leaflet-popup">
 	<template>
 		<style>
 			:host {display: none;}
@@ -9,26 +9,56 @@
 	<script>
 	"use strict";
 
-	class LeafletAttributionControl extends LeafletControl {
+	class LeafletPopup extends LeafletDivoverlay {
 
       static get is(){
-        return 'leaflet-attribution-control';
+        return 'leaflet-popup';
       }
 
       static get properties() {
         return {
 
-			  addAttribution: {
+			  setContent: {
             type: String,
                 observer: '_methodObserver'
           },
 
-			  setPrefix: {
+			  bringToFront: {
             type: String,
                 observer: '_methodObserver'
           },
 
-			  removeAttribution: {
+			  getLatLng: {
+            type: String,
+                observer: '_methodObserver'
+          },
+
+			  isOpen: {
+            type: String,
+                observer: '_methodObserver'
+          },
+
+			  getContent: {
+            type: String,
+                observer: '_methodObserver'
+          },
+
+			  update: {
+            type: String,
+                observer: '_methodObserver'
+          },
+
+			  openOn: {
+            type: String,
+                observer: '_methodObserver'
+          },
+
+			  setLatLng: {
+            type: String,
+                observer: '_methodObserver'
+          },
+
+			  bringToBack: {
             type: String,
                 observer: '_methodObserver'
           },
@@ -63,19 +93,19 @@
 
         switch (args.length) {
           case 0: {
-            this.obj = L.control.attribution();
+            this.obj = L.popup();
             break;
           }
           case 1: {
-            this.obj = L.control.attribution(args[0]);
+            this.obj = L.popup(args[0]);
             break;
           }
           case 2: {
-            this.obj = L.control.attribution(args[0], args[1]);
+            this.obj = L.popup(args[0], args[1]);
             break;
           }
           case 3: {
-            this.obj = L.control.attribution(args[0], args[1], args[2]);
+            this.obj = L.popup(args[0], args[1], args[2]);
             break;
           }
         }
@@ -86,6 +116,6 @@
 		  //fixme
       }
 	}
-  window.customElements.define(LeafletAttributionControl.is, LeafletAttributionControl);
+  window.customElements.define(LeafletPopup.is, LeafletPopup);
 	</script>
 </dom-module>

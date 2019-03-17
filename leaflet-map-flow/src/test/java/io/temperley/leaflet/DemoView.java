@@ -10,6 +10,8 @@ import io.temperley.leaflet.control.ScaleControl;
 import io.temperley.leaflet.control.ScaleControlOptions;
 import io.temperley.leaflet.layers.Marker;
 import io.temperley.leaflet.layers.MarkerOptions;
+import io.temperley.leaflet.ui.Popup;
+import io.temperley.leaflet.ui.PopupOptions;
 
 @Route("")
 @Theme(Lumo.class)
@@ -22,7 +24,6 @@ public class DemoView extends Div {
                 .maxWidth(300)
 //                .metric(false)
                 ;
-
 
         ScaleControl scaleControl = new ScaleControl(scaleControlOptions);
 
@@ -72,7 +73,7 @@ public class DemoView extends Div {
 
 
         Icon icon = new Icon("https://stendhalgame.org/images/mapmarker/me.png");
-        icon.iconSize(new LeafletPoint(100,100));
+        icon.iconSize(new LeafletPoint(50,50));
 
         MarkerOptions markerOptions = new MarkerOptions()
                 .icon(icon)
@@ -83,8 +84,11 @@ public class DemoView extends Div {
         Marker marker = new Marker(center, markerOptions);
         leafletMap.add(marker);
 
-
-
+//        Popup popup = new Popup();
+//        PopupOptions popupOptions = new PopupOptions()
+//        marker.bindPopup("asdf", new PopupOptions());
+        LatLng center2 = new LatLng(40.8, 12.6);
+        marker.setLatLng(center2);
 
 
 //        String url = "https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png";

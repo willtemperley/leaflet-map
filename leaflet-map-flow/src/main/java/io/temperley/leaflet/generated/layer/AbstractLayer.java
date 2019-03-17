@@ -2,10 +2,10 @@ package io.temperley.leaflet.generated.layer;
 
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.HtmlImport;
-import io.temperley.leaflet.LeafletSerializable;
 import io.temperley.leaflet.basetypes.LatLng;
-import io.temperley.leaflet.basetypes.Popup;
 import io.temperley.leaflet.options.TakesServerOptions;
+import io.temperley.leaflet.ui.Popup;
+import io.temperley.leaflet.ui.PopupOptions;
 import java.lang.String;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,18 +30,18 @@ public abstract class AbstractLayer extends TakesServerOptions {
     /**
      * Binds a popup to the layer with the passed content and sets up the necessary event listeners. If a Function is passed it will receive the layer as the first argument and should return a String or HTMLElement.
      */
-    public void bindPopup(LeafletSerializable content) {
+    public void bindPopup(String content) {
         List<Object> objects = new ArrayList<>();
-        objects.add(content.serializable());
+        objects.add(content);
         setProperty("bindPopup", objects);
     }
 
     /**
      * Binds a popup to the layer with the passed content and sets up the necessary event listeners. If a Function is passed it will receive the layer as the first argument and should return a String or HTMLElement.
      */
-    public void bindPopup(LeafletSerializable content, LeafletSerializable options) {
+    public void bindPopup(String content, PopupOptions options) {
         List<Object> objects = new ArrayList<>();
-        objects.add(content.serializable());
+        objects.add(content);
         objects.add(options.serializable());
         setProperty("bindPopup", objects);
     }

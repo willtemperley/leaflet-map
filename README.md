@@ -52,6 +52,7 @@ with the exception of core JavaScript and top-level Java classes.
 The latter are generally very simple, acting as entry points, 
 often just passing themselves as a type parameter to inform the fluent api.
 They also serve as extension points or places to sugar the api.
+
 Java files are generated using the excellent JavaPoet library. 
 
 Algorithmic code generation gives a number of advantages:
@@ -60,6 +61,12 @@ Algorithmic code generation gives a number of advantages:
 3. Code documentation can also be generated
 4. API updates should just mean minor edits to method/option definitions.
 
+TODO: html should provide getters for object properties. 
+May need to use these:
+https://www.polymer-project.org/2.0/docs/devguide/observers#dynamic-observer-methods
+so you get the property in polymer, then the property function calls the getter. Probably.  
+
+TODO: Mechanism for events.
 
 ### Options
 Options are built with a fluent API. For each automatically generated abstract options class there is a manually 

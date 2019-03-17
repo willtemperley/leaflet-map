@@ -13,3 +13,4 @@ marker	io.temperley.leaflet.generated.layer	layer
 icon	io.temperley.leaflet.generated.ui	object
 divicon	io.temperley.leaflet.generated.ui	icon
 divoverlay	io.temperley.leaflet.generated.ui	layer
+popup	io.temperley.leaflet.generated.ui	divoverlay

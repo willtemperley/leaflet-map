@@ -1,6 +1,6 @@
 <link rel="import" href="leaflet-core.html">
 
-<dom-module id="leaflet-scale-control">
+<dom-module id="${tagName}">
 	<template>
 		<style>
 			:host {display: none;}

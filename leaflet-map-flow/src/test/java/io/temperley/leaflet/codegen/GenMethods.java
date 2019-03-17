@@ -4,9 +4,7 @@ import com.squareup.javapoet.*;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.dom.Element;
-import com.vaadin.flow.dom.ElementConstants;
 import io.temperley.leaflet.codegen.markers.ConstructorMarker;
-import io.temperley.leaflet.options.OptionsBase;
 
 import javax.lang.model.element.Modifier;
 import java.io.File;
@@ -53,7 +51,7 @@ public class GenMethods {
 
                 builder.addAnnotation(
                         AnnotationSpec.builder(Tag.class)
-                            .addMember("value", "$S", tagInfo.getLeafletTagName())
+                            .addMember("value", "$S", tagInfo.getPolymerTagName())
                             .build()
                 )
                 .addAnnotation(

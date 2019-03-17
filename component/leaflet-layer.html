@@ -1,86 +1,76 @@
 <link rel="import" href="leaflet-core.html">
+<link rel="import" href="leaflet-layer.html">
+<link rel="import" href="leaflet-control.html">
 
-<dom-module id="leaflet-scale-control">
-	<template>
-		<style>
-			:host {display: none;}
-		</style>
-	</template>
-	<script>
-	"use strict";
 
-	class LeafletLayer extends LeafletCore {
-
-		static get is(){
-          return 'leaflet-layer';
-		}
-
+<script>
+  /**
+   * `leaflet-map`
+   * lmap
+   *
+   * @customElement
+   * @polymer
+   * @demo demo/index.html
+   */
+  class LeafletLayer extends LeafletCore {
     static get properties() {
+
       return {
 
-			  getAttribution: {
-            type: String,
-                observer: '_methodObserver'
-          },
+        getAttribution: {
+          type: String,
+          observer : '_methodObserver'
+        },
 
-			  remove: {
-            type: String,
-                observer: '_methodObserver'
-          },
+        bindPopup: {
+          type: String,
+          observer : '_methodObserver'
+        },
 
+        setPopupContent: {
+          type: String,
+          observer : '_methodObserver'
+        },
 
-          container: {
-            type: Object,
-            observer: '_containerChanged'
-          }
+        openPopup: {
+          type: String,
+          observer : '_methodObserver'
+        },
 
-        }
+        togglePopup: {
+          type: String,
+          observer : '_methodObserver'
+        },
+
+        unbindPopup: {
+          type: String,
+          observer : '_methodObserver'
+        },
+
+        getPopup: {
+          type: String,
+          observer : '_methodObserver'
+        },
+
+        closePopup: {
+          type: String,
+          observer : '_methodObserver'
+        },
+
+        isPopupOpen: {
+          type: String,
+          observer : '_methodObserver'
+        },
+
+        remove: {
+          type: String,
+          observer : '_methodObserver'
+        },
+
       }
+    }
 
-      _containerChanged() {
-        if (this.constructorargs && this.container) {
-          this._construct(this.constructorargs);
-        }
-      }
 
-      _construct(argString) {
+  }
 
-        if (this.obj) {
-          return;
-        }
-
-        if (!(this.constructorargs && this.container)) {
-          return;
-        }
-
-        let invocation = JSON.parse(argString);
-        let args = invocation.args;
-
-        switch (args.length) {
-          case 0: {
-            this.obj = fixme();
-            break;
-          }
-          case 1: {
-            this.obj = fixme(args[0]);
-            break;
-          }
-          case 2: {
-            this.obj = fixme(args[0], args[1]);
-            break;
-          }
-          case 3: {
-            this.obj = fixme(args[0], args[1], args[2]);
-            break;
-          }
-        }
-        this.obj.addTo(this.container);
-      }
-
-      detached() {
-		  //fixme
-      }
-	}
-  window.customElements.define(LeafletLayer.is, LeafletLayer);
-	</script>
-</dom-module>
+</script>

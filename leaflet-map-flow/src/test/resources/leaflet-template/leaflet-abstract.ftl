@@ -1,4 +1,7 @@
-<link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="leaflet-core.html">
+<link rel="import" href="leaflet-layer.html">
+<link rel="import" href="leaflet-control.html">
+
 
 <script>
   /**

@@ -2,7 +2,6 @@ package io.temperley.leaflet.generated.ui;
 
 import io.temperley.leaflet.basetypes.LeafletPoint;
 import io.temperley.leaflet.generated.layer.AbstractLayerOptions;
-
 import java.lang.String;
 
 public abstract class AbstractDivoverlayOptions<T extends AbstractDivoverlayOptions<T>> extends AbstractLayerOptions<T> {

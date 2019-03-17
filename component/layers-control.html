@@ -1,6 +1,6 @@
 <link rel="import" href="leaflet-core.html">
 
-<dom-module id="leaflet-attribution-control">
+<dom-module id="leaflet-scale-control">
 	<template>
 		<style>
 			:host {display: none;}
@@ -9,26 +9,36 @@
 	<script>
 	"use strict";
 
-	class LeafletAttributionControl extends LeafletControl {
+	class LeafletLayersControl extends LeafletControl {
 
       static get is(){
-        return 'leaflet-attribution-control';
+        return 'layers-control';
       }
 
       static get properties() {
         return {
 
-			  addAttribution: {
+			  addBaseLayer: {
             type: String,
                 observer: '_methodObserver'
           },
 
-			  setPrefix: {
+			  removeLayer: {
             type: String,
                 observer: '_methodObserver'
           },
 
-			  removeAttribution: {
+			  expand: {
+            type: String,
+                observer: '_methodObserver'
+          },
+
+			  addOverlay: {
+            type: String,
+                observer: '_methodObserver'
+          },
+
+			  collapse: {
             type: String,
                 observer: '_methodObserver'
           },
@@ -63,19 +73,19 @@
 
         switch (args.length) {
           case 0: {
-            this.obj = L.control.attribution();
+            this.obj = L.control.layers();
             break;
           }
           case 1: {
-            this.obj = L.control.attribution(args[0]);
+            this.obj = L.control.layers(args[0]);
             break;
           }
           case 2: {
-            this.obj = L.control.attribution(args[0], args[1]);
+            this.obj = L.control.layers(args[0], args[1]);
             break;
           }
           case 3: {
-            this.obj = L.control.attribution(args[0], args[1], args[2]);
+            this.obj = L.control.layers(args[0], args[1], args[2]);
             break;
           }
         }
@@ -86,6 +96,6 @@
 		  //fixme
       }
 	}
-  window.customElements.define(LeafletAttributionControl.is, LeafletAttributionControl);
+  window.customElements.define(LeafletLayersControl.is, LeafletLayersControl);
 	</script>
 </dom-module>

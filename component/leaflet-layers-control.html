@@ -1,21 +1,4 @@
-<link rel="import" href="../polymer/polymer-element.html">
-<!--
-todo describe
-
-##### Example
-
-    <leaflet-layers-control> </leaflet-layers-control>
-	
-##### Example
-
-    <leaflet-layers-control metric>
-    </leaflet-layers-control>
-
-@element leaflet-layers-control
-@blurb todo
-@homepage https://leaflet-extras.github.io/leaflet-map/
-@demo https://leaflet-extras.github.io/leaflet-map/demo.html
--->
+<link rel="import" href="leaflet-core.html">
 
 <dom-module id="leaflet-layers-control">
 	<template>
@@ -26,61 +9,92 @@ todo describe
 	<script>
 	"use strict";
 
-	class LeafletLayersControl extends Polymer.Element {
+	class LeafletLayersControl extends LeafletControl {
 
-		static get is(){
-		  return 'leaflet-layers-control';
-		}
+      static get is(){
+        return 'leaflet-layers-control';
+      }
 
-    static get properties() {
-      return {
+      static get properties() {
+        return {
 
-        container: {
-          type: Object,
-          observer: '_containerChanged'
-        },
+			  addBaseLayer: {
+            type: String,
+                observer: '_methodObserver'
+          },
 
-        options: {
-          type: Object,
-          value: null
-        },
+			  removeLayer: {
+            type: String,
+                observer: '_methodObserver'
+          },
 
-        opts: {
-          type: String,
-          value: null,
-          observer: '_optsObserver'
+			  expand: {
+            type: String,
+                observer: '_methodObserver'
+          },
+
+			  addOverlay: {
+            type: String,
+                observer: '_methodObserver'
+          },
+
+			  collapse: {
+            type: String,
+                observer: '_methodObserver'
+          },
+
+
+          container: {
+            type: Object,
+            observer: '_containerChanged'
+          }
+
+        }
+      }
+
+      _containerChanged() {
+        if (this.constructorargs && this.container) {
+          this._construct(this.constructorargs);
+        }
+      }
+
+      _construct(argString) {
+
+        if (this.obj) {
+          return;
         }
 
+        if (!(this.constructorargs && this.container)) {
+          return;
+        }
+
+        let invocation = JSON.parse(argString);
+        let args = invocation.args;
+
+        switch (args.length) {
+          case 0: {
+            this.obj = L.control.layers();
+            break;
+          }
+          case 1: {
+            this.obj = L.control.layers(args[0]);
+            break;
+          }
+          case 2: {
+            this.obj = L.control.layers(args[0], args[1]);
+            break;
+          }
+          case 3: {
+            this.obj = L.control.layers(args[0], args[1], args[2]);
+            break;
+          }
+        }
+        this.obj.addTo(this.container);
       }
-    }
 
-    _optsObserver() {
-		  if (this.opts && this.container) {
-		    let options = JSON.parse(this.opts);
-		    this._create(options);
-			}
-		}
-
-    _containerChanged() {
-      if (this.options && this.container) {
-        this._create(this.options);
+      detached() {
+		  //fixme
       }
-    }
-
-		_create(options) {
-      if (this.control) {
-        return;
-      }
-      this.control = L.control.layers(options);
-      this.control.addTo(this.container);
-		}
-
-
-		detached() {
-			if (this.container && this.control) {
-				this.container.removeControl(this.control);
-			}
-		}
 	}
   window.customElements.define(LeafletLayersControl.is, LeafletLayersControl);
 	</script>

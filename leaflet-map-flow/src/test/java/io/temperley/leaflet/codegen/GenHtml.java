@@ -10,9 +10,6 @@ import java.util.*;
 import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import static io.temperley.leaflet.codegen.ResourceUtils.getFile;
 
 public class GenHtml {
 
@@ -42,7 +39,7 @@ public class GenHtml {
         //fixme figure out from the superclass tag info
         String templateName = "leaflet-x.ftl";
         String superClassTagName = TagInfo.capitalize(superClassTagInfo.getTagName());
-        if (tagName.equals("layer")) {
+        if (tagName.equals("layer") || tagName.equals("control")) {
             templateName = "leaflet-abstract.ftl";
         }
         if (tagName.equals("marker")) {
@@ -54,7 +51,7 @@ public class GenHtml {
         {
             input.put("className", "Leaflet" + tagInfo.getSimpleName());
             input.put("superClassName", "Leaflet" + superClassTagName);
-            input.put("tagName", tagName);
+            input.put("tagName", tagInfo.getPolymerTagName());
             input.put("methodNames", methodNames);
         }
 
@@ -77,7 +74,7 @@ public class GenHtml {
 
 
         String outputLocation = "leaflet-map-flow/src/test/resources/generated/";
-        try (Writer fileWriter = new FileWriter(new File(outputLocation + tagName + ".html"))) {
+        try (Writer fileWriter = new FileWriter(new File(outputLocation + tagInfo.getPolymerTagName() + ".html"))) {
             template.process(input, fileWriter);
         } catch (TemplateException e) {
             e.printStackTrace();

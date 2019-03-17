@@ -1,6 +1,6 @@
 <link rel="import" href="leaflet-core.html">
 
-<dom-module id="leaflet-scale-control">
+<dom-module id="leaflet-layers-control">
 	<template>
 		<style>
 			:host {display: none;}
@@ -9,7 +9,7 @@
 	<script>
 	"use strict";
 
-	class LeafletLayersControl extends LeafletCore {
+	class LeafletLayersControl extends LeafletControl {
 
       static get is(){
         return 'leaflet-layers-control';

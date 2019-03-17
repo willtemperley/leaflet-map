@@ -32,7 +32,11 @@
 
     _methodObserver(newvalue, oldvalue) {
       console.log("invocation:" + newvalue);
-      if (this.obj) {
+      if (!this.obj) {
+
+        console.log("need to cache this invocation until object creation!")
+
+      } else {
 
         let invocation = JSON.parse(newvalue);
         let methodName = invocation.methodName;
